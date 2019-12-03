@@ -43,6 +43,15 @@ body {
     height: 100%;
 }
 
+#proPic{
+    height: 70px;
+    width: 70px;
+    margin:auto;
+    margin-top: 10px;
+    border-radius: 50%;
+    background-color: #5b99ce;
+}
+
 #leftPanel {
     text-align: left;
     width: 20%;
@@ -57,8 +66,8 @@ body {
     background-color: rgb(226, 227, 240);
     color: black;
     width: 100%;
-    padding: 15px 32px;
-    padding-left: 82px;
+    padding: 0px 32px;
+    padding-left: 70px;
     text-align: left;
     text-decoration: none;
     display: inline-block;
@@ -74,6 +83,10 @@ body {
 .leftPnlBtn:focus {
     background-color: #3a2b8b;
     color: white;
+}
+
+.feedBtn{
+    font-size: 14px;
 }
 
 #middlePanel {
@@ -96,7 +109,6 @@ body {
 
 #postBtn {
     margin-top: 4px;
-    margin-right: 6px;
     float: right;
 }
 
@@ -107,16 +119,31 @@ body {
 }
 
 #addNewPost {
-    margin-left: 12.5%;
-    width: 75%;
+    margin:auto;
+    width: 70%;
     align-items: center;
     margin-bottom: 0px;
+}
+
+#feedProPic{
+    height:20px;
+    width:20px;
+    background-color: #5590c4;
+    border-radius: 50%;
+    float:left;
+    margin-right:10px;
+    padding-bottom: 4px;
+}
+
+#feedProName{
+    font-size: 14px;
+    font-weight: bold;
 }
 
 #feedsPanel {
     margin: auto;
     margin-top: 85px;
-    width: 65%;
+    width: 70%;
     align-items: center;
     color: black;
 }
@@ -125,13 +152,19 @@ body {
     margin-top: -10px;
 }
 
-#feed {
+#feedPic {
     margin: auto;
     border: 2px;
     height: 400px;
     background-color: wheat;
     align-items: center;
 
+}
+.img{
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
 }
 
 #feedPanel {
@@ -140,11 +173,21 @@ body {
     margin-bottom: 8px;
 }
 
+.feedBtn{
+    font-size: 14px;
+    size: 10px;
+}
+
 #titleMain {
     color: white;
     margin: auto;
-    margin-left: 50px;
+    margin-left: 40px;
     padding-left: 30px;
     padding-top: 7px;
     ;
+}
+
+#endOfFeed{
+    float: left;
+    margin-top:60px;
 }
