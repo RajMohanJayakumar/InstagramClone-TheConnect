@@ -1,103 +1,150 @@
-#header{
-    height : 80px;
+#header {
+    height: 80px;
     background-color: rgb(54, 3, 102);
     position: fixed;
     z-index: 1;
-    width:100%;
-    top:0;
-    left:0;
+    width: 100%;
+    top: 0;
+    left: 0;
 }
 
-#logo,#search,#addPost{
-    float : left;
-    align-content : center;
-    width : 30%;
+#logo,
+#search,
+#addPost {
+    float: left;
+    align-content: center;
+    width: 30%;
     margin-top: 20px;
 }
-#search-btn{
-    padding-left : 4px;    
-    float : left;
-    align-content : center;
+
+#search-btn {
+    padding-left: 4px;
+    float: left;
+    align-content: center;
     margin-top: 20px;
 }
-#addPost{
+
+#addPost {
     text-align: center;
-    float:right;
+    float: right;
     margin-right: -20px;
 }
 
-#uploadAndPostBtn{
+#uploadAndPostBtn {
     margin-top: 8px;
 }
-body{
-    margin:0;
+
+body {
+    margin: 0;
 }
 
-#dashboard{
-    background-color:rgb(228, 231, 250);
-    height:100%;
+#dashboard {
+    background-color: rgb(228, 231, 250);
+    height: 100%;
 }
 
-#leftPanel{
-    text-align: left;  
-    width:20%;
-    background-color: rgb(216, 219, 245);
-    height:100%;
+#leftPanel {
+    text-align: left;
+    width: 20%;
+    background-color: rgb(226, 227, 240);
+    height: 100%;
     position: fixed;
-    top:80px;
+    top: 80px;
 }
-.leftPnlBtn{
-  border: none;
-  background-color: rgb(216, 219, 245);
-  color: black;
-  width:100%;
-  padding: 15px 32px;
-  padding-left: 67px;
-  text-align: left;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+
+.leftPnlBtn {
+    border: none;
+    background-color: rgb(226, 227, 240);
+    color: black;
+    width: 100%;
+    padding: 15px 32px;
+    padding-left: 82px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
 
 .leftPnlBtn:hover {
-    background-color: #3a2b8b;
+    background-color: #837bb1;
     color: white;
     transition: 0.5s;
-  }
+}
 
-.leftPnlBtn:focus{
+.leftPnlBtn:focus {
     background-color: #3a2b8b;
     color: white;
-  }
+}
 
-#rightPanel{
-    margin-top:100px;
-    width:80%;
-    margin-left:20%;
+#middlePanel {
+    margin-top: 100px;
+    width: 60%;
+    margin-left: 20%;
     height: 200vh;
     float: left;
 }
-#postBtn{
-    margin-top:4px;
-    margin-right:6px;
-    float:right;
-}
-#uploadImage{
-    margin-top:4px;
-    margin-right:6px;
-    float:right;
-}
-#addNewPost{
-    margin-left: 12.5%;
-    width:75%;
-    align-items: center;
-    height: 300px;
+
+#rightPanel {
+    margin-top: 80px;
+    width: 20%;
+    height: 200vh;
+    float: left;
+    right:0;
+    position:fixed;
+    background-color: rgb(239, 239, 245);
 }
 
-#titleMain{
-    color:white;
-    margin:auto;
-    margin-left: 26px;
+#postBtn {
+    margin-top: 4px;
+    margin-right: 6px;
+    float: right;
+}
+
+#uploadImage {
+    margin-top: 4px;
+    margin-right: 6px;
+    float: right;
+}
+
+#addNewPost {
+    margin-left: 12.5%;
+    width: 75%;
+    align-items: center;
+    margin-bottom: 0px;
+}
+
+#feedsPanel {
+    margin: auto;
+    margin-top: 85px;
+    width: 65%;
+    align-items: center;
+    color: black;
+}
+
+#cmtArea {
+    margin-top: -10px;
+}
+
+#feed {
+    margin: auto;
+    border: 2px;
+    height: 400px;
+    background-color: wheat;
+    align-items: center;
+
+}
+
+#feedPanel {
+    margin-top: 10px;
+    float: left;
+    margin-bottom: 8px;
+}
+
+#titleMain {
+    color: white;
+    margin: auto;
+    margin-left: 50px;
     padding-left: 30px;
-    padding-top: 7px;;
+    padding-top: 7px;
+    ;
 }

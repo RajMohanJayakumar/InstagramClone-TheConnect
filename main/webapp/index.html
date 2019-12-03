@@ -1,51 +1,81 @@
 <!DOCTYPE html>
+
 <head>
   <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
   <title>The Connect</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
   <div id="login">
-  <div id="header">
-    <div id="logo"><h3 id="titleMain">The Connect</h3></div>
-    <div id="search" class="form-group mx-sm-3 mb-2">
+    <div id="header">
+      <div id="logo">
+        <h3 id="titleMain">The Connect</h3>
+      </div>
+      <div id="search" class="form-group mx-sm-3 mb-2">
         <label class="sr-only">Search</label>
         <input type="text" class="form-control" placeholder="Search">
-      
+
+      </div>
+      <div id="search-btn">
+        <a class="btn btn-primary mb-2">Search</a>
+      </div>
+      <div id="addPost">
+        <a class="btn btn-primary mb-2">+ Add Post</a>
+      </div>
     </div>
-    <div id="search-btn">
-      <button class="btn btn-primary mb-2">Search</button>
-    </div>
-    <div id="addPost">
-      <button class="btn btn-primary mb-2">Add Post</button>
-    </div>
-  </div>
-  <div id="dashboard">
-  <div id="leftPanel">
-    <button class="leftPnlBtn"><h4>Feeds</h4></button>
-    <button class="leftPnlBtn"><h4>My Friends</h4></button>
-    <button class="leftPnlBtn"><h4>My Posts</h4></button>
-    <button class="leftPnlBtn"><h4>My Photos</h4></button>
-    <button class="leftPnlBtn"><h4>Logout</h4></button>
-  </div>
-  <div id="rightPanel">
-    <div id="addNewPost">
-        <div class="form-group purple-border">
+    <div id="dashboard">
+      <div id="leftPanel">
+        <button class="leftPnlBtn">
+          <h4>Feeds</h4>
+        </button>
+        <button class="leftPnlBtn">
+          <h4>My Friends</h4>
+        </button>
+        <button class="leftPnlBtn">
+          <h4>My Posts</h4>
+        </button>
+        <button class="leftPnlBtn">
+          <h4>My Photos</h4>
+        </button>
+        <button class="leftPnlBtn">
+          <h4>Logout</h4>
+        </button>
+      </div>
+      <div id="middlePanel">
+        <div id="addNewPost">
+          <div class="form-group purple-border">
             <label for="exampleFormControlTextarea4">Add Post</label>
-            <textarea class="form-control" id="exampleFormControlTextarea4" rows="3"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea4" rows="3">Write Something...</textarea>
             <div id="uploadAndPostBtn">
-                <button id="postBtn" class="btn btn-primary mb-2">Post</button>
-                <button id="uploadImage" class="btn btn-primary mb-2">+ Add photo</button>
+              <a id="postBtn" class="btn btn-primary mb-2">Post</a>
+              <a id="uploadImage" class="btn btn-primary mb-2">+ Add photo</a>
             </div>
-            
           </div>
+        </div>
+        <div id="feedsPanel">
+          <div id="feed"></div>
+          <div id="feedPanel">
+            <button type="button" class="btn btn-primary">
+              Like <span class="badge badge-light">10</span>
+            </button>
+            <button type="button" class="btn btn-primary">
+              Comment <span class="badge badge-light">4</span>
+            </button>
           </div>
+          <div id="cmtArea">
+            <textarea class="form-control" id="exampleFormControlTextarea4" rows="3">Write Something...</textarea>
+            <a id="postBtn" class="btn btn-primary mb-2">Add Comment</a>
+          </div>
+        </div>
+      </div>
+      <div id="rightPanel">
+        <center><h5>&copy; AW Inc.</h5></center>
+      </div>
     </div>
   </div>
-</div>
-</div>
   <script src="/script.js"></script>
 </body>
+
 </html>
