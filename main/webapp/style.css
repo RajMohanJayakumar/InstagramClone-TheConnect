@@ -1,6 +1,11 @@
 #header{
     height : 80px;
     background-color: rgb(54, 3, 102);
+    position: fixed;
+    z-index: 1;
+    width:100%;
+    top:0;
+    left:0;
 }
 
 #logo,#search,#addPost{
@@ -17,7 +22,12 @@
 }
 #addPost{
     text-align: center;
-    margin-left: 40px;
+    float:right;
+    margin-right: -20px;
+}
+
+#uploadAndPostBtn{
+    margin-top: 8px;
 }
 body{
     margin:0;
@@ -29,12 +39,12 @@ body{
 }
 
 #leftPanel{
-    text-align: center;
-    margin-top: 0;
-    padding-left: 10px;
+    text-align: left;  
     width:20%;
     background-color: rgb(216, 219, 245);
     height:100%;
+    position: fixed;
+    top:80px;
 }
 .leftPnlBtn{
   border: none;
@@ -42,29 +52,52 @@ body{
   color: black;
   width:100%;
   padding: 15px 32px;
-  margin-top: 4px;
-  text-align: center;
+  padding-left: 67px;
+  text-align: left;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
 }
 
+.leftPnlBtn:hover {
+    background-color: #3a2b8b;
+    color: white;
+    transition: 0.5s;
+  }
+
+.leftPnlBtn:focus{
+    background-color: #3a2b8b;
+    color: white;
+  }
+
 #rightPanel{
+    margin-top:100px;
     width:80%;
-    height: 100%;
+    margin-left:20%;
+    height: 200vh;
     float: left;
-    background-color: tomato;
+}
+#postBtn{
+    margin-top:4px;
+    margin-right:6px;
+    float:right;
+}
+#uploadImage{
+    margin-top:4px;
+    margin-right:6px;
+    float:right;
 }
 #addNewPost{
-    width:50%;
+    margin-left: 12.5%;
+    width:75%;
     align-items: center;
     height: 300px;
-
 }
 
 #titleMain{
     color:white;
     margin:auto;
+    margin-left: 26px;
     padding-left: 30px;
     padding-top: 7px;;
 }
