@@ -43,10 +43,10 @@ body {
     height: 100%;
 }
 
-#proPic{
+#proPic {
     height: 70px;
     width: 70px;
-    margin:auto;
+    margin: auto;
     margin-top: 10px;
     border-radius: 50%;
     background-color: #5b99ce;
@@ -85,7 +85,7 @@ body {
     color: white;
 }
 
-.feedBtn{
+.feedBtn {
     font-size: 14px;
 }
 
@@ -102,8 +102,8 @@ body {
     width: 20%;
     height: 200vh;
     float: left;
-    right:0;
-    position:fixed;
+    right: 0;
+    position: fixed;
     background-color: rgb(239, 239, 245);
 }
 
@@ -119,23 +119,23 @@ body {
 }
 
 #addNewPost {
-    margin:auto;
+    margin: auto;
     width: 70%;
     align-items: center;
     margin-bottom: 0px;
 }
 
-#feedProPic{
-    height:20px;
-    width:20px;
+#feedProPic {
+    height: 20px;
+    width: 20px;
     background-color: #5590c4;
     border-radius: 50%;
-    float:left;
-    margin-right:10px;
+    float: left;
+    margin-right: 10px;
     padding-bottom: 4px;
 }
 
-#feedProName{
+#feedProName {
     font-size: 14px;
     font-weight: bold;
 }
@@ -160,7 +160,8 @@ body {
     align-items: center;
 
 }
-.img{
+
+.img {
     object-fit: cover;
     object-position: center;
     height: 100%;
@@ -173,7 +174,7 @@ body {
     margin-bottom: 8px;
 }
 
-.feedBtn{
+.feedBtn {
     font-size: 14px;
     size: 10px;
 }
@@ -187,7 +188,11 @@ body {
     ;
 }
 
-#endOfFeed{
+#endOfFeed {
     float: left;
-    margin-top:60px;
+    margin-top: 60px;
+}
+
+#logout{
+    margin-top:200px;
 }
