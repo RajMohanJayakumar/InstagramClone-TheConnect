@@ -1,0 +1,61 @@
+#header{
+    height : 80px;
+    background-color: rgb(54, 3, 102);
+}
+
+#logo,#search,#addPost{
+    float : left;
+    align-content : center;
+    width : 30%;
+    margin-top: 20px;
+}
+#search-btn{
+    padding-left : 4px;    
+    float : left;
+    align-content : center;
+    margin-top: 20px;
+}
+#addPost{
+    text-align: center;
+    margin-left: 40px;
+}
+body{
+    margin:0;
+}
+
+#dashboard{
+    background-color:rgb(228, 231, 250);
+    height:1000px;
+}
+
+#leftPanel{
+    text-align: center;
+    margin-top: 0;
+    padding-left: 10px;
+    width:20%;
+    background-color: rgb(216, 219, 245);
+    height:100%;
+}
+.leftPnlBtn{
+  border: none;
+  background-color: rgb(216, 219, 245);
+  color: black;
+  width:100%;
+  padding: 15px 32px;
+  margin-top: 4px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+#rightPanel{
+    height: 100%;
+}
+
+#titleMain{
+    color:white;
+    margin:auto;
+    padding-left: 30px;
+    padding-top: 7px;;
+}
