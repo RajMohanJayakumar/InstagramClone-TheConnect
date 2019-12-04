@@ -140,6 +140,11 @@ body {
     font-weight: bold;
 }
 
+.feedText{
+    text-align: left;
+    
+}
+
 #feedsPanel {
     margin: auto;
     margin-top: 85px;
