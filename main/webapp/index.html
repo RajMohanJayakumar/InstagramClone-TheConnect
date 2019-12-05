@@ -3,175 +3,44 @@
 <head>
   <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
   <title>The Connect</title>
-  <meta name="google-signin-client_id" content="682848596913-hv4btn93fglrd4enfkkm9p5slfvacktt.apps.googleusercontent.com">
+  <meta name="google-signin-client_id" content="682848596913-k654bjpe8d5n9kdl5e9rkeha50hlq2rh.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="style.css">
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+      .g-signin2{
+        margin-left: 46%;
+      }
+  </style>
 </head>
 
 <body>
-  <div id="login">
+  <div id="logout">
     <div id="header">
       <div id="logo">
         <h3 id="titleMain" style="font-size: 20px;">The Connect</h3>
       </div>
-      <div id="search" class="form-group mx-sm-3 mb-2">
-        <label class="sr-only">Search</label>
-        <input type="text" class="form-control" placeholder="Search">
-
-      </div>
-      <div id="search-btn">
-        <a class="btn btn-primary">Search</a>
-      </div>
-      <div id="addPost">
-        <a class="btn btn-primary btn-sm">+ Add Post</a>
-      </div>
     </div>
-    <div id="dashboard">
-      <div id="leftPanel">
-        <div id="proSec">
-          <div id="proPic"></div>
-          <center>
-            <h4 style="font-size: 16px;"><b>Raj Mohan</b></h4>
-          </center>
+    <div id="logoutPanel">
+        <div id="mid40">
+                <h3><center>Welcome to The Connect</center></h3>
+                <div class="form-group">
+                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                        <label>Username</label>
+                        <input class="form-control" type="text" id="name" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input class="form-control" type="password" id="name" placeholder="Enter password">
+                    </div>
+                    <button id="add" type="submit" class="btn btn-sm btn-primary" style="float:left;">Sign In</button>
+                    <button id="add" type="submit" class="btn btn-sm btn-primary" style="float:left;margin-left: 10px;">Sign Up</button>
         </div>
-        <hr style="background: #b0cbe3;height: 1px;">
-        <button class="leftPnlBtn">
-          &nbsp;<h5 class="fa fa-flash" style="font-size:14px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Feeds</h5>
-        </button>
-        <button class="leftPnlBtn">
-          <h5 class="fa fa-users" style="font-size:14px">&nbsp;&nbsp;&nbsp;&nbsp;Friends</h5>
-        </button>
-        <button class="leftPnlBtn">
-          <h5 class="glyphicon glyphicon-send" style="font-size:14px">&nbsp;Timeline</h5>
-        </button>
-        <button class="leftPnlBtn">
-          <h5 class="fa fa-camera" style="font-size:14px">&nbsp;&nbsp;&nbsp;&nbsp;Photos</h5>
-        </button>
-        <button class="leftPnlBtn">
-          <h5 class="glyphicon glyphicon-off" style="font-size:14px">&nbsp;Logout</h5>
-        </button>
-      </div>
-      <div id="middlePanel">
-        <div id="addNewPost">
-          <div class="form-group purple-border">
-            <label for="exampleFormControlTextarea4">Add Post</label>
-            <textarea class="form-control" id="exampleFormControlTextarea4" rows="3" placeholder="Write Something..."></textarea>
-            <div id="uploadAndPostBtn">
-              <a id="postBtn" class="btn btn-primary mb-2 btn-xs">Post</a>
-              <a id="uploadImage" class="btn btn-primary mb-2 btn-xs">+ Add photo</a>
             </div>
-          </div>
-        </div>
-
-
-        <div id="feedsPanel">
-          <div id="feedInfo">
-            <div id="feedProPic"></div>
-            <h4 id="feedProName">Karthick Krishna</h4>
-              <h4 class="feedText" style="font-size: 14px;">
-                    Pleasant Morning..
-                    Hot Coffee..                
-              </h4>
-          </div>
-          <figure id="feedPic"><img class="img" src="images/feed2.jpeg" /></figure>
-          <div id="feedPanel">
-            <button type="button" class="feedBtn btn btn-primary btn-xs">
-              Like <span class="badge badge-light">10</span>
-            </button>
-            <button type="button" class="feedBtn btn btn-primary btn-xs">
-              Comment <span class="badge badge-light">4</span>
-            </button>
-          </div>
-          <div id="cmtArea">
-            <textarea class="form-control" id="exampleFormControlTextarea4" rows="3" placeholder="Write a comment..."></textarea>
-            <a id="postBtn" class="btn btn-primary mb-2 btn-xs">Add Comment</a>
-          </div>
-        </div>
-
-        <div id="feedsPanel">
-          <div id="feedInfo">
-            <div id="feedProPic"></div>
-            <h4 id="feedProName">Mohan</h4>
-            <h4 class="feedText" style="font-size: 14px;">
-                Adventures...                
-          </h4>
-          </div>
-          <figure id="feedPic"><img class="img" src="images/feed1.jpg" /></figure>
-          <div id="feedPanel">
-            <button type="button" class="feedBtn btn btn-primary btn-xs">
-              Like <span class="badge badge-light">10</span>
-            </button>
-            <button type="button" class="feedBtn btn btn-primary btn-xs">
-              Comment <span class="badge badge-light">4</span>
-            </button>
-          </div>
-          <div id="cmtArea">
-              <textarea class="form-control" id="exampleFormControlTextarea4" rows="3" placeholder="Write a comment..."></textarea>
-            <a id="postBtn" class="btn btn-primary mb-2 btn-xs">Add Comment</a>
-          </div>
-        </div>
-
-        <div id="feedsPanel">
-          <div id="feedInfo">
-            <div id="feedProPic"></div>
-            <h4 id="feedProName">Shiny Baskar</h4>
-            <h4 class="feedText" style="font-size: 14px;">
-                The Cold Sweet..                  
-          </h4>
-          </div>
-          <figure id="feedPic"><img class="img" src="images/feed3.jpg" /></figure>
-          <div id="feedPanel">
-            <button type="button" class="feedBtn btn btn-primary btn-xs">
-              Like <span class="badge badge-light">10</span>
-            </button>
-            <button type="button" class="feedBtn btn btn-primary btn-xs">
-              Comment <span class="badge badge-light">4</span>
-            </button>
-          </div>
-          <div id="cmtArea">
-              <textarea class="form-control" id="exampleFormControlTextarea4" rows="3" placeholder="Write a comment..."></textarea>
-            <a id="postBtn" class="btn btn-primary mb-2 btn-xs">Add Comment</a>
-          </div>
-        </div>
-
-        <div id="feedsPanel">
-          <div id="feedInfo">
-            <div id="feedProPic"></div>
-            <h4 id="feedProName">John Peterson</h4>
-            <h4 class="feedText" style="font-size: 14px;">
-                Relaxing!!                  
-          </h4>
-          </div>
-          <figure id="feedPic"><img class="img" src="images/feed4.jpg" /></figure>
-          <div id="feedPanel">
-            <button type="button" class="feedBtn btn btn-primary btn-xs">
-              Like <span class="badge badge-light">10</span>
-            </button>
-            <button type="button" class="feedBtn btn btn-primary btn-xs">
-              Comment <span class="badge badge-light">4</span>
-            </button>
-          </div>
-          <div id="cmtArea">
-              <textarea class="form-control" id="exampleFormControlTextarea4" rows="3" placeholder="Write a comment..."></textarea> 
-            <a id="postBtn" class="btn btn-primary mb-2 btn-xs">Add Comment</a>
-          </div>
-        </div>
-        <div id="endOfFeed">
-          <hr>.</div>
-      </div>
-      <div id="clogout">
-        
-      </div>
-      <div id="rightPanel">
-        <center>
-          <h5>&copy; AW Inc.</h5>
-        </center>
-      </div>
+            <a href="#" onclick="signOut();">Sign out</a>
     </div>
-  </div>
-  <script src="script.js"></script>
-</body>
-
-</html>
+    <script src="script.js"></script>
+    </body>
+    </html>

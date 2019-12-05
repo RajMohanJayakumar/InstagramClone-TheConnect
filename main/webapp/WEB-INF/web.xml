@@ -7,4 +7,35 @@
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  
+  <servlet>
+  <servlet-name>Application</servlet-name>
+  <servlet-class>com.theconnect.App</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>Application</servlet-name>
+  <url-pattern>/app</url-pattern>
+  </servlet-mapping>
+  
+  <filter>
+  <filter-name>SessionFilter</filter-name>
+  <filter-class>com.theconnect.SessionFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  <filter-name>SessionFilter</filter-name>
+  <servlet-name>Application</servlet-name>
+  </filter-mapping>
+
+	<servlet>
+		<servlet-name>app</servlet-name>
+		<jsp-file>/app.html</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>app</servlet-name>
+		<url-pattern>/dashboard</url-pattern>
+	</servlet-mapping>
+		
 </web-app>
