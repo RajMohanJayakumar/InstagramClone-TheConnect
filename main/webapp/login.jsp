@@ -39,7 +39,6 @@
                     <button id="add" type="submit" class="btn btn-sm btn-primary" style="float:left;margin-left: 10px;">Sign Up</button>
         </div>
             </div>
-            <a href="#" onclick="signOut();">Sign out</a>
     </div>
     <script src="script.js"></script>
     </body>

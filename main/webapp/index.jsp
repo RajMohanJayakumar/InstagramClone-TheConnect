@@ -51,7 +51,7 @@
           <h5 class="fa fa-camera" style="font-size:14px">&nbsp;&nbsp;&nbsp;&nbsp;Photos</h5>
         </button>
         <button class="leftPnlBtn">
-          <h5 class="glyphicon glyphicon-off" onclick="signOut();" style="font-size:14px">&nbsp;Logout</h5>
+          <h5 class="glyphicon glyphicon-off" onclick="logout();" style="font-size:14px">&nbsp;Logout</h5>
         </button>
       </div>
       <div id="middlePanel">

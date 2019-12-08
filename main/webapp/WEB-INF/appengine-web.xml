@@ -3,6 +3,7 @@
 
   <threadsafe>true</threadsafe>
   <sessions-enabled>true</sessions-enabled>
+  <application>the-connect-261006</application>
   <runtime>java8</runtime>
 
   <system-properties>

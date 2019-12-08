@@ -1,19 +1,29 @@
 function onSignIn(googleUser,setSession) {
     var profile = googleUser.getBasicProfile();
 //    profileInfo(profile.getName(),profile.getImageUrl(),profile.getEmail());
-var proId = profile.getId();
-    // console.log('ID: ' + profile.getId()); 
-    console.log('Name: ' + proId);
+// var proId = profile.getId();
+    console.log('ID: ' + profile.getId()); 
     console.log('Name: ' + profile.getName());
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail());
-    setSession(proId);
-    function setSession(id){
-        axios.post('http://localhost:8080/app?id='+id, {})
+    setSession(profile.getId(),profile.getName(),profile.getImageUrl(),profile.getEmail());
+    function setSession(id,name,proPic,email,signOut){
+        axios.post('http://localhost:8080/app?id='+id+'&name='+name+'&proPic='+proPic+'&email='+email, {})
         .then(res => {
-        window.location.replace("http://localhost:8080/app.html");
+        signOut();
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance().disconnect();
+            auth2.signOut().then(function () {
+              console.log('User signed out.');
+            });
+          }
     })
+    
       }
+    }
+
+    function logout(){
+        window.location.replace("http://localhost:8080/login.html");
     }
 
   
@@ -25,13 +35,7 @@ var proId = profile.getId();
 //	document.getElementById('proEmail').innerText = email;
 //}
 
-  function signOut() {
-    window.location.replace("http://localhost:8080/logout.html");
-    var auth2 = gapi.auth2.getAuthInstance().disconnect();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
+  
 
   function login(){
     window.location.replace("http://localhost:8080/index.html");
