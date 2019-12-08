@@ -53,8 +53,23 @@ public class App extends HttpServlet {
 		}
 		else {
 			
+			if(request.getParameter("email")==null) {
+				request.getRequestDispatcher("/login");
+			}else {
+			
 			sessionEmail = (HashMap)session.getAttribute("email");
 			
+			if(sessionEmail==null) {
+				session.setAttribute("email", new HashMap());
+				sessionEmail = (HashMap)session.getAttribute("email");
+				sessionEmail.put(session.getId(), request.getParameter("email"));
+				System.out.println("sessionNull emailPrrest");
+				request.getRequestDispatcher("/index");
+			}
+			else {
+			//write for if jessionid is present and email is null
+			System.out.println("11"+request.getParameter("email"));
+			System.out.println("22"+sessionEmail.get(session.getId()));
 			if(request.getParameter("email").equals(sessionEmail.get(session.getId()))) {
 				System.out.println("present emailequal");
 				request.getRequestDispatcher("/index");
@@ -64,6 +79,8 @@ public class App extends HttpServlet {
 				System.out.println("present emailunequal");
 				sessionEmail.put(session.getId(), request.getParameter("email"));
 				request.getRequestDispatcher("/index");
+			}
+			}
 			}
 		}
 		
