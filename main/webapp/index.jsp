@@ -32,9 +32,10 @@
     <div id="dashboard">
       <div id="leftPanel">
         <div id="proSec">
-          <div id="proPic"></div>
+          <div id="proPic"><img class="img" src="images/feed2.jpeg" /></div>
           <center>
-            <h4 style="font-size: 16px;"><b>Raj Mohan</b></h4>
+            <h4 style="font-size: 16px;"><b><div id="username">Username</div></b></h4><br>
+            <h4 style="font-size: 12px;"><div id="email">Email</div></h4>
           </center>
         </div>
         <hr style="background: #b0cbe3;height: 1px;">
@@ -173,6 +174,9 @@
     </div>
   </div>
   <script src="script.js"></script>
+  <script>
+  
+  </script>
 </body>
 
 </html>

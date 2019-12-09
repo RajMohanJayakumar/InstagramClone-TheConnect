@@ -3,6 +3,7 @@ package com.theconnect;
 import java.io.IOException;
 import java.util.HashMap;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,14 +18,18 @@ public class App extends HttpServlet {
 	
 	HashMap sessionEmail;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		HttpSession session = request.getSession();
 		
 //		HttpServletRequest req = (HttpServletRequest)request;
 //		HttpServletResponse res = (HttpServletResponse)response;
 		
-		System.out.println("App Servlet");
+//		request.getRequestDispatcher("index.jsp").forward(request, response);
 		
+		System.out.println("App Servlet");
+//		RequestDispatcher dispatch = request.getRequestDispatcher("/index.jsp");
+//		dispatch.forward(request, response);
+		System.out.println(request.getParameter("id"));
 		System.out.println(request.getParameter("name"));
 		System.out.println(request.getParameter("email"));
 		System.out.println(request.getParameter("proPic"));
@@ -36,7 +41,8 @@ public class App extends HttpServlet {
 			
 			if(request.getParameter("email")==null) {
 				System.out.println("null emailNull");
-				request.getRequestDispatcher("/login");
+				request.setAttribute("redirect", "1");
+				request.getRequestDispatcher("/redirect").forward(request, response);
 			}
 			else {
 				session = request.getSession();
@@ -45,40 +51,52 @@ public class App extends HttpServlet {
 				sessionEmail = (HashMap)session.getAttribute("email");
 				sessionEmail.put(session.getId(), request.getParameter("email"));
 				System.out.println(sessionEmail);
-				
+					
 //				System.out.println(session.getAttribute("id"));
-				
-				request.getRequestDispatcher("/index");
+
+				request.setAttribute("redirect", "1");
+				request.getRequestDispatcher("/redirect").forward(request, response);
 			}
 		}
 		else {
 			
 			if(request.getParameter("email")==null) {
-				request.getRequestDispatcher("/login");
+
+				request.setAttribute("redirect", "2");
+				request.getRequestDispatcher("/redirect").forward(request, response);
+//				request.getRequestDispatcher("/login").forward(request, response);
 			}else {
 			
-			sessionEmail = (HashMap)session.getAttribute("email");
+			sessionEmail = (HashMap) session.getAttribute("email");
+			
 			
 			if(sessionEmail==null) {
 				session.setAttribute("email", new HashMap());
 				sessionEmail = (HashMap)session.getAttribute("email");
 				sessionEmail.put(session.getId(), request.getParameter("email"));
 				System.out.println("sessionNull emailPrrest");
-				request.getRequestDispatcher("/index");
+				request.setAttribute("redirect", "1");
+				request.getRequestDispatcher("/redirect").forward(request, response);
+				//RequestDispatcher dispatch = request.getRequestDispatcher("/webapp/index.jsp");
+//				dispatch.forward(request, response);
 			}
 			else {
 			//write for if jessionid is present and email is null
 			System.out.println("11"+request.getParameter("email"));
 			System.out.println("22"+sessionEmail.get(session.getId()));
 			if(request.getParameter("email").equals(sessionEmail.get(session.getId()))) {
-				System.out.println("present emailequal");
-				request.getRequestDispatcher("/index");
+				System.out.println("present emailequal");	
+				request.setAttribute("redirect", "1");
+				request.getRequestDispatcher("/index").include(request,response);
+				//RequestDispatcher dispatch = request.getRequestDispatcher("/webapp/index.jsp");
+//				dispatch.forward(request, response);
 			}
 			else {
 //				session.setAttribute("email",request.getParameter("email"));
 				System.out.println("present emailunequal");
 				sessionEmail.put(session.getId(), request.getParameter("email"));
-				request.getRequestDispatcher("/index");
+				request.setAttribute("redirect", "1");
+				request.getRequestDispatcher("/redirect").forward(request, response);
 			}
 			}
 			}
@@ -101,7 +119,7 @@ public class App extends HttpServlet {
 		
 //		ofy.save().en
 //		ofy.save().entity(p).now();
-//		ObjectifyService.begin().
+//		ObjectifyService.begin();
 //		ofy.put(p);
 		
 		
