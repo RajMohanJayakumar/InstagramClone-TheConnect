@@ -1,4 +1,4 @@
-package com.theconnect;
+package com.userdetails;
 
 public class SendUserDetailsPojo {
 	private String username;

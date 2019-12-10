@@ -1,4 +1,4 @@
-package com.theconnect;
+package com.userdetails;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

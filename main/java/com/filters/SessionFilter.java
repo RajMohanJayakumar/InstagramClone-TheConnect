@@ -1,4 +1,4 @@
-package com.theconnect;
+package com.filters;
 
 import java.io.IOException;
 import java.util.HashMap;

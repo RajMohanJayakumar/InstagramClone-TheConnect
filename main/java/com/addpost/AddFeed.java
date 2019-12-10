@@ -1,4 +1,4 @@
-package com.theconnect;
+package com.addpost;
 
 import java.io.Serializable;
 
