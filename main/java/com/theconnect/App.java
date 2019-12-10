@@ -27,17 +27,9 @@ public class App extends HttpServlet {
 	HashMap sessionKeys = new HashMap();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		HttpSession session = request.getSession();
-		
-//		HttpServletRequest req = (HttpServletRequest)request;
-//		HttpServletResponse res = (HttpServletResponse)response;
-		
-//		request.getRequestDispatcher("index.jsp").forward(request, response);
-		
+	
 		System.out.println("App Servlet");
-//		RequestDispatcher dispatch = request.getRequestDispatcher("/index.jsp");
-//		dispatch.forward(request, response);
-		
+
 		String str = jsonToString(request);
 		UserDetails userDetails = jsonPharse(str);
 		System.out.println(userDetails.getId());
@@ -52,7 +44,7 @@ public class App extends HttpServlet {
 		
 		if(session == null) {
 			
-			if(request.getParameter("email")==null) {
+			if(userDetails.getEmail()==null) {
 				System.out.println("null emailNull");
 				writer.append("null");
 			}
@@ -61,25 +53,20 @@ public class App extends HttpServlet {
 				session.setAttribute("email", new HashMap());
 				System.out.println("null emailPresent");
 				sessionEmail = (HashMap)session.getAttribute("email");
-				sessionEmail.put(session.getId(), request.getParameter("email"));
+				sessionEmail.put(session.getId(), userDetails.getEmail());
 				System.out.println(sessionEmail);
-					
-//				System.out.println(session.getAttribute("id"));
-				writer.append(createKey(request.getParameter("email")));
-//				request.setAttribute("redirect", "1");
-				request.getRequestDispatcher("/index").include(request, response);
+					System.out.println(userDetails.getEmail());
+				writer.append(createKey(userDetails.getEmail()));
+				
 			}
 		}
 		else {
 			
 			if(userDetails.getEmail()==null) {
 
-//				request.setAttribute("redirect", "2");
 				
 				writer.append("null");
 				
-//				request.getRequestDispatcher("/login").include(request, response);
-//				request.getRequestDispatcher("/login").forward(request, response);
 			}else {
 			
 			sessionEmail = (HashMap) session.getAttribute("email");
@@ -88,39 +75,28 @@ public class App extends HttpServlet {
 			if(sessionEmail==null) {
 				session.setAttribute("email", new HashMap());
 				sessionEmail = (HashMap)session.getAttribute("email");
-				sessionEmail.put(session.getId(), request.getParameter("email"));
+				sessionEmail.put(session.getId(), userDetails.getEmail());
 				System.out.println("sessionNull emailPrrest");
 				
 				writer.append(createKey(request.getParameter("email")));
-				//RequestDispatcher dispatch = request.getRequestDispatcher("/webapp/index.jsp");
-//				dispatch.forward(request, response);
+
 			}
 			else {
 			//write for if jessionid is present and email is null
-			System.out.println("11"+request.getParameter("email"));
-			System.out.println("22"+sessionEmail.get(session.getId()));
 			if(userDetails.getEmail()==sessionEmail.get(session.getId())) {
 				System.out.println("present emailequal");
+				System.out.println(userDetails.getEmail());
+				writer.append(createKey(userDetails.getEmail()));
 				
-//				response.sendRedirect("/index");
-//				request.getRequestDispatcher("/index").include(request,response);
-				
-				writer.append(createKey(request.getParameter("email")));
-				
-				//RequestDispatcher dispatch = request.getRequestDispatcher("/webapp/index.jsp");
-//				dispatch.forward(request, response);
 			}
 			else {
-//				session.setAttribute("email",request.getParameter("email"));
 				System.out.println("present emailunequal");
-				sessionEmail.put(session.getId(), request.getParameter("email"));
-//				request.setAttribute("redirect", "1");
+				sessionEmail.put(session.getId(), userDetails.getEmail());
+				
 				System.out.println(sessionEmail);
-//				request.getRequestDispatcher("/index").include(request, response);
 				
-				writer.append(createKey(request.getParameter("email")));
+				writer.append(createKey(userDetails.getEmail()));
 				
-				System.out.println("pU");
 			}
 			}
 			}
@@ -132,7 +108,7 @@ public class App extends HttpServlet {
 		System.out.println(request.getParameter("key"));
 		
 		if(sessionKeys.containsKey(request.getParameter("key"))) {
-			String email = (String) sessionKeys.get(request.getParameter("key"));
+			String email = (String) sessionKeys.get((String)request.getParameter("key"));
 			System.out.println("Enter from Key "+email);
 			sessionKeys.remove(request.getParameter("key"));
 			request.getRequestDispatcher("/index").include(request, response);
@@ -155,6 +131,7 @@ public class App extends HttpServlet {
 		}
 		
 		String str = sb.toString();
+		System.out.println(email);
 		
 		sessionKeys.put(str,email);
 		
