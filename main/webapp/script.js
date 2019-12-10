@@ -1,78 +1,22 @@
 var url = "http://localhost:8080/";
 
-// function onSignIn(googleUser,setSession) {
-//     var profile = googleUser.getBasicProfile();
-// //    profileInfo(profile.getName(),profile.getImageUrl(),profile.getEmail());
-// // var proId = profile.getId();
-//     console.log('ID: ' + profile.getId()); 
-//     console.log('Name: ' + profile.getName());
-//     console.log('Image URL: ' + profile.getImageUrl());
-//     console.log('Email: ' + profile.getEmail());
-//     setSession(profile.getId(),profile.getName(),profile.getImageUrl(),profile.getEmail());
-//     function setSession(id,name,proPic,email,signOut){
-//       // axios.post(url+'app', {
-//       //     id:id,
-//       //     name:name,
-//       //     proPic:proPic,
-//       //     email:email
-//       // })
-
-//       axios({
-//         method: 'post',
-//         url: url+'app',
-//         headers: {}, 
-//         data: {
-//           id:id,
-//           name:name,
-//           proPic:proPic,
-//           email:email
-//         }
-      
-//         .then(res => {
-//           console.log(res.data);
-//           window.location.replace(url+'app?key='+res.data);
-//         })
-//       });
-//         signOut();
-//       function signOut() {
-//         var auth2 = gapi.auth2.getAuthInstance()
-//         auth2.signOut().then(function () {
-//           console.log('User signed out.');
-//         });
-//       }
-//       }
-//     }
-
-
-
     function logout(){
         window.location.replace(url);
     }
 
-    function updateUserDetails(username,email,imgUrl){
-      document.getElementById('username').innerHTML = "Hi, Raj Mohan";
-      document.getElementById('email').innerHTML = "rajmohan2695@gmail.com";
-    }
-
-  
-
-//function profileInfo(name,imgUrl,email){
-//	document.getElementById('proName').innerText = name;
-//	let str = ``;
-//	document.getElementById('update').innerText = name;
-//	document.getElementById('proEmail').innerText = email;
-//}
-
-  
-
-  // function login(){
-  //   window.location.replace("http://localhost:8080/index.html");
-  // }
+    
+var proId;
+var proName;
+var proImg;
+var proEmail;
 
   function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     signOut();
-    var id = profile.getId;
+    proId = profile.getId();
+    proName = profile.getName();
+    proImg = profile.getImageUrl();
+    proEmail = profile.getEmail();
     console.log('ID: ' + profile.getId()); 
     console.log('Name: ' + profile.getName());
     console.log('Image URL: ' + profile.getImageUrl());
@@ -101,3 +45,30 @@ var url = "http://localhost:8080/";
         console.log('User signed out.');
       });
     }
+
+    var data;
+    
+    function dashboard(){
+      axios.put(url+'app')
+    .then(res => {
+        data = res.data;
+        document.getElementById('username').innerHTML = data.name;
+      document.getElementById('email').innerHTML = data.email;
+      document.getElementById('proPics').setAttribute('src',data.imgUrl);
+    });
+  //  updateUserDetails(data.name,data.email,data.imgUrl);
+    }
+
+    function updateUserDetails(proName,proEmail,proImgUrl){
+      console.log(proName);
+      console.log(proEmail);
+      document.getElementById('username').innerHTML = proName;
+      document.getElementById('email').innerHTML = proEmail;
+    }    
+
+    //function profileInfo(name,imgUrl,email){
+//	document.getElementById('proName').innerText = name;
+//	let str = ``;
+//	document.getElementById('update').innerText = name;
+//	document.getElementById('proEmail').innerText = email;
+//}

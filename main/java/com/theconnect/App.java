@@ -17,14 +17,17 @@ import javax.servlet.http.HttpSession;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
 
 import com.addpost.AddFeed;
 import com.googlecode.objectify.ObjectifyService;
+import com.userdetails.SendUserDetailsPojo;
 
 public class App extends HttpServlet {
 
-	HashMap sessionEmail;
-	HashMap sessionKeys = new HashMap();
+	HashMap<String,String> sessionEmail = new HashMap<String,String>();
+	HashMap<String,String> sessionKeys = new HashMap<String,String>();
+	HashMap<String,UserDetails> sessionDetails = new HashMap<String,UserDetails>();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
@@ -50,38 +53,50 @@ public class App extends HttpServlet {
 			}
 			else {
 				session = request.getSession();
-				session.setAttribute("email", new HashMap());
+//				session.setAttribute("email", new HashMap());
 				System.out.println("null emailPresent");
-				sessionEmail = (HashMap)session.getAttribute("email");
-				sessionEmail.put(session.getId(), userDetails.getEmail());
-				System.out.println(sessionEmail);
-					System.out.println(userDetails.getEmail());
-				writer.append(createKey(userDetails.getEmail()));
 				
+				sessionEmail.put(session.getId(), userDetails.getEmail());
+				sessionDetails.put(userDetails.getEmail(),userDetails);
+				
+//				sessionEmail = (HashMap)session.getAttribute("email");
+//				sessionEmail.put(session.getId(), userDetails.getEmail());
+				
+				
+				System.out.println(sessionEmail);
+					System.out .println(userDetails.getEmail());
+				writer.append(createKey(userDetails.getEmail()));
 			}
 		}
 		else {
 			
 			if(userDetails.getEmail()==null) {
-
 				
 				writer.append("null");
 				
 			}else {
 			
-			sessionEmail = (HashMap) session.getAttribute("email");
+//			sessionEmail = (HashMap) session.getAttribute("email");
 			
 			
-			if(sessionEmail==null) {
-				session.setAttribute("email", new HashMap());
-				sessionEmail = (HashMap)session.getAttribute("email");
-				sessionEmail.put(session.getId(), userDetails.getEmail());
-				System.out.println("sessionNull emailPrrest");
-				
-				writer.append(createKey(request.getParameter("email")));
-
-			}
-			else {
+//			if(sessionEmail.get(session.getId())==userDetails.getEmail()) {
+////				session.setAttribute("email", new HashMap());
+////				sessionEmail = (HashMap)session.getAttribute("email");
+////				sessionEmail.put(session.getId(), userDetails.getEmail());
+//				
+////				session = request.getSession();
+////				sessionEmail.put(session.getId(), userDetails.getEmail());
+////				sessionDetails.put(userDetails.getEmail(),userDetails);
+////				
+////				System.out.println(sessionEmail);
+////				System.out.println(sessionDetails);
+//				
+//				System.out.println("sessionNull emailPrrest");
+//				
+//				writer.append(createKey(userDetails.getEmail()));
+//
+//			}
+//			else {
 			//write for if jessionid is present and email is null
 			if(userDetails.getEmail()==sessionEmail.get(session.getId())) {
 				System.out.println("present emailequal");
@@ -91,13 +106,17 @@ public class App extends HttpServlet {
 			}
 			else {
 				System.out.println("present emailunequal");
+//				sessionEmail.put(session.getId(), userDetails.getEmail());
+				
 				sessionEmail.put(session.getId(), userDetails.getEmail());
+				sessionDetails.put(userDetails.getEmail(),userDetails);
+				
+//				sessionDetails.put(userDetails.getEmail(),userDetails);
 				
 				System.out.println(sessionEmail);
 				
 				writer.append(createKey(userDetails.getEmail()));
 				
-			}
 			}
 			}
 		}
@@ -108,14 +127,32 @@ public class App extends HttpServlet {
 		System.out.println(request.getParameter("key"));
 		
 		if(sessionKeys.containsKey(request.getParameter("key"))) {
-			String email = (String) sessionKeys.get((String)request.getParameter("key"));
-			System.out.println("Enter from Key "+email);
-			sessionKeys.remove(request.getParameter("key"));
+			String email = sessionKeys.get(request.getParameter("key"));
 			request.getRequestDispatcher("/index").include(request, response);
 		}
 		else {
 			request.getRequestDispatcher("/login").include(request, response);
 		}
+	}
+	
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws JsonGenerationException, JsonMappingException, IOException {
+		response.setContentType("application/json");
+		
+		HttpSession session = request.getSession(false);
+		
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		SendUserDetailsPojo sendUserDetails = new SendUserDetailsPojo("Yogeshwar","yogeswar1234@gmail.com","https://lh3.googleusercontent.com/a-/AAuE7mDZAGHznLCeuzmH9qFQeYhzXCPTfUMjL1dit8wmOs0=s96-c");
+		
+		System.out.println(sessionEmail.get(session.getId()));
+		
+		UserDetails userDetails = sessionDetails.get(sessionEmail.get(session.getId()));
+		
+		System.out.println(userDetails);
+		
+		String json = ow.writeValueAsString(userDetails);
+		response.setContentType("application/json");
+		response.getWriter().print(json);
+		System.out.println("getOne Successful");
 	}
 	
 		

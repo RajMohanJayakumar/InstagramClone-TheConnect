@@ -32,9 +32,9 @@
     <div id="dashboard">
       <div id="leftPanel">
         <div id="proSec">
-          <div id="proPic"><img class="img" src="images/feed2.jpeg" /></div>
+          <div id="proPic" style="margin-top: 30px;"><img class="img" id="proPics"/></div>
           <center>
-            <h4 style="font-size: 16px;"><b><div id="username">Username</div></b></h4><br>
+            <h4 style="font-size: 16px;margin-bottom: -22px;"><b><div id="username">Username</div></b></h4><br>
             <h4 style="font-size: 12px;"><div id="email">Email</div></h4>
           </center>
         </div>
@@ -175,7 +175,9 @@
   </div>
   <script src="script.js"></script>
   <script>
-  
+  	window.onload = function(){
+      dashboard(updateUserDetails);
+    };
   </script>
 </body>
 
