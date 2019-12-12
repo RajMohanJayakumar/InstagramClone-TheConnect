@@ -67,6 +67,7 @@
           </div>
         </div>
 
+        <div id="feeds"></div>
 
         <div id="feedsPanel">
           <div id="feedInfo">

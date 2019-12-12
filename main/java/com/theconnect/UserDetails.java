@@ -1,12 +1,14 @@
 package com.theconnect;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class UserDetails implements Serializable{
 	private String id;
 	private String name;
 	private String imgUrl;
 	private String email;
+	private ArrayList<String> postIds;  
 	
 	public String getId() {
 		return id;
