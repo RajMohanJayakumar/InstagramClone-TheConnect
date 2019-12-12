@@ -77,3 +77,56 @@ var proEmail;
 //	document.getElementById('update').innerText = name;
 //	document.getElementById('proEmail').innerText = email;
 //}
+
+
+function feeds(){
+
+  axios.get(url+'feeds')
+  .then(res =>{
+    iterateFeeds(res.data);
+});
+
+function iterateFeeds(feed){
+  feed.forEach((e) => { 
+    var feed1 = `
+<div id="feedsPanel">
+<div id="feedInfo">
+<figure id="feedProPic"><img class="img" src="${e.proImgUrl}" /></figure>
+  <h4 id="feedProName">${e.name}</h4>
+    <h4 class="feedText" style="font-size: 14px;">
+          ${e.feedText}               
+    </h4>
+</div>
+<figure id="feedPic"><img class="img" src="${e.feedImgUrl}" /></figure>
+<div id="feedPanel">
+  <button type="button" class="feedBtn btn btn-primary btn-xs">
+    Like <span class="badge badge-light">${e.likesCount}</span>
+  </button>
+  <button type="button" class="feedBtn btn btn-primary btn-xs">
+    Comment <span class="badge badge-light">${e.commentsCount}</span>
+  </button>
+</div>
+<div id="cmtArea">
+  <textarea class="form-control" id="exampleFormControlTextarea4" rows="3" placeholder="Write a comment..."></textarea>
+  <a id="postBtn" class="btn btn-primary mb-2 btn-xs">Add Comment</a>
+</div>
+</div>
+`;
+document.getElementById("feeds").appendChild(feed1);
+})
+}
+}
+
+// for (var key in validation_messages) {
+//   // skip loop if the property is from prototype
+//   if (!validation_messages.hasOwnProperty(key)) continue;
+
+//   var obj = validation_messages[key];
+//   for (var prop in obj) {
+//       // skip loop if the property is from prototype
+//       if (!obj.hasOwnProperty(prop)) continue;
+
+//       // your code
+//       alert(prop + " = " + obj[prop]);
+//   }
+// }
