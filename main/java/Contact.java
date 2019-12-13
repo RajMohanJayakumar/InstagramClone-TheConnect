@@ -1,24 +1,53 @@
+import java.io.Serializable;
 
-public class Contact {
-	private String email;
-	private String Name;
+public class Contact implements Serializable{
+	private Object phoneNumber;
+	private Object email;
+	private Object Name;
 	
-	public String getEmail() {
+	
+	
+	public Object getPhoneNumber() {
+		return phoneNumber;
+	}
+
+
+
+	public void setPhoneNumber(Object phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+
+
+	public Object getEmail() {
 		return email;
 	}
-	public void setEmail(String email) {
+
+
+
+	public void setEmail(Object email) {
 		this.email = email;
 	}
-	public String getName() {
+
+
+
+	public Object getName() {
 		return Name;
 	}
-	public void setName(String name) {
+
+
+
+	public void setName(Object name) {
 		Name = name;
 	}
-	public Contact(String email, String name) {
+
+
+
+	public Contact(Object phoneNumber,Object email, Object name) {
 		super();
+		this.phoneNumber = phoneNumber;
 		this.email = email;
-		Name = name;
+		this.Name = name;
 	}
 	
 }

@@ -100,7 +100,7 @@ public class Datastore extends HttpServlet {
 		
 		List<Contact> list = new ArrayList<>();
 		
-		for(Entity entity : entities) {
+		for(Entity entity : entities) { 
 			properties = entity.getProperties();
 			contact = new Contact(properties.get("phoneNumber"),properties.get("Name"),properties.get("email"));
 			list.add(contact);
