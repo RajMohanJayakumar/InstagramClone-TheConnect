@@ -98,7 +98,7 @@ body {
 }
 
 #rightPanel {
-    margin-top: 80px;
+    margin-top: -20px;
     width: 20%;
     height: 200vh;
     float: left;
@@ -209,4 +209,19 @@ body {
 
 .g-signin2{
     margin:auto;
+}
+
+.gallery{
+    margin:20px;
+}
+
+.galleryPic {
+    border: 2px;
+    height: 130px;
+    width:130px;
+    background-color: wheat;
+    align-items: center;
+    float:left;
+    margin: 3px;
+    border: 2px solid #0000ff3d;
 }

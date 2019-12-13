@@ -3,7 +3,7 @@ var url = "http://localhost:8080/";
     function logout(){
       axios.delete(url+'app?key='+window.location.href)
       .then(res => {
-        document.cookie = 'JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        // document.cookie = 'JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         window.location.replace(url);
     });
         
@@ -115,6 +115,23 @@ function iterateFeeds(feed){
 document.getElementById("feeds").appendChild(feed1);
 })
 }
+}
+
+function friends(){
+  document.getElementById('feedsPage').innerHTML = "";
+}
+
+function feeds(){
+  window.location.reload();
+}
+
+function timeline(){
+  document.getElementById('feedsPage').innerHTML = "";
+}
+
+function photos (){
+  document.getElementById('feedsPage').innerHTML = "";
+  document.getElementById('gallery').style.display=block;
 }
 
 // for (var key in validation_messages) {
