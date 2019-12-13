@@ -61,7 +61,7 @@
         </button>
       </div>
       <div id="middlePanel">
-        <div id="feedsPage">
+        <div id="feedsPage" class="middlePanelFields">
           <div id="addNewPost">
             <div class="form-group purple-border">
               <label for="exampleFormControlTextarea4">Add Post</label>
@@ -179,7 +179,7 @@
             <hr>.</div>
         </div>
 
-        <div class="gallery">
+        <div class="gallery" class="middlePanelFields">
             <figure class="galleryPic"><img class="img" src="images/feed2.jpeg" /></figure>
             <figure class="galleryPic"><img class="img" src="images/feed2.jpeg" /></figure>
             <figure class="galleryPic"><img class="img" src="images/feed2.jpeg" /></figure>
@@ -193,13 +193,15 @@
         <div id="clogout">
 
         </div>
-        <div id="rightPanel">
-          <center>
-            <h5>&copy; AW Inc.</h5>
-          </center>
-        </div>
+        
       </div>
+      
     </div>
+    <div id="rightPanel">
+        <center>
+          <h5>&copy; AW Inc.</h5>
+        </center>
+      </div>
   </div>
   <script src="script.js"></script>
   <script>

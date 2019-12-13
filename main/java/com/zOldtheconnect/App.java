@@ -1,4 +1,4 @@
-package com.theconnect;
+package com.zOldtheconnect;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,10 +19,9 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
 
-import com.addpost.AddFeed;
 import com.googlecode.objectify.ObjectifyService;
-import com.userdetails.SendUserDetailsPojo;
-
+import com.zOldaddpost.AddFeed;
+import com.zOlduserdetails.SendUserDetailsPojo;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;

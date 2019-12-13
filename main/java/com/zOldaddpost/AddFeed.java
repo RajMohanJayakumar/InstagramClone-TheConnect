@@ -1,4 +1,4 @@
-package com.addpost;
+package com.zOldaddpost;
 
 import java.io.Serializable;
 

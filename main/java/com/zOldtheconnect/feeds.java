@@ -1,4 +1,4 @@
-package com.theconnect;
+package com.zOldtheconnect;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
 
-import com.model.Feed;
+import com.zOldmodel.Feed;
 
 /**
  * Servlet implementation class feeds

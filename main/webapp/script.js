@@ -57,9 +57,11 @@ var proEmail;
       axios.put(url+'app')
     .then(res => {
         data = res.data;
+        if(data != null){
         document.getElementById('username').innerHTML = data.name;
       document.getElementById('email').innerHTML = data.email;
       document.getElementById('proPics').setAttribute('src',data.imgUrl);
+      }
     });
   //  updateUserDetails(data.name,data.email,data.imgUrl);
     }
@@ -118,7 +120,7 @@ document.getElementById("feeds").appendChild(feed1);
 }
 
 function friends(){
-  document.getElementById('feedsPage').innerHTML = "";
+  document.getElementsByClassName('middlePanelFields').style.display = none;
 }
 
 function feeds(){
@@ -126,11 +128,12 @@ function feeds(){
 }
 
 function timeline(){
-  document.getElementById('feedsPage').innerHTML = "";
+  document.getElementsByClassName('middlePanelFields').innerHTML = "";
 }
 
-function photos (){
+function photos(){
   document.getElementById('feedsPage').innerHTML = "";
+  // document.getElementsByClassName('middlePanelFields').innerHTML = "";
   document.getElementById('gallery').style.display=block;
 }
 

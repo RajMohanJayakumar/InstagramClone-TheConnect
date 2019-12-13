@@ -1,4 +1,4 @@
-package com.userdetails;
+package com.zOlduserdetails;
 
 public class SendUserDetailsPojo {
 	private String username;

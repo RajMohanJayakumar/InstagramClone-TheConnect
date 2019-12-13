@@ -98,9 +98,9 @@ body {
 }
 
 #rightPanel {
-    margin-top: -20px;
+    margin-top: 80px;
     width: 20%;
-    height: 200vh;
+    height: calc(100vh - 80px);
     float: left;
     right: 0;
     position: fixed;

@@ -1,4 +1,4 @@
-package com.model;
+package com.zOldmodel;
 
 public class Feed {
 	private String name;
