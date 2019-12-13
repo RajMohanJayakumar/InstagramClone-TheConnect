@@ -58,7 +58,8 @@ public class Datastore extends HttpServlet {
 //		PreparedQuery pq = datastore.prepare(q);
 		List<Entity> pq = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
 		System.out.println(pq);
-		Contact contact1 = jsonPharse(pq);
+		Contact contact1 = jsonPharse(pq.toString());
+//		System.out.println(contact1.getName()+contact1.getEmail());
 		
 		
 		
@@ -90,7 +91,7 @@ public class Datastore extends HttpServlet {
 //		}
 		}
 	
-	public Contact jsonPharse(List str) throws IOException {
+	public Contact jsonPharse(String str) throws IOException {
 		
 		//Creating reference to store the contact variable
 		Contact contact = null;
@@ -99,7 +100,7 @@ public class Datastore extends HttpServlet {
 	      
 	      try
 	      {
-	         contact =  mapper.readValue(str, new TypeToken<ArrayList<Contact>>(){}.getType());
+	         System.out.println(mapper.readValue(str, (Class<Contact>) (new TypeToken<ArrayList<Contact>>(){}.getType())));
 	      } catch (JsonGenerationException e)
 	      {
 	         e.printStackTrace();
@@ -110,6 +111,8 @@ public class Datastore extends HttpServlet {
 	      {
 	         e.printStackTrace();
 	      }
-	      return contact;
+//	      System.out.println(contact);
+//	      return contact;
+	      return null;
 	}
 }
