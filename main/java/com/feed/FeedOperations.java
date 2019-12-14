@@ -37,18 +37,26 @@ import com.zOldDatastore.Contact;
 public class FeedOperations extends HttpServlet {
 
 	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	ObjectMapper mapper = new ObjectMapper();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId = request.getParameter("userId");
 		
 		if(userId == null) {
 			Query q = new Query("Feed");
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
-			JsonOperations.EntitiesListToJsonResponse(response, preparedQuery,"Feed");
+			List<Feed> list = DatastoreOperations.EntitiesListToObjectList(response, preparedQuery,"Feed");
+			String json = mapper.writeValueAsString(list);
+			response.setContentType("application/json");
+			response.getWriter().print(json);
+			
 		}
 		else {
 			Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, userId);
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
-			JsonOperations.EntitiesListToJsonResponse(response, preparedQuery,"Feed");
+			List<Feed> list = DatastoreOperations.EntitiesListToObjectList(response, preparedQuery,"Feed");
+			String json = mapper.writeValueAsString(list);
+			response.setContentType("application/json");
+			response.getWriter().print(json);
 		} 
 	}
 	
