@@ -9,7 +9,7 @@
   
   <servlet>
   <servlet-name>Application</servlet-name>
-  <servlet-class>com.theconnect.App</servlet-class>
+  <servlet-class>com.zOldtheconnect.App</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -39,7 +39,7 @@
 	
 	<servlet>
 	<servlet-name>Redirect</servlet-name>
-	<servlet-class>com.theconnect.Redirect</servlet-class>
+	<servlet-class>com.zOldtheconnect.Redirect</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>

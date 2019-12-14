@@ -20,6 +20,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
 
 import com.googlecode.objectify.ObjectifyService;
+import com.model.UserDetail;
 import com.zOldaddpost.AddFeed;
 import com.zOlduserdetails.SendUserDetailsPojo;
 import com.google.appengine.api.datastore.DatastoreService;
@@ -35,14 +36,14 @@ public class App extends HttpServlet {
 
 	HashMap<String,String> sessionEmail = new HashMap<String,String>();
 	HashMap<String,String> sessionKeys = new HashMap<String,String>();
-	HashMap<String,UserDetails> sessionDetails = new HashMap<String,UserDetails>();
+	HashMap<String,UserDetail> sessionDetails = new HashMap<String,UserDetail>();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		System.out.println("App Servlet");
 
 		String str = jsonToString(request);
-		UserDetails userDetails = jsonPharse(str);
+		UserDetail userDetails = jsonPharse(str);
 		System.out.println(userDetails.getId());
 		System.out.println(userDetails.getName());
 		System.out.println(userDetails.getEmail());
@@ -154,7 +155,7 @@ public class App extends HttpServlet {
 		
 		System.out.println(sessionEmail.get(session.getId()));
 		
-		UserDetails userDetails = sessionDetails.get(sessionEmail.get(session.getId()));
+		UserDetail userDetails = sessionDetails.get(sessionEmail.get(session.getId()));
 		
 		System.out.println(userDetails);
 		
@@ -214,16 +215,16 @@ public class App extends HttpServlet {
 	}
 	
 	//Pharsing a json standard string format to an Object(Contact)
-	public UserDetails jsonPharse(String str) throws IOException {
+	public UserDetail jsonPharse(String str) throws IOException {
 		
 		//Creating reference to store the contact variable
-		UserDetails userDetails = null;
+		UserDetail userDetails = null;
 		
 	      ObjectMapper mapper = new ObjectMapper();
 	      
 	      try
 	      {
-	         userDetails =  mapper.readValue(str.getBytes(),UserDetails.class);
+	         userDetails =  mapper.readValue(str.getBytes(),UserDetail.class);
 	      } catch (JsonGenerationException e)
 	      {
 	         e.printStackTrace();

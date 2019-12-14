@@ -1,14 +1,13 @@
-package com.zOldtheconnect;
+package com.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UserDetails implements Serializable{
+public class UserDetail implements Serializable{
 	private String id;
 	private String name;
 	private String imgUrl;
 	private String email;
-	private ArrayList<String> postIds;  
 	
 	public String getId() {
 		return id;
@@ -34,8 +33,4 @@ public class UserDetails implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-
-	
-	
 }
