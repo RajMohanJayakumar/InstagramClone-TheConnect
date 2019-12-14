@@ -44,10 +44,10 @@ public class App extends HttpServlet {
 
 		String str = jsonToString(request);
 		UserDetail userDetails = jsonPharse(str);
-		System.out.println(userDetails.getId());
+//		System.out.println(userDetails.getId());
 		System.out.println(userDetails.getName());
 		System.out.println(userDetails.getEmail());
-		System.out.println(userDetails.getImgUrl());
+//		System.out.println(userDetails.getImgUrl());
 		response.setContentType("text/plain");
 		PrintWriter writer=response.getWriter();
 		
