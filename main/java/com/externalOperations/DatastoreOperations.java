@@ -34,7 +34,7 @@ public class DatastoreOperations {
 			return;
 		}
 		
-		case "UserDetails":{
+		case "UserDetail":{
 			Entity userDetailEntity = new Entity(entity);
 			userDetailEntity.setProperty("userId",((UserDetail) object).getUserId());
 			userDetailEntity.setProperty("name", ((UserDetail) object).getName());
@@ -44,7 +44,14 @@ public class DatastoreOperations {
 			return;
 		}
 		
-		
+		case "SessionLog":{
+			Entity sessionLogEntity = new Entity(entity);
+			sessionLogEntity.setProperty("sessionId", ((SessionLog) object).getSessionId());
+			sessionLogEntity.setProperty("key", ((SessionLog) object).getKey());
+			sessionLogEntity.setProperty("userId", ((SessionLog) object).getUserId());
+			datastore.put(sessionLogEntity);
+			return;
+		}
 	}
 	}
 }

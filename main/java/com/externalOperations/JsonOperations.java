@@ -16,8 +16,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
 import com.google.appengine.api.datastore.Entity;
-import com.model.Feed;
-import com.model.UserDetail;
+import com.model.*;
 
 public class JsonOperations {
 	
@@ -43,7 +42,8 @@ public class JsonOperations {
 	    
 	    switch(classname) {
 	    	case "Feed" : List<Feed> feed = mapper.readValue(jsonString, new TypeReference<List<Feed>>() {}); return feed; 
-	    	case "UserDetail" : List<UserDetail> userdetail = mapper.readValue(jsonString, new TypeReference<List<UserDetail>>() {});return userdetail;
+	    	case "UserDetail" : List<UserDetail> userDetail = mapper.readValue(jsonString, new TypeReference<List<UserDetail>>() {});return userDetail;
+	    	case "SessionLog" : List<UserDetail> sessionLog = mapper.readValue(jsonString, new TypeReference<List<UserDetail>>() {});return sessionLog;
 	    }
 	    return null;
 	}
@@ -85,6 +85,20 @@ public static void EntitiesListToJsonResponse(HttpServletResponse response,List<
 					userDetail.setProPicUrl(String.valueOf(entity.getProperty("proPicUrl")));
 					userDetail.setEmail(String.valueOf(entity.getProperty("email")));
 					list.add(userDetail);
+				}
+			json = mapper.writeValueAsString(list);
+			break;
+			}
+		case "SessionLog" :{
+			properties = new HashMap<>();
+			List<SessionLog> list = new ArrayList<SessionLog>();
+			for(Entity entity : entities) {
+				properties = entity.getProperties();
+				SessionLog sessionLog = new SessionLog();
+					sessionLog.setSessionId(String.valueOf(entity.getProperty("sessionId")));
+					sessionLog.setKey(String.valueOf(entity.getProperty("key")));
+					sessionLog.setUserId(String.valueOf(entity.getProperty("userId")));
+					list.add(sessionLog);
 				}
 			json = mapper.writeValueAsString(list);
 			break;
