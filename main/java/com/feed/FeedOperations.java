@@ -1,5 +1,7 @@
 package com.feed;
 
+import com.externalOperations.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,91 +41,25 @@ public class FeedOperations extends HttpServlet {
 		String userId = request.getParameter("userId");
 		
 		if(userId == null) {
-			
+			Query q = new Query("Feed");
+			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
+			JsonOperations.EntitiesListToJsonResponse(response, preparedQuery,"Feed");
 		}
 		else {
 			Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, userId);
-			List<Entity> pq = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
-			System.out.println(pq);
-			ListToJsonResponse(response, pq);
-		}
+			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
+			JsonOperations.EntitiesListToJsonResponse(response, preparedQuery,"Feed");
+		} 
 	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		System.out.println("Feed Post");
-		
-		
-		UUID id = UUID.randomUUID();
-		
-		String str = jsonToString(request);
-		
-		Feed feed = jsonPharse(str);
+		Feed feed = (Feed)JsonOperations.jsonToObject(request,"Feed","asSingleEntity");
 		
 		System.out.println(feed.getFeedText()+" "+feed.getImageUrl()+" "+feed.getFeedId()+" "+feed.getTimeStamp());
 		
-//		Key taskKey = datastore.newKeyFactory()
-//				.setKind("Feed")
-//				.newKey("FeedId");
-//		Entity user = new Entity(taskKey);
+		DatastoreOperations.ObjectToDatastore(feed, "Feed");
 		
-		Entity user = new Entity("Feed");
-		
-		user.setProperty("feedId", id.toString());
-		user.setProperty("userId", feed.getUserId());
-		user.setProperty("feedText",feed.getFeedText());
-		user.setProperty("imageUrl", feed.getImageUrl());
-		user.setProperty("timeStamp", feed.getTimeStamp());
-		user.setProperty("status", feed.getStatus());
-		
-		datastore.put(user);
-	}
-	
-	public void ListToJsonResponse(HttpServletResponse response,List<Entity> entities) throws JsonGenerationException, JsonMappingException, IOException {
-		
-		Feed feed = null;
-		
-		Map<String,Object> properties = new HashMap<>();
-	    
-		ObjectMapper mapper = new ObjectMapper();
-		
-		List<Feed> list = new ArrayList<>();
-		
-		for(Entity entity : entities) { 
-			properties = entity.getProperties();
-			feed = new Feed();
-			feed.setFeedId(String.valueOf(entity.getProperty("feedId")));
-			feed.setUserId(String.valueOf(entity.getProperty("userId")));
-			feed.setFeedText(String.valueOf(entity.getProperty("feedText")));
-			feed.setImageUrl(String.valueOf(entity.getProperty("imageUrl")));
-			feed.setTimeStamp(String.valueOf(entity.getProperty("timeStamp")));
-			feed.setStatus(String.valueOf(entity.getProperty("status")));
-			list.add(feed);
-		}
-		String str = mapper.writeValueAsString(list);
-		response.setContentType("application/json");
-		response.getWriter().print(str);
-		System.out.println(list);
-	}
-	
-	public String jsonToString(HttpServletRequest request) throws IOException {
-		String line = "";
-		StringBuffer str = new StringBuffer();
-		BufferedReader reader = request.getReader();
-		while((line = reader.readLine()) != null)
-			{
-			str.append(line); 
-			}
-		String jsonString = str.toString();
-//		System.out.println(jsonString);
-		return jsonString;
-	}
-	
-	//Pharsing a json standard string format to an Object(Contact)
-	public Feed jsonPharse(String str) throws IOException {
-	    ObjectMapper mapper = new ObjectMapper();
-		List<Feed> feed = mapper.readValue(str, new TypeReference<List<Feed>>() {});
-		System.out.println(feed.get(0));
-		return feed.get(0);
 	}
 
 }
