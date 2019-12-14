@@ -4,16 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class UserDetail implements Serializable{
-	private String id;
+	private String userId;
 	private String name;
-	private String imgUrl;
+	private String proPicUrl;
 	private String email;
 	
-	public String getId() {
-		return id;
+	public String getUserId() {
+		return userId;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public String getName() {
 		return name;
@@ -21,11 +21,11 @@ public class UserDetail implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getImgUrl() {
-		return imgUrl;
+	public String getProPicUrl() {
+		return proPicUrl;
 	}
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
+	public void setProPicUrl(String proPicUrl) {
+		this.proPicUrl = proPicUrl;
 	}
 	public String getEmail() {
 		return email;
