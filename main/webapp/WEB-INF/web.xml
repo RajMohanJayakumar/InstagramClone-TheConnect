@@ -47,6 +47,18 @@
 	<url-pattern>/redirect</url-pattern>
 	</servlet-mapping>
 	
+	<filter>
+	<filter-name>SessionAndKey</filter-name>
+	<filter-class>com.filter.SessionAndKeyFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	<filter-name>SessionAndKey</filter-name>
+	<servlet-name>Index</servlet-name>
+	<servlet-name>login</servlet-name>
+	<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 
 		
 </web-app>

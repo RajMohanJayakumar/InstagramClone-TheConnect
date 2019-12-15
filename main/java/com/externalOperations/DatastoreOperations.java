@@ -73,11 +73,11 @@ public class DatastoreOperations {
 	}
 	}
 	
-	public static Object EntitiesListToObjectList(List<Entity> entities,String classname,String returnAs) throws JsonGenerationException, JsonMappingException, IOException {
-		List<Object> list = EntitiesListToObjectList(entities,classname);
-		if(returnAs == "asSingleObject")
+	public static Object EntitiesListToObjectList(Entity entity,String classname) throws JsonGenerationException, JsonMappingException, IOException {
+		List<Entity> entityList = new ArrayList();
+		entityList.add(entity);
+		List<Object> list = EntitiesListToObjectList(entityList,classname);
 		return list.get(0);
-		return list;
 	}
 	
 public static List EntitiesListToObjectList(List<Entity> entities,String classname) throws JsonGenerationException, JsonMappingException, IOException {

@@ -46,8 +46,5 @@ public class JsonOperations {
 	    	case "SessionLog" : List<UserDetail> sessionLog = mapper.readValue(jsonString, new TypeReference<List<UserDetail>>() {});return sessionLog;
 	    }
 	    return null;
-	}
-	
-
-	
+	}	
 }

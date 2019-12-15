@@ -159,7 +159,7 @@ public class App extends HttpServlet {
 		
 		System.out.println(userDetails);
 		
-		String json = ow.writeValueAsString(userDetails);
+		String json = ow.writeValueAsString(sendUserDetails);
 		response.setContentType("application/json");
 		response.getWriter().print(json);
 		System.out.println("getOne Successful");
