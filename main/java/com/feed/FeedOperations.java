@@ -44,8 +44,8 @@ public class FeedOperations extends HttpServlet {
 		if(userId == null) {
 			Query q = new Query("Feed");
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
-			List<Feed> list = DatastoreOperations.EntitiesListToObjectList(response, preparedQuery,"Feed");
-			String json = mapper.writeValueAsString(list);
+			Feed feed = (Feed) DatastoreOperations.EntitiesListToObjectList(preparedQuery,"Feed", "AsSingleObject");
+			String json = mapper.writeValueAsString(feed);
 			response.setContentType("application/json");
 			response.getWriter().print(json);
 			
@@ -53,7 +53,7 @@ public class FeedOperations extends HttpServlet {
 		else {
 			Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, userId);
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
-			List<Feed> list = DatastoreOperations.EntitiesListToObjectList(response, preparedQuery,"Feed");
+			List<Feed> list = (List<Feed>) DatastoreOperations.EntitiesListToObjectList(preparedQuery,"Feed","AsListObject");
 			String json = mapper.writeValueAsString(list);
 			response.setContentType("application/json");
 			response.getWriter().print(json);
@@ -62,7 +62,7 @@ public class FeedOperations extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		Feed feed = (Feed)JsonOperations.jsonToObject(request,"Feed","asSingleEntity");
+		Feed feed = (Feed)JsonOperations.jsonToObject(request,"Feed","asSingleObject");
 		
 		System.out.println(feed.getFeedText()+" "+feed.getImageUrl()+" "+feed.getFeedId()+" "+feed.getTimeStamp());
 		

@@ -22,10 +22,10 @@ import com.google.appengine.api.datastore.Entity;
 public class DatastoreOperations {
 	
 	static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	
+	
 	public static void ObjectToDatastore(Object object,String entity) {
 		
-		
-
 //		Key taskKey = datastore.newKeyFactory()
 //		.setKind("Feed")
 //		.newKey("FeedId");
@@ -63,10 +63,24 @@ public class DatastoreOperations {
 			datastore.put(sessionLogEntity);
 			return;
 		}
+		
+		case "UserCredential":{
+			Entity userCredentialEntity = new Entity(entity);
+			userCredentialEntity.setProperty("username", ((UserCredential) object).getUsername());
+			userCredentialEntity.setProperty("password", ((UserCredential) object).getPassword());
+			userCredentialEntity.setProperty("userId", ((UserCredential) object).getUserId());
+		}
 	}
 	}
 	
-public static List EntitiesListToObjectList(HttpServletResponse response,List<Entity> entities,String classname) throws JsonGenerationException, JsonMappingException, IOException {
+	public static Object EntitiesListToObjectList(List<Entity> entities,String classname,String returnAs) throws JsonGenerationException, JsonMappingException, IOException {
+		List<Object> list = EntitiesListToObjectList(entities,classname);
+		if(returnAs == "asSingleObject")
+		return list.get(0);
+		return list;
+	}
+	
+public static List EntitiesListToObjectList(List<Entity> entities,String classname) throws JsonGenerationException, JsonMappingException, IOException {
 		
 		Map<String,Object> properties;
 
@@ -111,6 +125,19 @@ public static List EntitiesListToObjectList(HttpServletResponse response,List<En
 					sessionLog.setKey(String.valueOf(entity.getProperty("key")));
 					sessionLog.setUserId(String.valueOf(entity.getProperty("userId")));
 					list.add(sessionLog);
+				}
+			return list;
+			}
+		case "UserCredential" :{
+			properties = new HashMap<>();
+			List<UserCredential> list = new ArrayList<UserCredential>();
+			for(Entity entity : entities) {
+				properties = entity.getProperties();
+				UserCredential userCredential = new UserCredential();
+					userCredential.setUsername(String.valueOf(entity.getProperty("username")));
+					userCredential.setUserId(String.valueOf(entity.getProperty("userId")));
+					userCredential.setPassword(String.valueOf(entity.getProperty("password")));
+					list.add(userCredential);
 				}
 			return list;
 			}

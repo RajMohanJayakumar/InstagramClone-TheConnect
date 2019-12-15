@@ -22,7 +22,7 @@ public class JsonOperations {
 	
 	public static Object jsonToObject(HttpServletRequest request,String classname,String returnAs) throws IOException {
 		 List<Object> obj = (List<Object>) jsonToObject(request,classname);
-		 if(returnAs == "asSingleEntity")
+		 if(returnAs == "asSingleObject")
 		 return obj.get(0);
 		 return obj;
 	}
