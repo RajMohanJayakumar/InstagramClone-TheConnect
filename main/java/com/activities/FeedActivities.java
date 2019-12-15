@@ -44,7 +44,7 @@ public class FeedActivities extends HttpServlet {
 		if(userId == null) {
 			Query q = new Query("Feed");
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
-			Feed feed = (Feed) DatastoreOperations.EntitiesListToObjectList(preparedQuery,"Feed");
+			List<Feed> feed = DatastoreOperations.EntitiesListToObjectList(preparedQuery,"Feed");
 			String json = mapper.writeValueAsString(feed);
 			response.setContentType("application/json");
 			response.getWriter().print(json);
@@ -53,8 +53,8 @@ public class FeedActivities extends HttpServlet {
 		else {
 			Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, userId);
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
-			List<Feed> list = (List<Feed>) DatastoreOperations.EntitiesListToObjectList(preparedQuery,"Feed");
-			String json = mapper.writeValueAsString(list);
+			Feed feed = (Feed) DatastoreOperations.EntitiesListToObjectList(preparedQuery,"Feed","asSingleObject");
+			String json = mapper.writeValueAsString(feed);
 			response.setContentType("application/json");
 			response.getWriter().print(json);
 		} 

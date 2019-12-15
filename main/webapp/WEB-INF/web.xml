@@ -54,7 +54,7 @@
 	
 	<filter-mapping>
 	<filter-name>Session</filter-name>
-	<url-pattern>/*</url-pattern>
+	<url-pattern>/redirect</url-pattern>
 	</filter-mapping>
 	
 

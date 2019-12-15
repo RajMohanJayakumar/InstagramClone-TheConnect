@@ -73,9 +73,8 @@ public class DatastoreOperations {
 	}
 	}
 	
-	public static Object EntitiesListToObjectList(Entity entity,String classname) throws JsonGenerationException, JsonMappingException, IOException {
-		List<Entity> entityList = new ArrayList();
-		entityList.add(entity);
+	public static Object EntitiesListToObjectList(List<Entity> entityList,String classname,String returnAs) throws JsonGenerationException, JsonMappingException, IOException {
+		
 		List<Object> list = EntitiesListToObjectList(entityList,classname);
 		return list.get(0);
 	}
