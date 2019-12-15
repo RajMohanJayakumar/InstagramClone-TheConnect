@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.externalOperations.DatastoreOperations;
+import com.externalOperations.JsonOperations;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -26,7 +27,7 @@ import com.model.*;
  * Servlet Filter implementation class sessionAndKeyFilter
  */
 @WebFilter("/sessionAndKeyFilter")
-public class SessionAndKeyFilter implements Filter {
+public class SessionFilter implements Filter {
 
 	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -43,11 +44,26 @@ public class SessionAndKeyFilter implements Filter {
 //		sessionLog.setKey("1234");
 //		sessionLog.setUserId("1234");
 
-		if(session == null) {
-			System.out.println("Session = Null");
-			req.getRequestDispatcher("/login").forward(req, res);
+		if(req.getMethod().equals("GET")) {
+			if(session != null && httpSession.getAttribute("userId") != null) {
+				
+			}
+			else {
+				System.out.println("Session = Null");
+				req.getRequestDispatcher("/login").forward(req, res);
+			}
 		}
-		else {}
+		
+		if(req.getMethod().equals("POST")){
+			UserDetail userDetail = (UserDetail) JsonOperations.jsonToObject(req, "UserDetail", "asSingleObject");
+			if(userDetail.getUserId() == null || userDetail.getEmail() == null || userDetail.getName() == null || userDetail.getProPicUrl() == null) {
+				req.getRequestDispatcher("/login").forward(req, res);
+			}
+		}
+		
+		System.out.println(req.getMethod());
+		
+		
 		
 		chain.doFilter(request, response);
 	}

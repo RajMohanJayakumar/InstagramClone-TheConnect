@@ -44,18 +44,16 @@
 	
 	<servlet-mapping>
 	<servlet-name>Redirect</servlet-name>
-	<url-pattern>/redirect</url-pattern>
+	<url-pattern>/redirect1</url-pattern>
 	</servlet-mapping>
 	
 	<filter>
-	<filter-name>SessionAndKey</filter-name>
-	<filter-class>com.filter.SessionAndKeyFilter</filter-class>
+	<filter-name>Session</filter-name>
+	<filter-class>com.filter.SessionFilter</filter-class>
 	</filter>
 	
 	<filter-mapping>
-	<filter-name>SessionAndKey</filter-name>
-	<servlet-name>Index</servlet-name>
-	<servlet-name>login</servlet-name>
+	<filter-name>Session</filter-name>
 	<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	

@@ -1,4 +1,4 @@
-package com.feed;
+package com.activities;
 
 import com.externalOperations.*;
 
@@ -34,7 +34,7 @@ import com.model.Feed;
 import com.zOldDatastore.Contact;
 
 @WebServlet("/feed")
-public class FeedOperations extends HttpServlet {
+public class FeedActivities extends HttpServlet {
 
 	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	ObjectMapper mapper = new ObjectMapper();
