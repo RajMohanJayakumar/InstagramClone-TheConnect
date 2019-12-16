@@ -7,6 +7,11 @@
     top: 0;
     left: 0;
 }
+.clearfix::after{
+    content:'';
+    clear:both;
+    display: block;
+}
 
 #logo,
 #search,
@@ -147,7 +152,7 @@ body {
 
 #feedsPanel {
     margin: auto;
-    margin-top: 85px;
+    margin-top: 65px;
     width: 70%;
     align-items: center;
     color: black;

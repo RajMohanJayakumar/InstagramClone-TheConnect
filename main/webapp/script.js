@@ -58,6 +58,7 @@ var proEmail;
         document.getElementById('username').innerHTML = data.name;
       document.getElementById('email').innerHTML = data.email;
       document.getElementById('proPics').setAttribute('src',data.proPicUrl);
+      document.getElementById("addNewPost").style.display = 'none';
       }
     });
   //  updateUserDetails(data.name,data.email,data.imgUrl);
@@ -123,4 +124,13 @@ function timeline(){
 function photos(){
   document.getElementById('feedsPage').innerHTML = "";
   document.getElementById('gallery').style.display=block;
+}
+
+function addPostBtn(){
+  var x = document.getElementById("addNewPost");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
 }

@@ -27,7 +27,7 @@
         <a class="btn btn-primary">Search</a>
       </div>
       <div id="addPost">
-        <a class="btn btn-primary btn-sm">+ Add Post</a>
+        <a class="btn btn-primary btn-sm" onclick="addPostBtn();">+ Add Post</a>
       </div>
     </div>
     <div id="dashboard">
@@ -67,7 +67,7 @@
               <label for="exampleFormControlTextarea4">Add Post</label>
               <textarea class="form-control" id="exampleFormControlTextarea4" rows="3"
                 placeholder="Write Something..."></textarea>
-              <div id="uploadAndPostBtn">
+              <div id="uploadAndPostBtn" class="clearfix">
                 <a id="postBtn" class="btn btn-primary mb-2 btn-xs">Post</a>
                 <a id="uploadImage" class="btn btn-primary mb-2 btn-xs">+ Add photo</a>
               </div>
