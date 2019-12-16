@@ -1,4 +1,4 @@
-package com.externalOperations;
+package com.externalOperation;
 
 import java.io.BufferedReader;
 import java.io.IOException;

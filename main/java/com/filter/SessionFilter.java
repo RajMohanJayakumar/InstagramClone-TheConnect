@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.externalOperations.DatastoreOperations;
-import com.externalOperations.JsonOperations;
+import com.externalOperation.DatastoreOperations;
+import com.externalOperation.JsonOperations;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;

@@ -1,4 +1,4 @@
-package com.externalOperations;
+package com.externalOperation;
 
 import com.model.*;
 

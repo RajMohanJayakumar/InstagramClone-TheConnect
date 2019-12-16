@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.externalOperations.*;
+import com.externalOperation.*;
 import com.model.UserDetail;
 
 @WebServlet("/DatastoreQueries")

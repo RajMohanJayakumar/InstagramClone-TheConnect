@@ -1,4 +1,4 @@
-package com.externalOperations;
+package com.externalOperation;
 
 public class keyGeneration {
 	

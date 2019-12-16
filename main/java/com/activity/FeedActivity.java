@@ -1,6 +1,4 @@
-package com.activities;
-
-import com.externalOperations.*;
+package com.activity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,6 +20,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
+import com.externalOperation.*;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -34,7 +33,7 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.model.Feed;
 
 @WebServlet("/feed")
-public class FeedActivities extends HttpServlet {
+public class FeedActivity extends HttpServlet {
 
 	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	ObjectMapper mapper = new ObjectMapper();
