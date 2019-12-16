@@ -23,7 +23,6 @@ public class Session extends HttpServlet {
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 		else {
-			System.out.println("Session = Null");
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 		
