@@ -19,6 +19,7 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 public class DatastoreOperations {
 	
@@ -45,8 +46,9 @@ public class DatastoreOperations {
 		
 		case "UserDetail":{
 			
-//			Entity userDetailEntity = new Entity(entity,((UserDetail) object).getUserId());
-			Entity userDetailEntity = new Entity(entity);
+			Key studentKey = KeyFactory.createKey(entity, ((UserDetail) object).getUserId());
+			
+			Entity userDetailEntity = new Entity(entity,((UserDetail) object).getUserId());
 			userDetailEntity.setProperty("userId", ((UserDetail) object).getUserId());
 			userDetailEntity.setProperty("name", ((UserDetail) object).getName());
 			userDetailEntity.setProperty("proPicUrl", ((UserDetail) object).getProPicUrl());
