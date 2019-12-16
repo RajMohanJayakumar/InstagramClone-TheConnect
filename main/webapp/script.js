@@ -1,42 +1,26 @@
 var url = "http://localhost:8080/";
 
     function logout(){
-      axios.delete(url+'session')
+      call(url+'session','delete')
       .then(res => {
         window.location.replace(url);
     });
         
     }
 
-var proId;
-var proName;
-var proImg;
-var proEmail;
-
   function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     signOut();
-    proId = profile.getId();
-    proName = profile.getName();
-    proImg = profile.getImageUrl();
-    proEmail = profile.getEmail();
-    console.log('ID: ' + profile.getId()); 
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail());
 
-    axios({
-      method: 'post',
-      url: url+'session',
-      headers: {}, 
-      data: [{
-        userId:profile.getId(),
-        name:profile.getName(),
-        proPicUrl:profile.getImageUrl(),
-        email:profile.getEmail()
-      }]
-  })
-  .then(res => {
+    payload = [{
+      userId:profile.getId(),
+      name:profile.getName(),
+      proPicUrl:profile.getImageUrl(),
+      email:profile.getEmail()
+    }];
+
+    call(url+'session','post',payload)
+    .then(res => {
       window.location.href = url;
   });
 }
@@ -51,7 +35,7 @@ var proEmail;
     var data;
     
     function dashboard(){
-      axios.get(url+'userdata')
+      call(url+'userdata','get')
     .then(res => {
         data = res.data;
         if(data != null){
@@ -61,7 +45,6 @@ var proEmail;
       document.getElementById("addNewPost").style.display = 'none';
       }
     });
-  //  updateUserDetails(data.name,data.email,data.imgUrl);
     }
 
     function updateUserDetails(proName,proEmail,proImgUrl){
@@ -73,7 +56,7 @@ var proEmail;
 
 function feeds(){
 
-  axios.get(url+'feeds')
+  call(url+'feeds','get')
   .then(res =>{
     iterateFeeds(res.data);
 });
@@ -110,7 +93,7 @@ document.getElementById("feeds").appendChild(feed1);
 }
 
 function friends(){
-  document.getElementsByClassName('middlePanelFields').style.display = none;
+  document.getElementsById('feedsPage').style.display = 'none';
 }
 
 function feeds(){
@@ -118,12 +101,12 @@ function feeds(){
 }
 
 function timeline(){
-  document.getElementsByClassName('middlePanelFields').innerHTML = "";
+  document.getElementsById('feedsPage').style.display = 'none';
 }
 
 function photos(){
-  document.getElementById('feedsPage').innerHTML = "";
-  document.getElementById('gallery').style.display=block;
+  document.getElementById('feedsPage').style.display = 'none';
+  document.getElementById('gallery').style.display = 'block';
 }
 
 function addPostBtn(){
@@ -133,4 +116,13 @@ function addPostBtn(){
   } else {
     x.style.display = "none";
   }
+}
+
+function call(url,method,payload){
+  return axios({
+    method: method,
+    url: url,
+    headers: {}, 
+    data: payload
+})
 }
