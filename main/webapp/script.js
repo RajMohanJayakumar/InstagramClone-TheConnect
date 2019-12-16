@@ -9,7 +9,6 @@ var url = "http://localhost:8080/";
         
     }
 
-    
 var proId;
 var proName;
 var proImg;
@@ -29,18 +28,19 @@ var proEmail;
 
     axios({
       method: 'post',
-      url: url+'app',
+      url: url+'redirect',
       headers: {}, 
-      data: {
-        id:profile.getId(),
+      data: [{
+        userId:profile.getId(),
         name:profile.getName(),
-        imgUrl:profile.getImageUrl(),
+        proPicUrl:profile.getImageUrl(),
         email:profile.getEmail()
-      }
+      }]
   })
   .then(res => {
-      var key = res.data;
-      window.location.href=url+'app?key='+key;
+      // var key = res.data;
+      // window.location.href=url+'app?key='+key;
+      window.location.href = url+'index';
   });
 }
 
@@ -54,7 +54,7 @@ var proEmail;
     var data;
     
     function dashboard(){
-      axios.put(url+'app')
+      axios.get(url+'userdata')
     .then(res => {
         data = res.data;
         if(data != null){
