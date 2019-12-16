@@ -53,15 +53,17 @@ public class FeedActivity extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().print(json);
 		}
+		break;
 		
 		case "getOne" : {
 			Query q = new Query("Feed").addFilter("feedId", FilterOperator.EQUAL, fetch);
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(5));
-			List<Feed> feeds =  DatastoreOperations.EntitiesListToObjectList(preparedQuery,"Feed");
-			String json = mapper.writeValueAsString(feeds);
+			List<Feed> feed =  DatastoreOperations.EntitiesListToObjectList(preparedQuery,"Feed");
+			String json = mapper.writeValueAsString(feed);
 			response.setContentType("application/json");
 			response.getWriter().print(json);
 		}
+		break;
 		
 		case "getUserFeeds" : {
 			if(session != null && session.getAttribute("userId") != null) {
@@ -72,6 +74,7 @@ public class FeedActivity extends HttpServlet {
 				response.setContentType("application/json");
 				response.getWriter().print(json);
 		}
+			break;
 		}
 		}
 		
