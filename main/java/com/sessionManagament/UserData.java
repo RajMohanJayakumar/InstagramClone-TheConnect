@@ -32,7 +32,7 @@ public class UserData extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession(false);
-
+		
 		Query q = new Query("UserDetail").addFilter("userId", FilterOperator.EQUAL, session.getAttribute("userId"));
 		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(4));
 		UserDetail userDetail = (UserDetail) DatastoreOperations.EntitiesListToObjectList(preparedQuery,"UserDetail","asSingleObject");

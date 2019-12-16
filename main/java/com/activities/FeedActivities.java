@@ -43,6 +43,7 @@ public class FeedActivities extends HttpServlet {
 		String fetch = request.getParameter("fetch");
 		HttpSession session = request.getSession(false);
 		
+		if(getFeeds != null)
 		switch(getFeeds) {
 		
 		case "getAll" : {
