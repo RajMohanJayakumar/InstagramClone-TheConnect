@@ -1,9 +1,8 @@
 var url = "http://localhost:8080/";
 
     function logout(){
-      axios.delete(url+'app?key='+window.location.href)
+      axios.delete(url+'session')
       .then(res => {
-        // document.cookie = 'JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         window.location.replace(url);
     });
         
@@ -28,7 +27,7 @@ var proEmail;
 
     axios({
       method: 'post',
-      url: url+'redirect',
+      url: url+'session',
       headers: {}, 
       data: [{
         userId:profile.getId(),
@@ -38,9 +37,7 @@ var proEmail;
       }]
   })
   .then(res => {
-      // var key = res.data;
-      // window.location.href=url+'app?key='+key;
-      window.location.href = url+'index';
+      window.location.href = url;
   });
 }
 

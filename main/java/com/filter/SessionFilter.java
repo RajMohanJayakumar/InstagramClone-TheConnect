@@ -31,13 +31,15 @@ public class SessionFilter implements Filter {
 
 	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("Session");
+		
 		
 		HttpServletResponse res = (HttpServletResponse)response;
 		HttpServletRequest req = (HttpServletRequest)request;
 		
 		HttpSession httpSession = req.getSession(false);
 		String session = String.valueOf(httpSession);
+		
+		System.out.println("Session"+req.getMethod());
 		
 //		SessionLog sessionLog = new SessionLog();
 //		sessionLog.setSessionId(session);
@@ -55,10 +57,18 @@ public class SessionFilter implements Filter {
 		}
 		
 		if(req.getMethod().equals("POST")){
-			UserDetail userDetail = (UserDetail) JsonOperations.jsonToObject(req, "UserDetail", "asSingleObject");
-			if(userDetail.getUserId() == null || userDetail.getEmail() == null || userDetail.getName() == null || userDetail.getProPicUrl() == null) {
-				req.getRequestDispatcher("/login").forward(req, res);
-			}
+			System.out.println("Inside Post Filter");
+//			UserDetail userDetail = (UserDetail) JsonOperations.jsonToObject(req, "UserDetail", "asSingleObject");
+//			System.out.println(userDetail);
+//			if(userDetail.getUserId() == null || userDetail.getEmail() == null || userDetail.getName() == null || userDetail.getProPicUrl() == null) {
+//				req.getRequestDispatcher("/login").forward(req, res);
+//			}
+			
+			httpSession = req.getSession();
+			UserDetail userDetail = (UserDetail) JsonOperations.jsonToObject(req, "UserDetail","asSingleObject");
+			System.out.println(userDetail.getEmail()); 
+			DatastoreOperations.ObjectToDatastore(userDetail,"UserDetail");
+			httpSession.setAttribute("userId", userDetail.getUserId());
 		}
 		
 		System.out.println(req.getMethod());

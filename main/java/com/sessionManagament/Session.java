@@ -15,16 +15,16 @@ import com.externalOperations.DatastoreOperations;
 import com.externalOperations.JsonOperations;
 import com.model.UserDetail;
 
-@WebServlet("/redirect")
+@WebServlet("/session")
 public class Session extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if(session != null && session.getAttribute("userId") != null) {
-			request.getRequestDispatcher("/login").forward(request, response);
+			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 		else {
 			System.out.println("Session = Null");
-			request.getRequestDispatcher("/index").forward(request, response);
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 		
 	}
@@ -40,6 +40,12 @@ public class Session extends HttpServlet {
 		DatastoreOperations.ObjectToDatastore(userDetail,"UserDetail");
 		session.setAttribute("userId", userDetail.getUserId());
 
+	}
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		HttpSession session = request.getSession(false);
+		if(session != null)
+		session.invalidate();
 	}
 
 }
