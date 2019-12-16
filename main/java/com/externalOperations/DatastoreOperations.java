@@ -45,7 +45,9 @@ public class DatastoreOperations {
 		
 		case "UserDetail":{
 			
-			Entity userDetailEntity = new Entity(entity,((UserDetail) object).getUserId());
+//			Entity userDetailEntity = new Entity(entity,((UserDetail) object).getUserId());
+			Entity userDetailEntity = new Entity(entity);
+			userDetailEntity.setProperty("userId", ((UserDetail) object).getUserId());
 			userDetailEntity.setProperty("name", ((UserDetail) object).getName());
 			userDetailEntity.setProperty("proPicUrl", ((UserDetail) object).getProPicUrl());
 			userDetailEntity.setProperty("email", ((UserDetail) object).getEmail());

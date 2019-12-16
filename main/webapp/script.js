@@ -57,7 +57,7 @@ var proEmail;
         if(data != null){
         document.getElementById('username').innerHTML = data.name;
       document.getElementById('email').innerHTML = data.email;
-      document.getElementById('proPics').setAttribute('src',data.imgUrl);
+      document.getElementById('proPics').setAttribute('src',data.proPicUrl);
       }
     });
   //  updateUserDetails(data.name,data.email,data.imgUrl);
@@ -69,14 +69,6 @@ var proEmail;
       document.getElementById('username').innerHTML = proName;
       document.getElementById('email').innerHTML = proEmail;
     }    
-
-    //function profileInfo(name,imgUrl,email){
-//	document.getElementById('proName').innerText = name;
-//	let str = ``;
-//	document.getElementById('update').innerText = name;
-//	document.getElementById('proEmail').innerText = email;
-//}
-
 
 function feeds(){
 
@@ -130,20 +122,5 @@ function timeline(){
 
 function photos(){
   document.getElementById('feedsPage').innerHTML = "";
-  // document.getElementsByClassName('middlePanelFields').innerHTML = "";
   document.getElementById('gallery').style.display=block;
 }
-
-// for (var key in validation_messages) {
-//   // skip loop if the property is from prototype
-//   if (!validation_messages.hasOwnProperty(key)) continue;
-
-//   var obj = validation_messages[key];
-//   for (var prop in obj) {
-//       // skip loop if the property is from prototype
-//       if (!obj.hasOwnProperty(prop)) continue;
-
-//       // your code
-//       alert(prop + " = " + obj[prop]);
-//   }
-// }

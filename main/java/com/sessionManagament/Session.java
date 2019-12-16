@@ -33,7 +33,7 @@ public class Session extends HttpServlet {
 		UserDetail userDetail = (UserDetail) JsonOperations.jsonToObject(request, "UserDetail","asSingleObject");
 
 		if(userDetail.getUserId() == null || userDetail.getEmail() == null || userDetail.getName() == null || userDetail.getProPicUrl() == null) {
-			request.getRequestDispatcher("/login").forward(request, response);
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 		
 		HttpSession session = request.getSession();
