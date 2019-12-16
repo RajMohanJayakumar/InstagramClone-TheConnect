@@ -18,23 +18,21 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Key;
 
 public class DatastoreOperations {
 	
 	static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	
+	UserDetail user = new UserDetail();
 	
 	public static void ObjectToDatastore(Object object,String entity) {
 		
-//		Key taskKey = datastore.newKeyFactory()
-//		.setKind("Feed")
-//		.newKey("FeedId");
-//Entity user = new Entity(taskKey);
 		
 		switch(entity) {
 		case "Feed":{
 			UUID id = UUID.randomUUID();
 			Entity feedEntity = new Entity(entity);
+			
 			feedEntity.setProperty("feedId", id.toString());
 			feedEntity.setProperty("userId", ((Feed) object).getUserId());
 			feedEntity.setProperty("feedText",((Feed) object).getFeedText());
@@ -46,8 +44,8 @@ public class DatastoreOperations {
 		}
 		
 		case "UserDetail":{
-			Entity userDetailEntity = new Entity(entity);
-			userDetailEntity.setProperty("userId",((UserDetail) object).getUserId());
+			
+			Entity userDetailEntity = new Entity(entity,((UserDetail) object).getUserId());
 			userDetailEntity.setProperty("name", ((UserDetail) object).getName());
 			userDetailEntity.setProperty("proPicUrl", ((UserDetail) object).getProPicUrl());
 			userDetailEntity.setProperty("email", ((UserDetail) object).getEmail());
@@ -56,8 +54,7 @@ public class DatastoreOperations {
 		}
 		
 		case "SessionLog":{
-			Entity sessionLogEntity = new Entity(entity);
-			sessionLogEntity.setProperty("sessionId", ((SessionLog) object).getSessionId());
+			Entity sessionLogEntity = new Entity(entity,((SessionLog) object).getSessionId());
 			sessionLogEntity.setProperty("key", ((SessionLog) object).getKey());
 			sessionLogEntity.setProperty("userId", ((SessionLog) object).getUserId());
 			datastore.put(sessionLogEntity);
@@ -65,10 +62,11 @@ public class DatastoreOperations {
 		}
 		
 		case "UserCredential":{
-			Entity userCredentialEntity = new Entity(entity);
-			userCredentialEntity.setProperty("username", ((UserCredential) object).getUsername());
+			Entity userCredentialEntity = new Entity(entity,((UserCredential) object).getUsername());
 			userCredentialEntity.setProperty("password", ((UserCredential) object).getPassword());
 			userCredentialEntity.setProperty("userId", ((UserCredential) object).getUserId());
+			datastore.put(userCredentialEntity);
+			return;
 		}
 	}
 	}
@@ -100,7 +98,7 @@ public static List EntitiesListToObjectList(List<Entity> entities,String classna
 			}
 			return list;
 		}
-		case "UserDetails" :{
+		case "UserDetail" :{
 			properties = new HashMap<>();
 			List<UserDetail> list = new ArrayList<UserDetail>();
 			for(Entity entity : entities) {
