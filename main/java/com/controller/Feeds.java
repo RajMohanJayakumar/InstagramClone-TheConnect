@@ -46,7 +46,7 @@ public class Feeds extends HttpServlet {
 		switch(getFeeds) {
 		
 		case "getAll" : {
-			Query q = new Query("Feed");
+			Query q = new Query("Feed").addSort("timeStamp", Query.SortDirection.DESCENDING);
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
 			List<Feed> feed = Datastore.EntitiesListToObjectList(preparedQuery,"Feed");
 			String json = mapper.writeValueAsString(feed);
@@ -73,7 +73,8 @@ public class Feeds extends HttpServlet {
 		
 		case "getUserFeeds" : {
 			if(session != null && session.getAttribute("userId") != null) {
-				Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, fetch);
+				Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, fetch)
+						.addSort("timeStamp", Query.SortDirection.DESCENDING);
 				List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
 				List<Feed> feeds =  Datastore.EntitiesListToObjectList(preparedQuery,"Feed");
 				String json = mapper.writeValueAsString(feeds);
@@ -117,6 +118,7 @@ public class Feeds extends HttpServlet {
 		if(session.getAttribute("userId").equals(feed.getUserId())) {
 		
 			//Delete function
+//			Key feedKey = KeyFactory.createKey("Feed", id.toString());
 			
 		}
 		else {

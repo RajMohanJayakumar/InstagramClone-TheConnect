@@ -31,6 +31,8 @@ public class Datastore {
 		switch(entity) {
 		case "Feed":{
 			UUID id = UUID.randomUUID();
+			
+			Key feedKey = KeyFactory.createKey(entity, id.toString());
 			Entity feedEntity = new Entity(entity);
 			feedEntity.setProperty("feedId", id.toString());
 			feedEntity.setProperty("userId", ((Feed) object).getUserId());
@@ -44,7 +46,7 @@ public class Datastore {
 		
 		case "UserDetail":{
 			
-			Key studentKey = KeyFactory.createKey(entity, ((UserDetail) object).getUserId());
+			Key userDetailKey = KeyFactory.createKey(entity, ((UserDetail) object).getUserId());
 			
 			Entity userDetailEntity = new Entity(entity,((UserDetail) object).getUserId());
 			userDetailEntity.setProperty("userId", ((UserDetail) object).getUserId());
@@ -95,7 +97,7 @@ public static List EntitiesListToObjectList(List<Entity> entities,String classna
 				feed.setUserId(String.valueOf(entity.getProperty("userId")));
 				feed.setFeedText(String.valueOf(entity.getProperty("feedText")));
 				feed.setImageUrl(String.valueOf(entity.getProperty("imageUrl")));
-				feed.setTimeStamp(Long.valueOf((String) entity.getProperty("timeStamp")));
+				feed.setTimeStamp(Long.valueOf((long) entity.getProperty("timeStamp")));
 				feed.setStatus(String.valueOf(entity.getProperty("status")));
 				list.add(feed);
 			}
