@@ -20,7 +20,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.model.Feed;
 
-@WebServlet("/Search")
+@WebServlet("/search")
 public class Search extends HttpServlet {
 	
 	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

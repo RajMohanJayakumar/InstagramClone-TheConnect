@@ -1,4 +1,4 @@
-package com.sessionManagement;
+package com.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,18 +22,15 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.model.UserDetail;
 
-/**
- * Servlet implementation class UserData
- */
-@WebServlet("/currentuserdata")
-public class UserData extends HttpServlet {
-
+@WebServlet("/userinfo")
+public class UserInfo extends HttpServlet {
 	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		HttpSession session = request.getSession(false);
 		
-		Query q = new Query("UserDetail").addFilter("userId", FilterOperator.EQUAL, session.getAttribute("userId"));
+		String userId = request.getParameter("userId");
+		
+		if(userId != null) {
+		Query q = new Query("UserDetail").addFilter("userId", FilterOperator.EQUAL, userId);
 		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(4));
 		UserDetail userDetail = (UserDetail) Datastore.EntitiesListToObjectList(preparedQuery,"UserDetail","asSingleObject");
 		
@@ -43,4 +40,10 @@ public class UserData extends HttpServlet {
 		response.setContentType("application/json");
 		response.getWriter().print(json);
 	}
+		else {
+			response.setStatus(400);
+			return;
+		}
+	}
+
 }

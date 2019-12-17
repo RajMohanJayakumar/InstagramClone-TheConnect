@@ -27,7 +27,6 @@ public class Datastore {
 	
 	public static void ObjectToDatastore(Object object,String entity) {
 		
-		
 		switch(entity) {
 		case "Feed":{
 			UUID id = UUID.randomUUID();
@@ -103,6 +102,7 @@ public static List EntitiesListToObjectList(List<Entity> entities,String classna
 			}
 			return list;
 		}
+		
 		case "UserDetail" :{
 			properties = new HashMap<>();
 			List<UserDetail> list = new ArrayList<UserDetail>();
@@ -117,6 +117,7 @@ public static List EntitiesListToObjectList(List<Entity> entities,String classna
 				}
 			return list;
 			}
+		
 		case "SessionLog" :{
 			properties = new HashMap<>();
 			List<SessionLog> list = new ArrayList<SessionLog>();
@@ -130,6 +131,7 @@ public static List EntitiesListToObjectList(List<Entity> entities,String classna
 				}
 			return list;
 			}
+		
 		case "UserCredential" :{
 			properties = new HashMap<>();
 			List<UserCredential> list = new ArrayList<UserCredential>();
