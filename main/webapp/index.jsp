@@ -76,30 +76,29 @@
 
           <div id="feeds"></div>
 
-          <div id="feedsPanel">
+          <div id="feedsPanel" class="sections">
             <div id="feedInfo">
-              <div id="feedProPic"></div>
-              <h4 id="feedProName">Karthick Krishna</h4>
+              <div class="feedPro">
+                <figure style="margin:0 0 14px">
+                  <img src="./images/feed1.jpg" style="width:45px; height:45px; border-radius: 50%; vertical-align: middle;" alt="">
+                  <figcaption style="display: inline-block;
+                  vertical-align:middle;">
+                  <h4 style="font-size:16px; margin:0;font-weight: 700;">Hello</h4>
+                  <h4 style="font-size:16px; margin:0; opacity:0.5;font-weight: 700;"> Hi</h4>
+                  </figcaption>
+                  </figure>
+              </div>
               <h4 class="feedText" style="font-size: 14px;">
                 Pleasant Morning..
                 Hot Coffee..
               </h4>
             </div>
             <figure id="feedPic"><img class="img" src="images/feed2.jpeg" /></figure>
-            <div id="feedPanel">
-              <button type="button" class="feedBtn btn btn-primary btn-xs">
-                Like <span class="badge badge-light">10</span>
-              </button>
-              <button type="button" class="feedBtn btn btn-primary btn-xs">
-                Comment <span class="badge badge-light">4</span>
-              </button>
+            <div class="deleteBtn">
+              <a id="uploadImage" class="btn btn-primary mb-2 btn-xs">Delete</a>
             </div>
-            <div id="cmtArea">
-              <textarea class="form-control" id="exampleFormControlTextarea4" rows="3"
-                placeholder="Write a comment..."></textarea>
-              <a id="postBtn" class="btn btn-primary mb-2 btn-xs">Add Comment</a>
+
             </div>
-          </div>
 
           <div id="feedsPanel">
             <div id="feedInfo">
@@ -179,7 +178,7 @@
             <hr>.</div>
         </div>
 
-        <div class="gallery" class="middlePanelFields">
+        <div class="gallery" class="sections">
             <figure class="galleryPic"><img class="img" src="images/feed2.jpeg" /></figure>
             <figure class="galleryPic"><img class="img" src="images/feed2.jpeg" /></figure>
             <figure class="galleryPic"><img class="img" src="images/feed2.jpeg" /></figure>

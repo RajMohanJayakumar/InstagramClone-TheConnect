@@ -41,7 +41,7 @@ var url = "http://localhost:8080/";
     var data;
     
     function dashboard(){
-      call(url+'userdata','get')
+      call(url+'currentuserdata','get')
     .then(res => {
         data = res.data;
         if(data != null){
@@ -79,18 +79,6 @@ function iterateFeeds(feed){
     </h4>
 </div>
 <figure id="feedPic"><img class="img" src="${e.feedImgUrl}" /></figure>
-<div id="feedPanel">
-  <button type="button" class="feedBtn btn btn-primary btn-xs">
-    Like <span class="badge badge-light">${e.likesCount}</span>
-  </button>
-  <button type="button" class="feedBtn btn btn-primary btn-xs">
-    Comment <span class="badge badge-light">${e.commentsCount}</span>
-  </button>
-</div>
-<div id="cmtArea">
-  <textarea class="form-control" id="exampleFormControlTextarea4" rows="3" placeholder="Write a comment..."></textarea>
-  <a id="postBtn" class="btn btn-primary mb-2 btn-xs">Add Comment</a>
-</div>
 </div>
 `;
 document.getElementById("feeds").appendChild(feed1);
@@ -99,19 +87,22 @@ document.getElementById("feeds").appendChild(feed1);
 }
 
 function friends(){
-  document.getElementsById('feedsPage').style.display = 'none';
+  hideSections();
+  document.getElementsById('feedsfriendPage').style.display = 'none';
 }
 
 function feeds(){
   window.location.reload();
+  hideSections();
 }
 
 function timeline(){
+  hideSections();
   document.getElementsById('feedsPage').style.display = 'none';
 }
 
 function photos(){
-  document.getElementById('feedsPage').style.display = 'none';
+  hideSections();
   document.getElementById('gallery').style.display = 'block';
 }
 
