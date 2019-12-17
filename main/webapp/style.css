@@ -152,7 +152,7 @@ body {
 
 #feedsPanel {
     margin: auto;
-    margin-top: 65px;
+    margin-top: 55px;
     width: 70%;
     align-items: center;
     color: black;
@@ -230,3 +230,35 @@ body {
     margin: 3px;
     border: 2px solid #0000ff3d;
 }
+
+
+.feedProImage{
+    width:42px;
+    height:42px;
+    float:left;
+    margin:0;
+}
+
+.feedDetail{
+    height: 42px;
+    margin-left: 52px;
+}
+h4{
+    margin : 0;
+    padding : 3px;
+}
+
+.feedProName{
+    margin : 0;
+}
+.feedTime{
+    opacity: 0.5;
+}
+
+.imageCurve{
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+   }
