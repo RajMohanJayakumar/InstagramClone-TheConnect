@@ -1,5 +1,5 @@
 var url = "http://localhost:8080/";
-
+var proUserId;
     function logout(){
       call(url+'session','delete')
       .then(res => {
@@ -45,6 +45,7 @@ var url = "http://localhost:8080/";
     .then(res => {
         data = res.data;
         if(data != null){
+          proUserId = data.userId;
         document.getElementById('username').innerHTML = data.name;
       document.getElementById('email').innerHTML = data.email;
       document.getElementById('proPics').setAttribute('src',data.proPicUrl);
@@ -142,3 +143,66 @@ function postFeed() {
     document.getElementById("addNewPost").style.display = "none";
   })
  }
+
+ function feedCall(){
+   call(url+"feed?getFeeds=getAll",'get')
+   .then(res => {
+      feedIterate(res.data);
+   })
+ }
+
+ function feedIterate(feed){
+   console.log(feed);
+   feed.forEach((e) => {
+    if(localStorage.getItem(e.userId) == null){
+      call(url+'userinfo?userId='+e.userId,'get')
+      .then(res => {
+        console.log(res.data);
+           localStorage.setItem(e.userId,JSON.stringify(res.data));
+           postFeedFunction(e);
+      })
+    }
+    else{
+      postFeedFunction(e);
+    }
+  })
+}
+
+function postFeedFunction(e){
+     var userDetail = JSON.parse(localStorage.getItem(e.userId));
+     console.log(userDetail);
+   var feedTemplate = `
+   <div id="feedsPanel" class="sections">
+            <div id="feedInfo">
+              <div class="feedPro">
+                <figure style="margin:0 0 14px">
+                  <img src="${userDetail.proPicUrl}" style="width:45px; height:45px; border-radius: 50%; vertical-align: middle;" alt="">
+                  <figcaption style="display: inline-block;
+                  vertical-align:middle;">
+                  <h4 style="font-size:16px; margin:0;font-weight: 700;">${userDetail.name}</h4>
+                  <h4 style="font-size:16px; margin:0; opacity:0.5;font-weight: 700;">${e.timeStamp}</h4>
+                  </figcaption>
+                  </figure>
+              </div>
+              <h4 class="feedText" style="font-size: 14px;">
+                ${e.feedText}
+              </h4>
+            </div>
+            <figure id="feedPic"><img class="img" src="${e.imageUrl}" /></figure>
+            <div class="deleteBtn">
+              <a id="uploadImage" class="btn btn-primary mb-2 btn-xs">Delete</a>
+            </div>
+            </div>
+   `;
+   document.getElementById('feeds').innerHTML += feedTemplate;
+   
+  }
+
+ function iter(){
+ for(var i = 0 ; i<10 ; i++){
+   console.log("11");
+   feedIterate();
+ }
+}
+
+console.log(proUserId);
