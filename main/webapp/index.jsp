@@ -65,7 +65,7 @@
           <div id="addNewPost">
             <div class="form-group purple-border">
               <label for="exampleFormControlTextarea4">Add Post</label>
-              <textarea class="form-control" id="exampleFormControlTextarea4 feedTextArea" rows="3"
+              <textarea class="form-control" id="feedTextArea" rows="3"
                 placeholder="Write Something..."></textarea>
               <div id="uploadAndPostBtn" class="clearfix">
                 <a id="postBtn" class="btn btn-primary mb-2 btn-xs" onclick="postFeed();">Post</a>

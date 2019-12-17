@@ -136,4 +136,14 @@ function call(url,method,payload){
 function postFeed() {
   let feedText = document.getElementById('feedTextArea').value;
   console.log(feedText);
+  let timeStamp = new Date().getTime();
+  console.log(timeStamp);
+  let imageUrl = "image.jpg";
+  payload = [{
+    feedText : feedText,
+    timeStamp : timeStamp,
+    imageUrl : imageUrl
+  }] 
+
+  call(url+'feed','post',payload);
  }
