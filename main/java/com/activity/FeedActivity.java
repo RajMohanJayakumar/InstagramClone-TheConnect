@@ -89,9 +89,28 @@ public class FeedActivity extends HttpServlet {
 		if(session != null && session.getAttribute("userId") != null)
 		feed.setUserId((String)session.getAttribute("userId"));
 		
-		System.out.println(feed.getFeedText()+" "+feed.getImageUrl()+" "+feed.getFeedId()+" "+feed.getTimeStamp());
-		
 		DatastoreOperations.ObjectToDatastore(feed, "Feed");
+		
+	}
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String feedId = request.getParameter("feedId");
+		HttpSession session = request.getSession(false);
+		
+		Query q = new Query("Feed").addFilter("feedId", FilterOperator.EQUAL, feedId);
+		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
+		
+		Feed feed = (Feed) DatastoreOperations.EntitiesListToObjectList(preparedQuery,"Feed","AsSingleObject");
+		
+		if(session.getAttribute("userId").equals(feed.getUserId())) {
+		
+			//Delete function
+			
+		}
+		else {
+			response.setStatus(401);
+			return;
+		}
 		
 	}
 

@@ -4,9 +4,15 @@ var url = "http://localhost:8080/";
       call(url+'session','delete')
       .then(res => {
         window.location.replace(url);
-    });
-        
+    });   
     }
+
+    let sections = document.querySelectorAll('.sections')
+    function hideSections(sections) {
+    sections.forEach(function(userItem) {
+    userItem.style.display = 'none';
+    });
+}
 
   function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
@@ -126,3 +132,8 @@ function call(url,method,payload){
     data: payload
 })
 }
+
+function postFeed() {
+  let feedText = document.getElementById('feedTextArea').value;
+  console.log(feedText);
+ }
