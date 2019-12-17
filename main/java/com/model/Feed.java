@@ -17,7 +17,7 @@ private String imageUrl;
 
 private String feedText;
 
-private String timeStamp;
+private long timeStamp;
 
 private String status;
 
@@ -53,11 +53,11 @@ public void setFeedText(String feedText) {
 	this.feedText = feedText;
 }
 
-public String getTimeStamp() {
+public long getTimeStamp() {
 	return timeStamp;
 }
 
-public void setTimeStamp(String timeStamp) {
+public void setTimeStamp(long timeStamp) {
 	this.timeStamp = timeStamp;
 }
 

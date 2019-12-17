@@ -21,10 +21,9 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
-public class DatastoreOperations {
+public class Datastore {
 	
 	static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	UserDetail user = new UserDetail();
 	
 	public static void ObjectToDatastore(Object object,String entity) {
 		
@@ -33,7 +32,6 @@ public class DatastoreOperations {
 		case "Feed":{
 			UUID id = UUID.randomUUID();
 			Entity feedEntity = new Entity(entity);
-			
 			feedEntity.setProperty("feedId", id.toString());
 			feedEntity.setProperty("userId", ((Feed) object).getUserId());
 			feedEntity.setProperty("feedText",((Feed) object).getFeedText());
@@ -73,6 +71,7 @@ public class DatastoreOperations {
 			return;
 		}
 	}
+		return;
 	}
 	
 	public static Object EntitiesListToObjectList(List<Entity> entityList,String classname,String returnAs) throws JsonGenerationException, JsonMappingException, IOException {
@@ -96,7 +95,7 @@ public static List EntitiesListToObjectList(List<Entity> entities,String classna
 				feed.setUserId(String.valueOf(entity.getProperty("userId")));
 				feed.setFeedText(String.valueOf(entity.getProperty("feedText")));
 				feed.setImageUrl(String.valueOf(entity.getProperty("imageUrl")));
-				feed.setTimeStamp(String.valueOf(entity.getProperty("timeStamp")));
+				feed.setTimeStamp(Long.valueOf((String) entity.getProperty("timeStamp")));
 				feed.setStatus(String.valueOf(entity.getProperty("status")));
 				list.add(feed);
 			}

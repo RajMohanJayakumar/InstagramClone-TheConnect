@@ -21,6 +21,6 @@ public class DatastoreQueries extends HttpServlet {
 		userDetail.setUserId("12345");
 		userDetail.setProPicUrl("https://lh3.googleusercontent.com/a-/AAuE7mDZAGHznLCeuzmH9qFQeYhzXCPTfUMjL1dit8wmOs0=s96-c");
 		
-		DatastoreOperations.ObjectToDatastore(userDetail,"UserDetail");
+		Datastore.ObjectToDatastore(userDetail,"UserDetail");
 	}
 }

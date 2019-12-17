@@ -1,4 +1,4 @@
-package com.sessionManagament;
+package com.sessionManagement;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
 
-import com.externalOperation.DatastoreOperations;
+import com.externalOperation.Datastore;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -35,7 +35,7 @@ public class UserData extends HttpServlet {
 		
 		Query q = new Query("UserDetail").addFilter("userId", FilterOperator.EQUAL, session.getAttribute("userId"));
 		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(4));
-		UserDetail userDetail = (UserDetail) DatastoreOperations.EntitiesListToObjectList(preparedQuery,"UserDetail","asSingleObject");
+		UserDetail userDetail = (UserDetail) Datastore.EntitiesListToObjectList(preparedQuery,"UserDetail","asSingleObject");
 		
 		ObjectWriter mapper = new ObjectMapper().writer().withDefaultPrettyPrinter();
 		String json = mapper.writeValueAsString(userDetail);

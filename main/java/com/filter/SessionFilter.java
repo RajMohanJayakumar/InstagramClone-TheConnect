@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.externalOperation.DatastoreOperations;
-import com.externalOperation.JsonOperations;
+import com.externalOperation.Datastore;
+import com.externalOperation.JsonPharsing;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -34,6 +34,10 @@ public class SessionFilter implements Filter {
 
 			if(session != null && session.getAttribute("userId") != null) {
 				
+			}
+			else if(session != null && session.getAttribute("userId") == null) {
+				session.invalidate();
+				return;
 			}
 			else {
 				((HttpServletResponse) response).setStatus(401);
