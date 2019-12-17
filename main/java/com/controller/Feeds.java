@@ -119,6 +119,7 @@ public class Feeds extends HttpServlet {
 		
 			//Delete function
 //			Key feedKey = KeyFactory.createKey("Feed", id.toString());
+			System.out.println(feedId);
 			
 		}
 		else {

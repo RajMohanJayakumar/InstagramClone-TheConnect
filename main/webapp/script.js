@@ -1,13 +1,14 @@
 var url = "http://localhost:8080/";
 var proUserId;
     function logout(){
-      call(url+'session','delete')
+      call('session','delete')
       .then(res => {
+        localStorage.clear();
         window.location.replace(url);
     });   
     }
 
-    let sections = document.querySelectorAll('.sections')
+    let sections = document.querySelectorAll('.sections');
     function hideSections(sections) {
     sections.forEach(function(userItem) {
     userItem.style.display = 'none';
@@ -25,9 +26,9 @@ var proUserId;
       email:profile.getEmail()
     }];
 
-    call(url+'session','post',payload)
+    call('session','post',payload)
     .then(res => {
-      window.location.href = url;
+      window.location.reload();
   });
 }
 
@@ -41,7 +42,7 @@ var proUserId;
     var data;
     
     function dashboard(){
-      call(url+'currentuserdata','get')
+      call('currentuserdata','get')
     .then(res => {
         data = res.data;
         if(data != null){
@@ -50,6 +51,7 @@ var proUserId;
       document.getElementById('email').innerHTML = data.email;
       document.getElementById('proPics').setAttribute('src',data.proPicUrl);
       document.getElementById("addNewPost").style.display = 'none';
+      feedCall();
       }
     });
     }
@@ -63,7 +65,7 @@ var proUserId;
 
 function feeds(){
 
-  call(url+'feeds','get')
+  call('feeds','get')
   .then(res =>{
     iterateFeeds(res.data);
 });
@@ -144,6 +146,10 @@ function postFeed() {
   })
  }
 
+ function deleteFeed(feedId){
+   call('feed?feedId='+feedId,'delete')
+ }
+
  function feedCall(){
    call(url+"feed?getFeeds=getAll",'get')
    .then(res => {
@@ -180,7 +186,7 @@ function postFeedFunction(e){
                   <figcaption style="display: inline-block;
                   vertical-align:middle;">
                   <h4 style="font-size:16px; margin:0;font-weight: 700;">${userDetail.name}</h4>
-                  <h4 style="font-size:16px; margin:0; opacity:0.5;font-weight: 700;">${e.timeStamp}</h4>
+                  <h4 style="font-size:16px; margin:0; opacity:0.5;font-weight: 700;">${new Date(e.timeStamp)}</h4>
                   </figcaption>
                   </figure>
               </div>
@@ -190,19 +196,12 @@ function postFeedFunction(e){
             </div>
             <figure id="feedPic"><img class="img" src="${e.imageUrl}" /></figure>
             <div class="deleteBtn">
-              <a id="uploadImage" class="btn btn-primary mb-2 btn-xs">Delete</a>
+              <a id="uploadImage" class="btn btn-primary mb-2 btn-xs" onclick=deleteFeed("${e.feedId}")>Delete</a>
             </div>
             </div>
    `;
    document.getElementById('feeds').innerHTML += feedTemplate;
    
   }
-
- function iter(){
- for(var i = 0 ; i<10 ; i++){
-   console.log("11");
-   feedIterate();
- }
-}
 
 console.log(proUserId);
