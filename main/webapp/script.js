@@ -145,5 +145,9 @@ function postFeed() {
     imageUrl : imageUrl
   }] 
 
-  call(url+'feed','post',payload);
+  call(url+'feed','post',payload)
+  .then(res =>{
+    document.getElementById('feedTextArea').value = "";
+    document.getElementById("addNewPost").style.display = "none";
+  })
  }
