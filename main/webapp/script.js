@@ -1,5 +1,5 @@
 var url = "http://localhost:8080/";
-var proUserId;
+
     function logout(){
       call('session','delete')
       .then(res => {
@@ -46,12 +46,13 @@ var proUserId;
     .then(res => {
         data = res.data;
         if(data != null){
-          proUserId = data.userId;
-        document.getElementById('username').innerHTML = data.name;
+      window.proUserId = data.userId;
+      console.log(window.proUserId);
+      document.getElementById('username').innerHTML = data.name;
       document.getElementById('email').innerHTML = data.email;
-      document.getElementById('proPics').setAttribute('src',data.proPicUrl);
-      document.getElementById("addNewPost").style.display = 'none';
+      document.getElementById('proPic').setAttribute('src',data.proPicUrl);
       feedCall();
+      // feeds();
       }
     });
     }
@@ -64,49 +65,64 @@ var proUserId;
     }    
 
 function feeds(){
-
-  call('feeds','get')
-  .then(res =>{
-    iterateFeeds(res.data);
-});
-
-function iterateFeeds(feed){
-  feed.forEach((e) => { 
-    var feed1 = `
-<div id="feedsPanel">
-<div id="feedInfo">
-<figure id="feedProPic"><img class="img" src="${e.proImgUrl}" /></figure>
-  <h4 id="feedProName">${e.name}</h4>
-    <h4 class="feedText" style="font-size: 14px;">
-          ${e.feedText}               
-    </h4>
-</div>
-<figure id="feedPic"><img class="img" src="${e.feedImgUrl}" /></figure>
-</div>
-`;
-document.getElementById("feeds").appendChild(feed1);
-})
+      document.getElementById("addNewPost").style.display = 'none';
+      document.getElementById('gallery').style.display = 'none';
+      document.getElementsById('friendPage').style.display = 'none';
+      document.getElementById('feeds').style.display = 'block';
+  feedCall();
 }
-}
+
+// function iterateFeeds(feed){
+//   feed.forEach((e) => { 
+//     var feed1 = `
+// <div id="feedsPanel">
+// <div id="feedInfo">
+// <figure id="feedProPic"><img class="img" src="${e.proImgUrl}" /></figure>
+//   <h4 id="feedProName">${e.name}</h4>
+//     <h4 class="feedText" style="font-size: 14px;">
+//           ${e.feedText}               
+//     </h4>
+// </div>
+// <figure id="feedPic"><img class="img" src="${e.feedImgUrl}" /></figure>
+// </div>
+// `;
+// document.getElementById("feeds").appendChild(feed1);
+// })
+// }
+// }
 
 function friends(){
-  hideSections();
-  document.getElementsById('feedsfriendPage').style.display = 'none';
+    document.getElementById("addNewPost").style.display = 'none';
+      document.getElementById('gallery').style.display = 'none';
+      document.getElementById('feeds').style.display = 'none';
+      document.getElementsById('timelineFeeds').style.display = 'none';
+      document.getElementsById('friendPage').style.display = 'block';
 }
 
 function feeds(){
   window.location.reload();
-  hideSections();
+  document.getElementById("addNewPost").style.display = 'none';
+  document.getElementById('gallery').style.display = 'none';
+  document.getElementsById('friendPage').style.display = 'none';
+  document.getElementsById('timelineFeeds').style.display = 'none';
+  document.getElementById('feeds').style.display = 'block';
 }
 
 function timeline(){
-  hideSections();
-  document.getElementsById('feedsPage').style.display = 'none';
+  timelineFeed();
+  document.getElementById("addNewPost").style.display = 'none';
+  document.getElementById('gallery').style.display = 'none';
+  document.getElementById('feeds').style.display = 'none';
+  document.getElementsById('friendPage').style.display = 'none';
+  document.getElementsById('timelineFeeds').style.display = 'block';
 }
 
 function photos(){
-  hideSections();
-  document.getElementById('gallery').style.display = 'block';
+  document.getElementById("addNewPost").style.display = 'none';
+  document.getElementById('feeds').style.display = 'none';
+  document.getElementsById('friendPage').style.display = 'none';
+  document.getElementsById('timelineFeeds').style.display = 'none';
+  document.getElementById('gallery').style.display = 'block'; 
 }
 
 function addPostBtn(){
@@ -153,11 +169,18 @@ function postFeed() {
  function feedCall(){
    call(url+"feed?getFeeds=getAll",'get')
    .then(res => {
-      feedIterate(res.data);
+      feedIterate(res.data,'feeds');
    })
  }
 
- function feedIterate(feed){
+ function timelineFeed(){
+  call('feed?getFeeds=getUserFeeds&fetch='+window.proUserId,'get')
+  .then(res => {
+     feedIterate(res.data,'timelineFeeds');
+  })
+}
+
+ function feedIterate(feed,toPost){
    console.log(feed);
    feed.forEach((e) => {
     if(localStorage.getItem(e.userId) == null){
@@ -165,28 +188,28 @@ function postFeed() {
       .then(res => {
         console.log(res.data);
            localStorage.setItem(e.userId,JSON.stringify(res.data));
-           postFeedFunction(e);
+           postFeedFunction(e,toPost);
       })
     }
     else{
-      postFeedFunction(e);
+      postFeedFunction(e,toPost);
     }
   })
 }
 
-function postFeedFunction(e){
+function postFeedFunction(e,toPost){
      var userDetail = JSON.parse(localStorage.getItem(e.userId));
      console.log(userDetail);
    var feedTemplate = `
-   <div id="feedsPanel" class="sections">
+   <div class="feedsPanel" class="sections">
             <div id="feedInfo">
               <div class="feedPro">
                 <figure style="margin:0 0 14px">
-                  <img src="${userDetail.proPicUrl}" style="width:45px; height:45px; border-radius: 50%; vertical-align: middle;" alt="">
+                  <img src="${userDetail.proPicUrl}" class="feedProPic" alt="">
                   <figcaption style="display: inline-block;
                   vertical-align:middle;">
                   <h4 style="font-size:16px; margin:0;font-weight: 700;">${userDetail.name}</h4>
-                  <h4 style="font-size:16px; margin:0; opacity:0.5;font-weight: 700;">${new Date(e.timeStamp)}</h4>
+                  <h4 style="font-size:13px; margin:0; opacity:0.5;font-weight: 700;">${new Date(e.timeStamp)}</h4>
                   </figcaption>
                   </figure>
               </div>
@@ -194,14 +217,20 @@ function postFeedFunction(e){
                 ${e.feedText}
               </h4>
             </div>
-            <figure id="feedPic"><img class="img" src="${e.imageUrl}" /></figure>
-            <div class="deleteBtn">
+            <figure class="feedPic"><img class="img" src="${e.imageUrl}" /></figure>`;
+
+            var deleteFeedBtn = `
+            <div class="feedBtn">
+              <a id="uploadImage" class="btn btn-primary mb-2 btn-xs" onclick=editFeed("${e.feedId}")>Edit</a>
+            </div>
+            </div>
+            <div class="feedBtn">
               <a id="uploadImage" class="btn btn-primary mb-2 btn-xs" onclick=deleteFeed("${e.feedId}")>Delete</a>
             </div>
-            </div>
-   `;
-   document.getElementById('feeds').innerHTML += feedTemplate;
+            </div>`;
+            if(window.proUserId == e.userId){
+            feedTemplate = feedTemplate+deleteFeedBtn;
+            }
+            document.getElementById(toPost).innerHTML += feedTemplate;
    
   }
-
-console.log(proUserId);
