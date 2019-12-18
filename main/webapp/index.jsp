@@ -40,20 +40,20 @@
       </center>
     </div>
     <hr style="background: #b0cbe3;height: 1px;">
-    <button class="leftPnlBtn">
-      &nbsp;<h5 class="fa fa-flash" style="font-size:14px" onclick="window.location.reload();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Feeds</h5>
+    <button class="leftPnlBtn" onclick="window.location.reload();">
+      &nbsp;<h5 class="fa fa-flash" style="font-size:14px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Feeds</h5>
     </button>
-    <button class="leftPnlBtn">
-      <h5 class="fa fa-users" style="font-size:14px" onclick="friendList();">&nbsp;&nbsp;&nbsp;&nbsp;Friends</h5>
+    <button class="leftPnlBtn" onclick="friendList();">
+      <h5 class="fa fa-users" style="font-size:14px">&nbsp;&nbsp;&nbsp;&nbsp;Friends</h5>
     </button>
-    <button class="leftPnlBtn">
-      <h5 class="glyphicon glyphicon-send" style="font-size:14px" onclick="timeline();">&nbsp;Timeline</h5>
+    <button class="leftPnlBtn" onclick="timeline();">
+      <h5 class="glyphicon glyphicon-send" style="font-size:14px">&nbsp;Timeline</h5>
     </button>
-    <button class="leftPnlBtn">
-      <h5 class="fa fa-camera" style="font-size:14px" onclick="photos();">&nbsp;&nbsp;&nbsp;&nbsp;Photos</h5>
+    <button class="leftPnlBtn" onclick="photos();">
+      <h5 class="fa fa-camera" style="font-size:14px">&nbsp;&nbsp;&nbsp;&nbsp;Photos</h5>
     </button>
-    <button class="leftPnlBtn">
-      <h5 class="glyphicon glyphicon-off" onclick="logout();" style="font-size:14px">&nbsp;Logout</h5>
+    <button class="leftPnlBtn" onclick="logout();">
+      <h5 class="glyphicon glyphicon-off" style="font-size:14px">&nbsp;Logout</h5>
     </button>
   </div>
 

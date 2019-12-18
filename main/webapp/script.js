@@ -210,6 +210,7 @@ function postFeedFunction(e,toPost){
 
   function friendListIterator(friendList){
    friendList.forEach((friendList) => {
+     if(window.proUserId != friendList.userId){
     if(localStorage.getItem(friendList.userId) == null){
       call(url+'userinfo?userId='+friendList.userId,'get')
       .then(res => {
@@ -220,6 +221,7 @@ function postFeedFunction(e,toPost){
     else{
       friendListFunction(friendList);
     }
+  }
   })
 }
 
