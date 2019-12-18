@@ -41,10 +41,10 @@
     </div>
     <hr style="background: #b0cbe3;height: 1px;">
     <button class="leftPnlBtn">
-      &nbsp;<h5 class="fa fa-flash" style="font-size:14px" onclick="feeds();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Feeds</h5>
+      &nbsp;<h5 class="fa fa-flash" style="font-size:14px" onclick="window.location.reload();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Feeds</h5>
     </button>
     <button class="leftPnlBtn">
-      <h5 class="fa fa-users" style="font-size:14px" onclick="friends();">&nbsp;&nbsp;&nbsp;&nbsp;Friends</h5>
+      <h5 class="fa fa-users" style="font-size:14px" onclick="friendList();">&nbsp;&nbsp;&nbsp;&nbsp;Friends</h5>
     </button>
     <button class="leftPnlBtn">
       <h5 class="glyphicon glyphicon-send" style="font-size:14px" onclick="timeline();">&nbsp;Timeline</h5>
@@ -70,18 +70,22 @@
         </div>
       </div>
       <div id="feedsPortion" class="sections"></div>
-    </div>
 
-    <div id="friendsPortion" class="sections" style="display:none;">Friends</div>
+      <div id="friendsPortion" class="sections" style="display:none;">
+        <div class="friendsPortion"><h2 style="margin-left: 65px;">Friends</h2></div>
+          <div id="friendsContainer" class="friendsPortion"></div>
+      </div>
     <div id="timelinePortion" class="sections" style="display:none;">Timeline</div>
     <div id="photosPortion" class="sections" style="display:none;">Photos</div>
-      
-    <div class="rightPanel">
-      <center>
-        <h5>&copy; AW Inc.</h5>
-      </center>
-</div>
+      <div class="endOfFeeds"></div>
+    
   </div>
+
+  <div class="rightPanel">
+    <center>
+      <h5>&copy; AW Inc.</h5>
+    </center>
+</div>
 
 <script src="script.js"></script>
   <script>

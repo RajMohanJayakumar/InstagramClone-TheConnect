@@ -8,13 +8,6 @@ var url = "http://localhost:8080/";
     });   
     }
 
-    let sections = document.querySelectorAll('.sections');
-    function hideSections(sections) {
-    sections.forEach(function(userItem) {
-    userItem.style.display = 'none';
-    });
-}
-
   function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     signOut();
@@ -51,7 +44,7 @@ var url = "http://localhost:8080/";
       document.getElementById('username').innerHTML = data.name;
       document.getElementById('email').innerHTML = data.email;
       document.getElementById('proPic').setAttribute('src',data.proPicUrl);
-      feeds();
+      feeds(feedCall);
       }
     });
     }
@@ -63,34 +56,43 @@ var url = "http://localhost:8080/";
       document.getElementById('email').innerHTML = proEmail;
     }    
 
-function feeds(){
-      feedCall();
-      hideSections(sections);
-      document.getElementById('feeds').style.display = 'block';
+function feeds(callback){
+  document.getElementById('photosPortion').style.display = 'none'; 
+  document.getElementById('timelinePortion').style.display = 'none';
+  document.getElementById('friendsPortion').style.display = 'none';
+  document.getElementById('feedsPortion').style.display = 'block';
+      callback();
 }
 
 function friends(){
-      hideSections(sections);
-      document.getElementsById('friendsPortion').style.display = 'block';
+  document.getElementById('photosPortion').style.display = 'none'; 
+  document.getElementById('timelinePortion').style.display = 'none';
+  document.getElementById('feedsPortion').style.display = 'none';
+  document.getElementById('friendsPortion').style.display = 'block';
 }
 
 function timeline(){
   timelineFeed();
-  hideSections();
-  document.getElementsById('timelineFeeds').style.display = 'block';
+  document.getElementById('photosPortion').style.display = 'none'; 
+  document.getElementById('friendsPortion').style.display = 'none';
+  document.getElementById('feedsPortion').style.display = 'none';
+  document.getElementById('timelinePortion').style.display = 'block';
 }
 
 function photos(){
-  hideSections();
-  document.getElementById('gallery').style.display = 'block'; 
+  document.getElementById('timelinePortion').style.display = 'none';
+  document.getElementById('friendsPortion').style.display = 'none';
+  document.getElementById('feedsPortion').style.display = 'none';
+  document.getElementById('photosPortion').style.display = 'block'; 
+  document.getElementById('photosPortion').innerHTML = "GALLERY"
 }
 
 function addPostBtn(){
   var x = document.getElementById("addNewPost");
-  if (x.style.display == "none") {
-    x.style.display = "block";
-  } else {
+  if (x.style.display == "block") {
     x.style.display = "none";
+  } else {
+    x.style.display = "block";
   }
 }
 
@@ -108,7 +110,7 @@ function postFeed() {
   let timeStamp = new Date().getTime();
   payload = [{
     feedText : feedText,
-    // imageUrl : imageUrl,
+    imageUrl : "https://www.outsideonline.com/sites/default/files/styles/img_1400x800/public/2019/10/10/man-reads-book-fall_h.jpg?itok=FX-pxiaq",
     timeStamp : timeStamp
   }] 
 
@@ -124,7 +126,7 @@ function postFeed() {
  }
 
  function feedCall(){
-   call(url+"feed?getFeeds=getAll",'get')
+   call('feed?getFeeds=getAll','get')
    .then(res => {
       feedIterate(res.data,'feedsPortion');
    })
@@ -195,4 +197,44 @@ function postFeedFunction(e,toPost){
             feedTemplate += feedBtns;
             }
             document.getElementById(toPost).innerHTML += feedTemplate;
+  }
+
+  function friendList(){
+    friends();
+    document.getElementById('friendsContainer').innerHTML = "";
+    call('userinfo?userId=getAll','get')
+    .then(res => {
+        friendListIterator(res.data);
+    })
+  }
+
+  function friendListIterator(friendList){
+   friendList.forEach((friendList) => {
+    if(localStorage.getItem(friendList.userId) == null){
+      call(url+'userinfo?userId='+friendList.userId,'get')
+      .then(res => {
+           localStorage.setItem(friendList.userId,JSON.stringify(res.data));
+           friendListFunction(friendList);
+      })
+    }
+    else{
+      friendListFunction(friendList);
+    }
+  })
+}
+
+function friendListFunction(friendList){
+      var friend = `
+      <div class="feedPro">
+                <figure style="margin:0 0 14px">
+                  <img src="${friendList.proPicUrl}" class="feedProPic" alt="">
+                  <figcaption style="display: inline-block;
+                  vertical-align:middle;">
+                  <h4 style="font-size:14px; margin:0;font-weight: 700;">${friendList.name}</h4>
+                  <h4 style="font-size:13px; margin:0; opacity:0.5;font-weight: 700;">${friendList.email}</h4>
+                  </figcaption>
+                  </figure>
+              </div>`;
+
+      document.getElementById('friendsContainer').innerHTML += friend;        
   }
