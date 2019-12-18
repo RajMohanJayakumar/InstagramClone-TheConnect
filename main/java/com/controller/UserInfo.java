@@ -28,8 +28,25 @@ public class UserInfo extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String userId = request.getParameter("userId");
+		if(userId == null) {
+			response.setStatus(400);
+			return;
+		}
 		
-		if(userId != null) {
+		switch(userId) {
+		case "getAll":{
+			Query q = new Query("UserDetail").addSort("name");
+			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(4));
+			List<UserDetail> userDetails = (List<UserDetail>) Datastore.EntitiesListToObjectList(preparedQuery,"UserDetail");
+			
+			ObjectWriter mapper = new ObjectMapper().writer().withDefaultPrettyPrinter();
+			String json = mapper.writeValueAsString(userDetails);
+			
+			response.setContentType("application/json");
+			response.getWriter().print(json);
+		}break;
+		
+		default : {
 		Query q = new Query("UserDetail").addFilter("userId", FilterOperator.EQUAL, userId);
 		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(4));
 		UserDetail userDetail = (UserDetail) Datastore.EntitiesListToObjectList(preparedQuery,"UserDetail","asSingleObject");
@@ -40,10 +57,7 @@ public class UserInfo extends HttpServlet {
 		response.setContentType("application/json");
 		response.getWriter().print(json);
 	}
-		else {
-			response.setStatus(400);
-			return;
-		}
 	}
 
+}
 }
