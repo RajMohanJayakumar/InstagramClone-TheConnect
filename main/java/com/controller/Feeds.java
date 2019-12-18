@@ -99,8 +99,12 @@ public class Feeds extends HttpServlet {
 
 		Feed feed = (Feed)JsonPharsing.jsonToObject(request,"Feed","asSingleObject");
 		
+		UUID id = UUID.randomUUID();
+		
 		if(session != null && session.getAttribute("userId") != null)
 		feed.setUserId((String)session.getAttribute("userId"));
+		
+		feed.setFeedId(id.toString());
 		
 		Datastore.ObjectToDatastore(feed, "Feed");
 		
@@ -119,6 +123,7 @@ public class Feeds extends HttpServlet {
 		
 			//Delete function
 //			Key feedKey = KeyFactory.createKey("Feed", id.toString());
+			feed.setStatus("deleted");
 			System.out.println(feedId);
 			
 		}

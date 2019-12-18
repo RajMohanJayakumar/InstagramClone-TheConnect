@@ -29,11 +29,10 @@ public class Datastore {
 		
 		switch(entity) {
 		case "Feed":{
-			UUID id = UUID.randomUUID();
 			
-			Key feedKey = KeyFactory.createKey(entity, id.toString());
-			Entity feedEntity = new Entity(entity,id.toString());
-			feedEntity.setProperty("feedId", id.toString());
+			Key feedKey = KeyFactory.createKey(entity, ((Feed) object).getFeedId());
+			Entity feedEntity = new Entity(entity,((Feed) object).getFeedId());
+			feedEntity.setProperty("feedId", ((Feed) object).getFeedId());
 			feedEntity.setProperty("userId", ((Feed) object).getUserId());
 			feedEntity.setProperty("feedText",((Feed) object).getFeedText());
 			feedEntity.setProperty("imageUrl", ((Feed) object).getImageUrl());
