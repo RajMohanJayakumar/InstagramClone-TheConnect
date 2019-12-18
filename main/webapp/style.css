@@ -36,6 +36,7 @@ h4{
     margin-left: 40px;
     padding-left: 30px;
     padding-top: 7px;
+    font-size: 20px;
 }
 
 .search-btn {
@@ -118,6 +119,7 @@ h4{
     width: 70%;
     align-items: center;
     margin-bottom: 0px;
+    display:none;
 }
 
 #postBtn {
@@ -198,4 +200,13 @@ h4{
     right: 0;
     position: fixed;
     background-color: rgb(239, 239, 245);
+}
+
+#mid40{
+    margin:auto;
+    width:35%;
+}
+
+.logout{
+    margin-top:200px;
 }

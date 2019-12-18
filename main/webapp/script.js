@@ -51,8 +51,7 @@ var url = "http://localhost:8080/";
       document.getElementById('username').innerHTML = data.name;
       document.getElementById('email').innerHTML = data.email;
       document.getElementById('proPic').setAttribute('src',data.proPicUrl);
-      feedCall();
-      // feeds();
+      feeds();
       }
     });
     }
@@ -65,69 +64,30 @@ var url = "http://localhost:8080/";
     }    
 
 function feeds(){
-      document.getElementById("addNewPost").style.display = 'none';
-      document.getElementById('gallery').style.display = 'none';
-      document.getElementsById('friendPage').style.display = 'none';
+      feedCall();
+      hideSections(sections);
       document.getElementById('feeds').style.display = 'block';
-  feedCall();
 }
-
-// function iterateFeeds(feed){
-//   feed.forEach((e) => { 
-//     var feed1 = `
-// <div id="feedsPanel">
-// <div id="feedInfo">
-// <figure id="feedProPic"><img class="img" src="${e.proImgUrl}" /></figure>
-//   <h4 id="feedProName">${e.name}</h4>
-//     <h4 class="feedText" style="font-size: 14px;">
-//           ${e.feedText}               
-//     </h4>
-// </div>
-// <figure id="feedPic"><img class="img" src="${e.feedImgUrl}" /></figure>
-// </div>
-// `;
-// document.getElementById("feeds").appendChild(feed1);
-// })
-// }
-// }
 
 function friends(){
-    document.getElementById("addNewPost").style.display = 'none';
-      document.getElementById('gallery').style.display = 'none';
-      document.getElementById('feeds').style.display = 'none';
-      document.getElementsById('timelineFeeds').style.display = 'none';
-      document.getElementsById('friendPage').style.display = 'block';
-}
-
-function feeds(){
-  window.location.reload();
-  document.getElementById("addNewPost").style.display = 'none';
-  document.getElementById('gallery').style.display = 'none';
-  document.getElementsById('friendPage').style.display = 'none';
-  document.getElementsById('timelineFeeds').style.display = 'none';
-  document.getElementById('feeds').style.display = 'block';
+      hideSections(sections);
+      document.getElementsById('friendsPortion').style.display = 'block';
 }
 
 function timeline(){
   timelineFeed();
-  document.getElementById("addNewPost").style.display = 'none';
-  document.getElementById('gallery').style.display = 'none';
-  document.getElementById('feeds').style.display = 'none';
-  document.getElementsById('friendPage').style.display = 'none';
+  hideSections();
   document.getElementsById('timelineFeeds').style.display = 'block';
 }
 
 function photos(){
-  document.getElementById("addNewPost").style.display = 'none';
-  document.getElementById('feeds').style.display = 'none';
-  document.getElementsById('friendPage').style.display = 'none';
-  document.getElementsById('timelineFeeds').style.display = 'none';
+  hideSections();
   document.getElementById('gallery').style.display = 'block'; 
 }
 
 function addPostBtn(){
   var x = document.getElementById("addNewPost");
-  if (x.style.display === "none") {
+  if (x.style.display == "none") {
     x.style.display = "block";
   } else {
     x.style.display = "none";
@@ -145,17 +105,14 @@ function call(url,method,payload){
 
 function postFeed() {
   let feedText = document.getElementById('feedTextArea').value;
-  console.log(feedText);
   let timeStamp = new Date().getTime();
-  console.log(timeStamp);
-  let imageUrl = "image.jpg";
   payload = [{
     feedText : feedText,
-    timeStamp : timeStamp,
-    imageUrl : imageUrl
+    // imageUrl : imageUrl,
+    timeStamp : timeStamp
   }] 
 
-  call(url+'feed','post',payload)
+  call('feed','post',payload)
   .then(res =>{
     document.getElementById('feedTextArea').value = "";
     document.getElementById("addNewPost").style.display = "none";
@@ -169,19 +126,20 @@ function postFeed() {
  function feedCall(){
    call(url+"feed?getFeeds=getAll",'get')
    .then(res => {
-      feedIterate(res.data,'feeds');
+      feedIterate(res.data,'feedsPortion');
    })
  }
 
  function timelineFeed(){
   call('feed?getFeeds=getUserFeeds&fetch='+window.proUserId,'get')
   .then(res => {
-     feedIterate(res.data,'timelineFeeds');
+     feedIterate(res.data,'timelinePortion');
   })
 }
 
  function feedIterate(feed,toPost){
    console.log(feed);
+   document.getElementById(toPost).innerHTML = "";
    feed.forEach((e) => {
     if(localStorage.getItem(e.userId) == null){
       call(url+'userinfo?userId='+e.userId,'get')
@@ -201,7 +159,7 @@ function postFeedFunction(e,toPost){
      var userDetail = JSON.parse(localStorage.getItem(e.userId));
      console.log(userDetail);
    var feedTemplate = `
-   <div class="feedsPanel" class="sections">
+   <div class="feedsPanel">
             <div id="feedInfo">
               <div class="feedPro">
                 <figure style="margin:0 0 14px">
@@ -216,10 +174,11 @@ function postFeedFunction(e,toPost){
               <h4 class="feedText" style="font-size: 14px;">
                 ${e.feedText}
               </h4>
-            </div>
-            <figure class="feedPic"><img class="img" src="${e.imageUrl}" /></figure>`;
+            </div>`;
+            
+            var image = `<figure class="feedPic"><img class="img" src="${e.imageUrl}" /></figure>`;
 
-            var deleteFeedBtn = `
+            var feedBtns = `
             <div class="feedBtn">
               <a id="uploadImage" class="btn btn-primary mb-2 btn-xs" onclick=editFeed("${e.feedId}")>Edit</a>
             </div>
@@ -228,9 +187,12 @@ function postFeedFunction(e,toPost){
               <a id="uploadImage" class="btn btn-primary mb-2 btn-xs" onclick=deleteFeed("${e.feedId}")>Delete</a>
             </div>
             </div>`;
+
+            if(e.imageUrl != "null"){
+              feedTemplate += image;
+            }
             if(window.proUserId == e.userId){
-            feedTemplate = feedTemplate+deleteFeedBtn;
+            feedTemplate += feedBtns;
             }
             document.getElementById(toPost).innerHTML += feedTemplate;
-   
   }

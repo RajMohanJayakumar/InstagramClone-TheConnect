@@ -17,10 +17,10 @@
 </head>
 
 <body>
-  <div id="logout">
-    <div id="header">
-      <div id="logo">
-        <h3 id="titleMain" style="font-size: 20px;">The Connect</h3>
+  <div class="logout">
+    <div class="header">
+      <div class="fl-lf-al-cn">
+        <h3 class="titleMain">The Connect</h3>
       </div>
     </div>
     <div id="logoutPanel">

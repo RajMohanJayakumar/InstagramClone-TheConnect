@@ -32,13 +32,13 @@ public class Datastore {
 			UUID id = UUID.randomUUID();
 			
 			Key feedKey = KeyFactory.createKey(entity, id.toString());
-			Entity feedEntity = new Entity(entity);
+			Entity feedEntity = new Entity(entity,id.toString());
 			feedEntity.setProperty("feedId", id.toString());
 			feedEntity.setProperty("userId", ((Feed) object).getUserId());
 			feedEntity.setProperty("feedText",((Feed) object).getFeedText());
 			feedEntity.setProperty("imageUrl", ((Feed) object).getImageUrl());
 			feedEntity.setProperty("timeStamp", ((Feed) object).getTimeStamp());
-			feedEntity.setProperty("status", ((Feed) object).getStatus());
+			feedEntity.setProperty("status", "active");
 			datastore.put(feedEntity);
 			return;
 		}
@@ -90,14 +90,16 @@ public static List EntitiesListToObjectList(List<Entity> entities,String classna
 			properties = new HashMap<>();
 			List<Feed> list = new ArrayList<Feed>();
 			for(Entity entity : entities) { 
-				properties = entity.getProperties();
 				Feed feed = new Feed();
+				properties = entity.getProperties();
+				if(String.valueOf(entity.getProperty("status")).equals("active")) {
 				feed.setFeedId(String.valueOf(entity.getProperty("feedId")));
 				feed.setUserId(String.valueOf(entity.getProperty("userId")));
 				feed.setFeedText(String.valueOf(entity.getProperty("feedText")));
 				feed.setImageUrl(String.valueOf(entity.getProperty("imageUrl")));
 				feed.setTimeStamp(Long.valueOf((long) entity.getProperty("timeStamp")));
 				feed.setStatus(String.valueOf(entity.getProperty("status")));
+				}
 				list.add(feed);
 			}
 			return list;

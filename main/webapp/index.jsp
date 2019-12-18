@@ -10,7 +10,7 @@
 <body>
 <div class="header">
   <div class="fl-lf-al-cn">
-    <h3 class="titleMain" style="font-size: 20px;">The Connect</h3>
+    <h3 class="titleMain">The Connect</h3>
   </div>
   <div class="fl-lf-al-cn" class="form-group mx-sm-3 mb-2">
     <label class="sr-only">Search</label>
@@ -58,7 +58,6 @@
   </div>
 
   <div class="middlePanel">
-    <div id="feedsPage">
       <div id="addNewPost">
         <div class="form-group purple-border">
           <label for="exampleFormControlTextarea4">Add Post</label>
@@ -70,25 +69,24 @@
           </div>
         </div>
       </div>
-
-      <div id="feeds">jnkjnkjnkjn</div>
-      <div id="timelineFeeds">lknkjnkjnjkk</div>
-      <div id='friendsPage'>nkjnkjnkjn</div>
+      <div id="feedsPortion" class="sections"></div>
     </div>
+
+    <div id="friendsPortion" class="sections" style="display:none;">Friends</div>
+    <div id="timelinePortion" class="sections" style="display:none;">Timeline</div>
+    <div id="photosPortion" class="sections" style="display:none;">Photos</div>
       
-  </div>
-      <div class="rightPanel">
-        <center>
-          <h5>&copy; AW Inc.</h5>
-        </center>
-      </div>
-      </div>
+    <div class="rightPanel">
+      <center>
+        <h5>&copy; AW Inc.</h5>
+      </center>
 </div>
+  </div>
 
 <script src="script.js"></script>
   <script>
     window.onload = function () {
-      dashboard(updateUserDetails);
+      dashboard();
     };
   </script>
 </body>
