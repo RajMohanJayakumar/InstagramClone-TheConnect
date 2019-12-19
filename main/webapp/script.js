@@ -118,6 +118,7 @@ function postFeed() {
   .then(res =>{
     document.getElementById('feedTextArea').value = "";
     document.getElementById("addNewPost").style.display = "none";
+    window.location.reload();
   })
  }
 
@@ -179,22 +180,23 @@ function postFeedFunction(e,toPost){
             </div>`;
             
             var image = `<figure class="feedPic"><img class="img" src="${e.imageUrl}" /></figure>`;
-
-            var feedBtns = `
+            var isEdited = `<div class="isEdited></div>`;
+            var feedController = `
+            <div class="feedBtns">
             <div class="feedBtn">
-              <a id="uploadImage" class="btn btn-primary mb-2 btn-xs" onclick=editFeed("${e.feedId}")>Edit</a>
-            </div>
+              <a id="uploadImage" class="btn btn-primary mb-2 btn-xs" style="font-size: 13px;" onclick=editFeed("${e.feedId}")>Edit</a>
             </div>
             <div class="feedBtn">
-              <a id="uploadImage" class="btn btn-primary mb-2 btn-xs" onclick=deleteFeed("${e.feedId}")>Delete</a>
+              <a id="uploadImage" class="btn btn-primary mb-2 btn-xs" style="font-size: 13px;" onclick=deleteFeed("${e.feedId}")>Delete</a>
             </div>
-            </div>`;
+            </div>
+            `;
 
             if(e.imageUrl != "null"){
               feedTemplate += image;
             }
             if(window.proUserId == e.userId){
-            feedTemplate += feedBtns;
+            feedTemplate += feedController;
             }
             document.getElementById(toPost).innerHTML += feedTemplate;
   }

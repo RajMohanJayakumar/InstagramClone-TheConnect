@@ -25,9 +25,12 @@ h4{
 }
 
 .feedBtn {
-    font-size: 14px;
-    size: 10px;
     float: right;
+    margin-left: 10px;
+}
+
+.feedBtns {
+    margin-top : 5px;
 }
 
 .titleMain {
@@ -217,4 +220,8 @@ h4{
 
 .endOfFeeds{
     margin-bottom: 40px;
+}
+
+.btn-xs {
+    font-size: 13px;
 }
