@@ -37,7 +37,9 @@ public class Datastore {
 			feedEntity.setProperty("feedText",((Feed) object).getFeedText());
 			feedEntity.setProperty("imageUrl", ((Feed) object).getImageUrl());
 			feedEntity.setProperty("timeStamp", ((Feed) object).getTimeStamp());
-			feedEntity.setProperty("status", "active");
+			feedEntity.setProperty("status", ((Feed) object).getStatus());
+			feedEntity.setProperty("edit",((Feed) object).isEdit());
+			
 			datastore.put(feedEntity);
 			return;
 		}

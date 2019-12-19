@@ -19,6 +19,16 @@ private String feedText;
 
 private long timeStamp;
 
+private boolean edit;
+
+public boolean isEdit() {
+	return edit;
+}
+
+public void setEdit(boolean edit) {
+	this.edit = edit;
+}
+
 private String status;
 
 public String getFeedId() {
