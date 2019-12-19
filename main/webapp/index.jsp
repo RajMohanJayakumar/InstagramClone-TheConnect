@@ -83,7 +83,7 @@
 
   <div class="rightPanel">
     <center>
-      <h5>&copy; AW Inc.</h5>
+      <h5></h5>
     </center>
 </div>
 

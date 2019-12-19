@@ -1,17 +1,15 @@
-var url = "http://localhost:8080/";
-
     function logout(){
       call('session','delete')
       .then(res => {
         localStorage.clear();
-        window.location.replace(url);
+        window.location.reload();
     });   
     }
 
   function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     signOut();
-
+    window.proUserId = profile.userId;
     payload = [{
       userId:profile.getId(),
       name:profile.getName(),
@@ -79,7 +77,17 @@ function timeline(){
   document.getElementById('timelinePortion').style.display = 'block';
 }
 
+function friendsTimeline(userId){
+  
+  document.getElementById('photosPortion').style.display = 'none'; 
+  document.getElementById('friendsPortion').style.display = 'none';
+  document.getElementById('feedsPortion').style.display = 'none';
+  document.getElementById('timelinePortion').style.display = 'block';
+  friendTimeline(userId);
+}
+
 function photos(){
+  photosCall()
   document.getElementById('timelinePortion').style.display = 'none';
   document.getElementById('friendsPortion').style.display = 'none';
   document.getElementById('feedsPortion').style.display = 'none';
@@ -105,8 +113,32 @@ function call(url,method,payload){
 })
 }
 
+function photosCall(){
+  call('photos','get')
+  .then(res => {
+     photoIterate(res.data);
+  })
+  
+}
+
+function photoIterate(photos){
+  document.getElementById('photosPortion').innerHTML = "";
+  photos.forEach((e) => {
+    if(e.imageUrl != "null"){
+      console.log(e.imageUrl)
+    let photoPortion = `<figure class="galleryPic"><img class="img" src="${e.imageUrl}" /></figure>`;
+    document.getElementById('photosPortion').innerHTML += photoPortion;
+    }
+  })
+}
+
+
 function postFeed() {
   let feedText = document.getElementById('feedTextArea').value;
+  let feedTextTrim = feedText.trim();
+  if(feedTextTrim == ""){
+    return;
+  }
   let timeStamp = new Date().getTime();
   payload = [{
     feedText : feedText,
@@ -134,9 +166,16 @@ function postFeed() {
  }
 
  function timelineFeed(){
+   console.log(window.proUserId);
   call('feed?getFeeds=getUserFeeds&fetch='+window.proUserId,'get')
   .then(res => {
-    window.feeds = res.data;
+     feedIterate(res.data,'timelinePortion');
+  })
+}
+
+function friendTimeline(userId){
+  call('feed?getFeeds=getUserFeeds&fetch='+userId,'get')
+  .then(res => {
      feedIterate(res.data,'timelinePortion');
   })
 }
@@ -146,7 +185,8 @@ function postFeed() {
    document.getElementById(toPost).innerHTML = "";
    feed.forEach((e) => {
     if(localStorage.getItem(e.userId) == null){
-      call(url+'user?user='+e.userId,'get')
+      console.log("fri"+e.userId);
+      call('user?user='+e.userId,'get')
       .then(res => {
         console.log(res.data);
            localStorage.setItem(e.userId,JSON.stringify(res.data));
@@ -170,7 +210,7 @@ function postFeedFunction(e,toPost){
                   <img src="${userDetail.proPicUrl}" class="feedProPic" alt="">
                   <figcaption style="display: inline-block;
                   vertical-align:middle;">
-                  <h4 style="font-size:16px; margin:0;font-weight: 700;">${userDetail.name}</h4>
+                  <h4 style="font-size:14px; margin:0;font-weight: 700; cursor: pointer" onclick="friendsTimeline('${userDetail.userId}')">${userDetail.name}</h4>
                   <h4 style="font-size:13px; margin:0; opacity:0.5;font-weight: 700;">${new Date(e.timeStamp)}</h4>
                   </figcaption>
                   </figure>
@@ -215,7 +255,8 @@ function postFeedFunction(e,toPost){
    friendList.forEach((friendList) => {
      if(window.proUserId != friendList.userId){
     if(localStorage.getItem(friendList.userId) == "null"){
-      call(url+'user?user='+friendList.userId,'get')
+      console.log("fri"+friendList.userId)
+      call('user?user='+friendList.userId,'get')
       .then(res => {
            localStorage.setItem(friendList.userId,JSON.stringify(res.data));
            friendListFunction(friendList);
@@ -235,8 +276,8 @@ function friendListFunction(friendList){
                   <img src="${friendList.proPicUrl}" class="feedProPic" alt="">
                   <figcaption style="display: inline-block;
                   vertical-align:middle;">
-                  <h4 style="font-size:14px; margin:0;font-weight: 700;">${friendList.name}</h4>
-                  <h4 style="font-size:13px; margin:0; opacity:0.5;font-weight: 700;">${friendList.email}</h4>
+                  <h4 style="font-size:14px; margin:0;font-weight: 700; cursor: pointer" onclick="friendsTimeline('${friendList.userId}')">${friendList.name}</h4>
+                   <h4 style="font-size:13px; margin:0; opacity:0.5;font-weight: 700;">${friendList.email}</h4>
                   </figcaption>
                   </figure>
               </div>`;
