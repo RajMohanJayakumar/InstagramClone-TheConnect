@@ -105,9 +105,30 @@ public class Feeds extends HttpServlet {
 		feed.setUserId((String)session.getAttribute("userId"));
 		
 		feed.setFeedId(id.toString());
+		feed.setStatus("active");
 		
 		Datastore.ObjectToDatastore(feed, "Feed");
 		
+	}
+	
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws JsonGenerationException, JsonMappingException, IOException {
+		String feedId = request.getParameter("feedId");
+		HttpSession session = request.getSession(false);
+		
+		Query q = new Query("Feed").addFilter("feedId", FilterOperator.EQUAL, feedId);
+		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
+		
+		Feed feed = (Feed) Datastore.EntitiesListToObjectList(preparedQuery,"Feed","AsSingleObject");
+		
+		if(session.getAttribute("userId").equals(feed.getUserId())) {
+			feed.setEdit(true);
+			Datastore.ObjectToDatastore(feed, "Feed");
+			
+		}
+		else {
+			response.setStatus(401);
+			return;
+		}
 	}
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -120,11 +141,8 @@ public class Feeds extends HttpServlet {
 		Feed feed = (Feed) Datastore.EntitiesListToObjectList(preparedQuery,"Feed","AsSingleObject");
 		
 		if(session.getAttribute("userId").equals(feed.getUserId())) {
-		
-			//Delete function
-//			Key feedKey = KeyFactory.createKey("Feed", id.toString());
 			feed.setStatus("deleted");
-			System.out.println(feedId);
+			Datastore.ObjectToDatastore(feed, "Feed");
 			
 		}
 		else {
