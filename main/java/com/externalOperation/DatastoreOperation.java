@@ -100,8 +100,8 @@ public static List EntitiesListToObjectList(List<Entity> entities,String classna
 				feed.setImageUrl(String.valueOf(entity.getProperty("imageUrl")));
 				feed.setTimeStamp(Long.valueOf((long) entity.getProperty("timeStamp")));
 				feed.setStatus(String.valueOf(entity.getProperty("status")));
-				}
 				list.add(feed);
+				}
 			}
 			return list;
 		}
