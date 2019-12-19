@@ -21,7 +21,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.model.Feed;
 
-@WebServlet("/photo")
+@WebServlet("/photos")
 public class PhotosController extends HttpServlet {
 
 	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -31,12 +31,13 @@ public class PhotosController extends HttpServlet {
 		
 		HttpSession session = request.getSession(false);
 		
-			Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, session.getAttribute("userId"));
-			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
-			List<Feed> feeds =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
-			String json = mapper.writeValueAsString(feeds);
-			response.setContentType("application/json");
-			response.getWriter().print(json);
+		Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, session.getAttribute("userId"));
+		q.addSort("timeStamp", Query.SortDirection.DESCENDING);
+		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
+		List<Feed> feeds =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
+		String json = mapper.writeValueAsString(feeds);
+		response.setContentType("application/json");
+		response.getWriter().print(json);
 			
 	}
 }

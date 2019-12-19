@@ -34,7 +34,7 @@ public class UserController extends HttpServlet {
 		String json = null;
 		
 		String user = request.getParameter("user");
-		if(user == null) {
+		if(user.equals("null")) {
 			response.setStatus(400);
 			return;
 		}
