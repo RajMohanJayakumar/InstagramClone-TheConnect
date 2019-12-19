@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.externalOperation.Datastore;
-import com.externalOperation.JsonPharsing;
+import com.externalOperation.DatastoreOperation;
+import com.externalOperation.JsonPharsingOperation;
 import com.model.UserDetail;
 
 @WebServlet("/session")
@@ -29,7 +29,7 @@ public class SessionAndRedirect extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		UserDetail userDetail = (UserDetail) JsonPharsing.jsonToObject(request, "UserDetail","asSingleObject");
+		UserDetail userDetail = (UserDetail) JsonPharsingOperation.jsonToObject(request, "UserDetail","asSingleObject");
 
 		if(userDetail.getUserId() == null || userDetail.getEmail() == null || userDetail.getName() == null || userDetail.getProPicUrl() == null) {
 			response.setStatus(400);
@@ -37,7 +37,7 @@ public class SessionAndRedirect extends HttpServlet {
 		}
 		
 		HttpSession session = request.getSession();
-		Datastore.ObjectToDatastore(userDetail,"UserDetail");
+		DatastoreOperation.ObjectToDatastore(userDetail,"UserDetail");
 		session.setAttribute("userId", userDetail.getUserId());
 	}
 	

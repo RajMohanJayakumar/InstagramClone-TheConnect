@@ -18,7 +18,7 @@ import org.codehaus.jackson.type.TypeReference;
 import com.google.appengine.api.datastore.Entity;
 import com.model.*;
 
-public class JsonPharsing {
+public class JsonPharsingOperation {
 	
 	public static Object jsonToObject(HttpServletRequest request,String classname,String returnAs) throws IOException {
 		 List<Object> obj = (List<Object>) jsonToObject(request,classname);

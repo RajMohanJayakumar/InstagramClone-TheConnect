@@ -33,7 +33,7 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.model.Feed;
 
 @WebServlet("/feed")
-public class Feeds extends HttpServlet {
+public class FeedsController extends HttpServlet {
 
 	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	ObjectMapper mapper = new ObjectMapper();
@@ -48,7 +48,7 @@ public class Feeds extends HttpServlet {
 		case "getAll" : {
 			Query q = new Query("Feed").addSort("timeStamp", Query.SortDirection.DESCENDING);
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
-			List<Feed> feed = Datastore.EntitiesListToObjectList(preparedQuery,"Feed");
+			List<Feed> feed = DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
 			String json = mapper.writeValueAsString(feed);
 			response.setContentType("application/json");
 			response.getWriter().print(json);
@@ -59,7 +59,7 @@ public class Feeds extends HttpServlet {
 			if(fetch != null) {
 			Query q = new Query("Feed").addFilter("feedId", FilterOperator.EQUAL, fetch);
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(5));
-			List<Feed> feed =  Datastore.EntitiesListToObjectList(preparedQuery,"Feed");
+			List<Feed> feed =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
 			String json = mapper.writeValueAsString(feed);
 			response.setContentType("application/json");
 			response.getWriter().print(json);
@@ -76,7 +76,7 @@ public class Feeds extends HttpServlet {
 				Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, fetch)
 						.addSort("timeStamp", Query.SortDirection.DESCENDING);
 				List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
-				List<Feed> feeds =  Datastore.EntitiesListToObjectList(preparedQuery,"Feed");
+				List<Feed> feeds =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
 				String json = mapper.writeValueAsString(feeds);
 				response.setContentType("application/json");
 				response.getWriter().print(json);
@@ -97,7 +97,7 @@ public class Feeds extends HttpServlet {
 		
 		HttpSession session = request.getSession(false);
 
-		Feed feed = (Feed)JsonPharsing.jsonToObject(request,"Feed","asSingleObject");
+		Feed feed = (Feed)JsonPharsingOperation.jsonToObject(request,"Feed","asSingleObject");
 		
 		UUID id = UUID.randomUUID();
 		
@@ -107,7 +107,7 @@ public class Feeds extends HttpServlet {
 		feed.setFeedId(id.toString());
 		feed.setStatus("active");
 		
-		Datastore.ObjectToDatastore(feed, "Feed");
+		DatastoreOperation.ObjectToDatastore(feed, "Feed");
 		
 	}
 	
@@ -118,11 +118,11 @@ public class Feeds extends HttpServlet {
 		Query q = new Query("Feed").addFilter("feedId", FilterOperator.EQUAL, feedId);
 		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
 		
-		Feed feed = (Feed) Datastore.EntitiesListToObjectList(preparedQuery,"Feed","AsSingleObject");
+		Feed feed = (Feed) DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed","AsSingleObject");
 		
 		if(session.getAttribute("userId").equals(feed.getUserId())) {
 			feed.setEdit(true);
-			Datastore.ObjectToDatastore(feed, "Feed");
+			DatastoreOperation.ObjectToDatastore(feed, "Feed");
 			
 		}
 		else {
@@ -138,11 +138,11 @@ public class Feeds extends HttpServlet {
 		Query q = new Query("Feed").addFilter("feedId", FilterOperator.EQUAL, feedId);
 		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
 		
-		Feed feed = (Feed) Datastore.EntitiesListToObjectList(preparedQuery,"Feed","AsSingleObject");
+		Feed feed = (Feed) DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed","AsSingleObject");
 		
 		if(session.getAttribute("userId").equals(feed.getUserId())) {
 			feed.setStatus("deleted");
-			Datastore.ObjectToDatastore(feed, "Feed");
+			DatastoreOperation.ObjectToDatastore(feed, "Feed");
 			
 		}
 		else {
