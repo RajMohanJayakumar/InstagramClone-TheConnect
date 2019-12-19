@@ -35,7 +35,7 @@ var url = "http://localhost:8080/";
     var data;
     
     function dashboard(){
-      call('currentuserdata','get')
+      call('user?user=currentuser','get')
     .then(res => {
         data = res.data;
         if(data != null){
@@ -61,7 +61,7 @@ function feeds(callback){
   document.getElementById('timelinePortion').style.display = 'none';
   document.getElementById('friendsPortion').style.display = 'none';
   document.getElementById('feedsPortion').style.display = 'block';
-      callback();
+  callback();
 }
 
 function friends(){
@@ -136,6 +136,7 @@ function postFeed() {
  function timelineFeed(){
   call('feed?getFeeds=getUserFeeds&fetch='+window.proUserId,'get')
   .then(res => {
+    window.feeds = res.data;
      feedIterate(res.data,'timelinePortion');
   })
 }
@@ -145,7 +146,7 @@ function postFeed() {
    document.getElementById(toPost).innerHTML = "";
    feed.forEach((e) => {
     if(localStorage.getItem(e.userId) == null){
-      call(url+'userinfo?userId='+e.userId,'get')
+      call(url+'user?user='+e.userId,'get')
       .then(res => {
         console.log(res.data);
            localStorage.setItem(e.userId,JSON.stringify(res.data));
@@ -204,7 +205,7 @@ function postFeedFunction(e,toPost){
   function friendList(){
     friends();
     document.getElementById('friendsContainer').innerHTML = "";
-    call('userinfo?userId=getAll','get')
+    call('user?user=getAll','get')
     .then(res => {
         friendListIterator(res.data);
     })
@@ -213,8 +214,8 @@ function postFeedFunction(e,toPost){
   function friendListIterator(friendList){
    friendList.forEach((friendList) => {
      if(window.proUserId != friendList.userId){
-    if(localStorage.getItem(friendList.userId) == null){
-      call(url+'userinfo?userId='+friendList.userId,'get')
+    if(localStorage.getItem(friendList.userId) == "null"){
+      call(url+'user?user='+friendList.userId,'get')
       .then(res => {
            localStorage.setItem(friendList.userId,JSON.stringify(res.data));
            friendListFunction(friendList);
