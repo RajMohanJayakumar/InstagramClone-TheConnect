@@ -154,8 +154,11 @@ function postFeed() {
   })
  }
 
- function deleteFeed(feedId){
+ function deleteFeed(feedId,currentDiv){
    call('feed?feedId='+feedId,'delete')
+   .then(res => {
+     currentDiv.parentNode.parentNode.parentNode.remove();
+   })
  }
 
  function feedCall(){
@@ -225,10 +228,10 @@ function postFeedFunction(e,toPost){
             var feedController = `
             <div class="feedBtns">
             <div class="feedBtn">
-              <a id="uploadImage" class="btn btn-primary mb-2 btn-xs" style="font-size: 13px;" onclick=editFeed("${e.feedId}")>Edit</a>
+              <a id="editButton" class="btn btn-primary mb-2 btn-xs" style="font-size: 13px;" onclick=editFeed("${e.feedId}",this)>Edit</a>
             </div>
             <div class="feedBtn">
-              <a id="uploadImage" class="btn btn-primary mb-2 btn-xs" style="font-size: 13px;" onclick=deleteFeed("${e.feedId}")>Delete</a>
+              <a id="deleteButton" class="btn btn-primary mb-2 btn-xs" style="font-size: 13px;" onclick=deleteFeed("${e.feedId}",this)>Delete</a>
             </div>
             </div>
             `;
