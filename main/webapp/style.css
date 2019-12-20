@@ -231,8 +231,22 @@ h4{
 }
 
 .editPost{
-    margin: auto;
-    width: 70%;
-    align-items: center;
+    width: 100%;
+    height: 100%;
     display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0.8;
+    z-index: 10;
+    background-color: rgba(0,0,0,0.8);
+}
+#editPost{
+    position: absolute;
+    top: 50%;
+    width: 300px;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #fff;
+    /* transform: translate(-50%, -50%);
 }

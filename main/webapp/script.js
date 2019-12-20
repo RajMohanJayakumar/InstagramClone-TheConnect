@@ -228,7 +228,7 @@ function postFeedFunction(e,toPost){
             var feedController = `
             <div class="feedBtns">
             <div class="feedBtn">
-              <a id="editButton" class="btn btn-primary mb-2 btn-xs" style="font-size: 13px;" onclick=editFeed("${e.feedId}",this)>Edit</a>
+              <a id="editButton" class="btn btn-primary mb-2 btn-xs" style="font-size: 13px;" onclick=editPost("${e.feedId}",this)>Edit</a>
             </div>
             <div class="feedBtn">
               <a id="deleteButton" class="btn btn-primary mb-2 btn-xs" style="font-size: 13px;" onclick=deleteFeed("${e.feedId}",this)>Delete</a>
@@ -290,3 +290,14 @@ function friendListFunction(friendList){
 
       document.getElementById('friendsContainer').innerHTML += friend;        
   }
+
+
+
+  function editPost(feedId,divProperties){
+    console.log(divProperties);
+    document.getElementById('editPortion').style.display = 'block';
+  }
+
+function closeEdit(){
+  document.getElementById('editPortion').style.display = 'none';
+}
