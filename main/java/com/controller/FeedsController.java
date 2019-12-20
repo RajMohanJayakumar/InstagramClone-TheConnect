@@ -31,6 +31,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.model.Feed;
+import com.model.UserDetail;
 
 @WebServlet("/feed")
 public class FeedsController extends HttpServlet {
@@ -47,12 +48,10 @@ public class FeedsController extends HttpServlet {
 		switch(getFeeds) {
 		case "getAll" : {
 //			if(timeStamp != null) {
-				System.out.println(timeStamp);
 			Query q = new Query("Feed")
 					.addSort("timeStamp", Query.SortDirection.DESCENDING);
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(100));
 			List<Feed> feed = DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
-			System.out.println("getAll");
 			String json = mapper.writeValueAsString(feed);
 			response.setContentType("application/json");
 			response.getWriter().print(json);
@@ -123,11 +122,19 @@ public class FeedsController extends HttpServlet {
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws JsonGenerationException, JsonMappingException, IOException {
 		HttpSession session = request.getSession(false);
-
-		Feed feed = (Feed)JsonPharsingOperation.jsonToObject(request,"Feed","asSingleObject");
 		
-		if(session.getAttribute("userId").equals(feed.getUserId())) {
+		Feed feed = (Feed)JsonPharsingOperation.jsonToObject(request,"Feed","asSingleObject");
+		Query q = new Query("Feed").addFilter("feedId", FilterOperator.EQUAL, feed.getFeedId());
+		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(4));
+		Feed lastFeedUpdate = (Feed) DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed","asSingleObject");		
+		
+		if(session.getAttribute("userId").equals(lastFeedUpdate.getUserId())) {
 			feed.setEdited("true");
+			feed.setImageUrl(lastFeedUpdate.getImageUrl()); //Have to change once the image api is fixed
+			feed.setFeedId(lastFeedUpdate.getFeedId());
+			feed.setStatus("active");
+			feed.setTimeStamp(lastFeedUpdate.getTimeStamp());
+			feed.setUserId(lastFeedUpdate.getUserId());
 			DatastoreOperation.ObjectToDatastore(feed, "Feed");
 			
 		}

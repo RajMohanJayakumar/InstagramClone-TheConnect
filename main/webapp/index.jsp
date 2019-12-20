@@ -80,18 +80,7 @@
 
 
     <div id="editPortion" class="editPost">
-      <div id="editPost">
-        <div class="form-group purple-border">
-          <label for="exampleFormControlTextarea4">Edit Post</label>
-          <textarea class="form-control" id="feedTextArea" rows="3"
-            value="Write Something..."></textarea>
-          <div id="uploadAndPostBtn" class="clearfix">
-            <a id="postBtn" class="btn btn-primary mb-2 btn-xs" onclick="editFeed();">update</a>
-            <a id="addImage" class="btn btn-primary mb-2 btn-xs">+ update Image</a>
-            <a id="closeEdit" class="btn btn-primary mb-2 btn-xs" onclick="closeEdit();">Close</a>
-          </div>
-        </div>
-      </div>
+      
     </div>
       <div class="endOfFeeds"></div>
     

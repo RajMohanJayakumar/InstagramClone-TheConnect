@@ -295,7 +295,38 @@ function friendListFunction(friendList){
 
   function editPost(feedId,divProperties){
     console.log(divProperties);
+    var feedText = divProperties.parentElement.parentElement.parentElement.getElementsByClassName("feedText")[0].innerText;
+    console.log(feedText);
+    var feedUpdate = `
+    <div id="editPost">
+        <div class="form-group purple-border">
+          <label for="exampleFormControlTextarea4">Edit Post</label>
+          <textarea class="form-control" id="feedUpdateTextArea" rows="3"
+            >${feedText}</textarea>
+          <div id="uploadAndPostBtn" class="clearfix">
+            <a id="postBtn" class="btn btn-primary mb-2 btn-xs" onclick="updateFeed('${feedId}');">update</a>
+            <a id="updateImage" class="btn btn-primary mb-2 btn-xs">+ update Image</a>
+            <a id="closeEdit" class="btn btn-primary mb-2 btn-xs" onclick="closeEdit();">Close</a>
+          </div>
+        </div>
+      </div>
+    `;
+    document.getElementById('editPortion').innerHTML = feedUpdate;
     document.getElementById('editPortion').style.display = 'block';
+  }
+
+  function updateFeed(feedId){
+      var feedUpdateText = document.getElementById('feedUpdateTextArea').value;
+      payLoad = [{
+        feedId:feedId,
+        // imageUrl:  ,
+        feedText:feedUpdateText
+      }];
+      call('feed','put',payLoad)
+      .then(res => {
+        window.location.reload();
+        closeEdit();
+      })
   }
 
 function closeEdit(){
