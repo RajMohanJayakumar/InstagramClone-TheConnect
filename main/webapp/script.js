@@ -159,7 +159,7 @@ function postFeed() {
  }
 
  function feedCall(){
-   call('feed?getFeeds=getAll','get')
+   call('feed?getFeeds=getAll&timeStamp'+new Date().getTime(),'get')
    .then(res => {
       feedIterate(res.data,'feedsPortion');
    })
@@ -235,6 +235,9 @@ function postFeedFunction(e,toPost){
 
             if(e.imageUrl != "null"){
               feedTemplate += image;
+            }
+            if(e.isEdit == "true"){
+              edit = `<div style="opacity : 0.5;">Edited</div>`
             }
             if(window.proUserId == e.userId){
             feedTemplate += feedController;

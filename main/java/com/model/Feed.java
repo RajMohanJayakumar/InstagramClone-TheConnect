@@ -19,14 +19,14 @@ private String feedText;
 
 private long timeStamp;
 
-private boolean edit;
+private String edited;
 
-public boolean isEdit() {
-	return edit;
+public String getEdited() {
+	return edited;
 }
 
-public void setEdit(boolean edit) {
-	this.edit = edit;
+public void setEdited(String edited) {
+	this.edited = edited;
 }
 
 private String status;

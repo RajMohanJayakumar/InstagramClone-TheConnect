@@ -58,7 +58,7 @@
   </div>
 
   <div class="middlePanel">
-      <div id="addNewPost">
+      <div id="addNewPost" class="postInput">
         <div class="form-group purple-border">
           <label for="exampleFormControlTextarea4">Add Post</label>
           <textarea class="form-control" id="feedTextArea" rows="3"
@@ -77,6 +77,21 @@
       </div>
     <div id="timelinePortion" class="sections" style="display:none;">Timeline</div>
     <div id="photosPortion" class="sections" style="display:none;">Photos</div>
+    <div id="editPortion" class="sections">
+        <div id="editPost" style="margin: auto;
+        width: 70%;
+        align-items: center;">
+          <div class="form-group purple-border">
+            <label for="exampleFormControlTextarea4">Edit Post</label>
+            <textarea class="form-control" id="feedTextArea" rows="3"
+              value="Write Something..."></textarea>
+            <div id="uploadAndPostBtn" class="clearfix">
+              <a id="postBtn" class="btn btn-primary mb-2 btn-xs" onclick="editFeed();">update</a>
+              <a id="addImage" class="btn btn-primary mb-2 btn-xs">+ update Image</a>
+            </div>
+          </div>
+        </div>
+    </div>
       <div class="endOfFeeds"></div>
     
   </div>

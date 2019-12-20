@@ -38,7 +38,7 @@ public class DatastoreOperation {
 			feedEntity.setProperty("imageUrl", ((Feed) object).getImageUrl());
 			feedEntity.setProperty("timeStamp", ((Feed) object).getTimeStamp());
 			feedEntity.setProperty("status", ((Feed) object).getStatus());
-			feedEntity.setProperty("edit",((Feed) object).isEdit());
+			feedEntity.setProperty("edited",((Feed) object).getEdited());
 			
 			datastore.put(feedEntity);
 			return;
@@ -100,6 +100,7 @@ public static List EntitiesListToObjectList(List<Entity> entities,String classna
 				feed.setImageUrl(String.valueOf(entity.getProperty("imageUrl")));
 				feed.setTimeStamp(Long.valueOf((long) entity.getProperty("timeStamp")));
 				feed.setStatus(String.valueOf(entity.getProperty("status")));
+				feed.setEdited(String.valueOf(entity.getProperty("edited")));
 				list.add(feed);
 				}
 			}

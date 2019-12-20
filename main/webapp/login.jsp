@@ -27,7 +27,9 @@
         <div id="mid40">
                 <h3><center>Welcome to The Connect</center></h3>
                 <div class="form-group">
-                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                        <div class="gsign" style="margin-left: -57px;">
+                          <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                        </div>
                         <label>Username</label>
                         <input class="form-control" type="text" id="name" placeholder="Enter email">
                     </div>

@@ -117,7 +117,7 @@ h4{
     display: block;
 }
 
-#addNewPost {
+.PostInput {
     margin: auto;
     width: 70%;
     align-items: center;
