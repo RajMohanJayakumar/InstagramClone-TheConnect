@@ -21,11 +21,11 @@
     <a class="btn btn-primary">Search</a>
   </div>
   <div class="fl-lf-al-cn addPost" class="sections">
-    <a class="btn btn-primary btn-sm" onclick="addPostBtn();">+ Add Post</a>
+    <a class="btn btn-primary btn-sm" href="#top" onclick="addPostBtn();">+ Add Post</a>
   </div>
 </div>
 
-<div class="dashboard clearfix">
+<div class="dashboard clearfix" id="top">
 
   <div class="leftPanel">
     <div id="proSec">
@@ -77,10 +77,10 @@
       </div>
     <div id="timelinePortion" class="sections" style="display:none;">Timeline</div>
     <div id="photosPortion" class="sections" style="display:none;">Photos</div>
-    <div id="editPortion" class="sections">
-        <div id="editPost" style="margin: auto;
-        width: 70%;
-        align-items: center;">
+
+
+    <div id="editPortion" class="editPost">
+        <div id="editPost">
           <div class="form-group purple-border">
             <label for="exampleFormControlTextarea4">Edit Post</label>
             <textarea class="form-control" id="feedTextArea" rows="3"

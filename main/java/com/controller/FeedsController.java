@@ -50,7 +50,7 @@ public class FeedsController extends HttpServlet {
 				System.out.println(timeStamp);
 			Query q = new Query("Feed")
 					.addSort("timeStamp", Query.SortDirection.DESCENDING);
-			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(2));
+			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(100));
 			List<Feed> feed = DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
 			System.out.println("getAll");
 			String json = mapper.writeValueAsString(feed);
@@ -66,7 +66,7 @@ public class FeedsController extends HttpServlet {
 		case "getOne" : {
 			if(fetch != null) {
 			Query q = new Query("Feed").addFilter("feedId", FilterOperator.EQUAL, fetch);
-			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(5));
+			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(100));
 			List<Feed> feed =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
 			String json = mapper.writeValueAsString(feed);
 			response.setContentType("application/json");
@@ -83,7 +83,7 @@ public class FeedsController extends HttpServlet {
 				Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, fetch);
 //				q.addFilter("timeStamp", FilterOperator.EQUAL, timeStamp);
 				q.addSort("timeStamp", Query.SortDirection.DESCENDING);
-				List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(1));
+				List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(100));
 				List<Feed> feeds =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
 				String json = mapper.writeValueAsString(feeds);
 				response.setContentType("application/json");

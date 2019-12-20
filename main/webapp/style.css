@@ -2,6 +2,10 @@ body {
     margin: 0;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 h4{
     margin : 0;
     padding : 3px;
@@ -224,4 +228,11 @@ h4{
 
 .btn-xs {
     font-size: 13px;
+}
+
+.editPost{
+    margin: auto;
+    width: 70%;
+    align-items: center;
+    display: none;
 }
