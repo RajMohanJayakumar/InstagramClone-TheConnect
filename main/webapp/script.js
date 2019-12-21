@@ -40,7 +40,7 @@
       document.getElementById('username').innerHTML = data.name;
       document.getElementById('email').innerHTML = data.email;
       document.getElementById('proPic').setAttribute('src',data.proPicUrl);
-      feeds(feedCall);
+      fetchWallFeeds();
       }
     });
     }
@@ -50,45 +50,20 @@
       document.getElementById('email').innerHTML = proEmail;
     }    
 
-function feeds(callback){
-  document.getElementById('photosPortion').style.display = 'none'; 
-  document.getElementById('timelinePortion').style.display = 'none';
-  document.getElementById('friendsPortion').style.display = 'none';
+function fetchWallFeeds(){
+  hideSections();
   document.getElementById('feedsPortion').style.display = 'block';
-  callback();
-}
-
-function friends(){
-  document.getElementById('photosPortion').style.display = 'none'; 
-  document.getElementById('timelinePortion').style.display = 'none';
-  document.getElementById('feedsPortion').style.display = 'none';
-  document.getElementById('friendsPortion').style.display = 'block';
-}
-
-function timeline(){
-  timelineFeed();
-  document.getElementById('photosPortion').style.display = 'none'; 
-  document.getElementById('friendsPortion').style.display = 'none';
-  document.getElementById('feedsPortion').style.display = 'none';
-  document.getElementById('timelinePortion').style.display = 'block';
+  call('feed?getFeeds=getAll&timeStamp'+new Date().getTime(),'get')
+   .then(res => {
+      feedIterate(res.data,'feedsPortion');
+   })
 }
 
 function friendsTimeline(userId){
   
-  document.getElementById('photosPortion').style.display = 'none'; 
-  document.getElementById('friendsPortion').style.display = 'none';
-  document.getElementById('feedsPortion').style.display = 'none';
+  hideSections();
   document.getElementById('timelinePortion').style.display = 'block';
   friendTimeline(userId);
-}
-
-function photos(){
-  photosCall()
-  document.getElementById('timelinePortion').style.display = 'none';
-  document.getElementById('friendsPortion').style.display = 'none';
-  document.getElementById('feedsPortion').style.display = 'none';
-  document.getElementById('photosPortion').style.display = 'block'; 
-  document.getElementById('photosPortion').innerHTML = "GALLERY"
 }
 
 function addPostBtn(){
@@ -100,9 +75,18 @@ function addPostBtn(){
   }
 }
 
+function hideSections(){
+  document.getElementById('timelinePortion').style.display = 'none';
+  document.getElementById('friendsPortion').style.display = 'none';
+  document.getElementById('feedsPortion').style.display = 'none';
+  document.getElementById('photosPortion').style.display = 'none'; 
+  document.getElementById("addNewPost").style.display = 'none';
 
+}
 
-function photosCall(){
+function fetchPhotos(){
+  hideSections();
+  document.getElementById('photosPortion').style.display = 'block'; 
   call('photos','get')
   .then(res => {
      photoIterate(res.data);
@@ -138,7 +122,7 @@ function postFeed() {
   .then(res =>{
     document.getElementById('feedTextArea').value = "";
     document.getElementById("addNewPost").style.display = "none";
-    window.location.reload();
+    fetchWallFeeds();
   })
  }
 
@@ -149,14 +133,9 @@ function postFeed() {
    })
  }
 
- function feedCall(){
-   call('feed?getFeeds=getAll&timeStamp'+new Date().getTime(),'get')
-   .then(res => {
-      feedIterate(res.data,'feedsPortion');
-   })
- }
-
- function timelineFeed(){
+ function fetchTimeline(){
+  hideSections();
+  document.getElementById('timelinePortion').style.display = 'block';
   call('feed?getFeeds=getUserFeeds&fetch='+window.proUserId,'get')
   .then(res => {
      feedIterate(res.data,'timelinePortion');
@@ -231,9 +210,9 @@ function postFeedFunction(e,toPost){
             document.getElementById(toPost).innerHTML += feedTemplate;
   }
 
-  function friendList(){
-    friends();
-    document.getElementById('friendsContainer').innerHTML = "";
+  function fetchFriends(){
+    hideSections();
+    document.getElementById('friendsPortion').style.display = 'block';
     call('user?user=getAll','get')
     .then(res => {
         friendListIterator(res.data);
@@ -241,6 +220,7 @@ function postFeedFunction(e,toPost){
   }
 
   function friendListIterator(friendList){
+   document.getElementById('friendsContainer').innerHTML = "";
    friendList.forEach((friendList) => {
      if(window.proUserId != friendList.userId){
     if(localStorage.getItem(friendList.userId) == "null"){

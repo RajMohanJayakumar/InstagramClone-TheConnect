@@ -40,16 +40,16 @@
       </center>
     </div>
     <hr style="background: #b0cbe3;height: 1px;">
-    <button class="leftPnlBtn" onclick="window.location.reload();">
+    <button class="leftPnlBtn" onclick="fetchWallFeeds();">
       &nbsp;<h5 class="fa fa-flash" style="font-size:14px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Feeds</h5>
     </button>
-    <button class="leftPnlBtn" onclick="friendList();">
+    <button class="leftPnlBtn" onclick="fetchFriends();">
       <h5 class="fa fa-users" style="font-size:14px">&nbsp;&nbsp;&nbsp;&nbsp;Friends</h5>
     </button>
-    <button class="leftPnlBtn" onclick="timeline();">
+    <button class="leftPnlBtn" onclick="fetchTimeline();">
       <h5 class="glyphicon glyphicon-send" style="font-size:14px">&nbsp;Timeline</h5>
     </button>
-    <button class="leftPnlBtn" onclick="photos();">
+    <button class="leftPnlBtn" onclick="fetchPhotos();">
       <h5 class="fa fa-camera" style="font-size:14px">&nbsp;&nbsp;&nbsp;&nbsp;Photos</h5>
     </button>
     <button class="leftPnlBtn" onclick="logout();">
@@ -77,8 +77,8 @@
         <div class="friendsPortion"><h2 style="margin-left: 65px;">Friends</h2></div>
           <div id="friendsContainer" class="friendsPortion"></div>
       </div>
-    <div id="timelinePortion" class="sections" style="display:none;">Timeline</div>
-    <div id="photosPortion" class="sections" style="display:none;">Photos</div>
+    <div id="timelinePortion" class="sections" style="display:none;"></div>
+    <div id="photosPortion" class="sections" style="display:none;"></div>
 
 
     <div id="editPortion" class="editPost">
