@@ -79,16 +79,4 @@ public void setStatus(String status) {
 	this.status = status;
 }
 
-//public Feed(String feedId, String userId, String image, String feedText, String timeStamp, String status) {
-//	this.feedId = feedId;
-//	this.userId = userId;
-//	this.image = image;
-//	this.feedText = feedText;
-//	this.timeStamp = timeStamp;
-//	this.status = status;
-//}
-
-
-
-
 }

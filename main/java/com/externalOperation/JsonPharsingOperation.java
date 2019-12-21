@@ -44,6 +44,7 @@ public class JsonPharsingOperation {
 	    	case "Feed" : List<Feed> feed = mapper.readValue(jsonString, new TypeReference<List<Feed>>() {}); return feed; 
 	    	case "UserDetail" : List<UserDetail> userDetail = mapper.readValue(jsonString, new TypeReference<List<UserDetail>>() {});return userDetail;
 	    	case "SessionLog" : List<UserDetail> sessionLog = mapper.readValue(jsonString, new TypeReference<List<UserDetail>>() {});return sessionLog;
+	    	case "UserCredential" : List<Feed> userCredential = mapper.readValue(jsonString, new TypeReference<List<UserCredential>>() {}); return userCredential; 
 	    }
 	    return null;
 	}	

@@ -23,7 +23,7 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.model.UserDetail;
 
 @WebServlet("/user")
-public class UserController extends HttpServlet {
+public class UserDataController extends HttpServlet {
 	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	ObjectWriter mapper = new ObjectMapper().writer().withDefaultPrettyPrinter();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

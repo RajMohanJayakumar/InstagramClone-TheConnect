@@ -41,13 +41,11 @@ public class FeedsController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String getFeeds = request.getParameter("getFeeds");
 		String fetch = request.getParameter("fetch");
-		String timeStamp = request.getParameter("timeStamp");
 		HttpSession session = request.getSession(false);
 		
 		if(getFeeds != null)
 		switch(getFeeds) {
 		case "getAll" : {
-//			if(timeStamp != null) {
 			Query q = new Query("Feed")
 					.addSort("timeStamp", Query.SortDirection.DESCENDING);
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(100));
@@ -55,10 +53,6 @@ public class FeedsController extends HttpServlet {
 			String json = mapper.writeValueAsString(feed);
 			response.setContentType("application/json");
 			response.getWriter().print(json);
-//			}
-//			else {
-//				response.setStatus(400);
-//			}
 		}
 		break;
 		
@@ -80,7 +74,6 @@ public class FeedsController extends HttpServlet {
 		
 		case "getUserFeeds" : {
 				Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, fetch);
-//				q.addFilter("timeStamp", FilterOperator.EQUAL, timeStamp);
 				q.addSort("timeStamp", Query.SortDirection.DESCENDING);
 				List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(100));
 				List<Feed> feeds =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");

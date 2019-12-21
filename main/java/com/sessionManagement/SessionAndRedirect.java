@@ -2,6 +2,7 @@ package com.sessionManagement;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,10 +14,21 @@ import javax.servlet.http.HttpSession;
 
 import com.externalOperation.DatastoreOperation;
 import com.externalOperation.JsonPharsingOperation;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.model.Feed;
+import com.model.UserCredential;
 import com.model.UserDetail;
 
 @WebServlet("/session")
 public class SessionAndRedirect extends HttpServlet {
+	
+	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if(session != null && session.getAttribute("userId") != null) {
@@ -36,6 +48,16 @@ public class SessionAndRedirect extends HttpServlet {
 			return;
 		}
 		
+		Query q = new Query("UserCredential").addFilter("userId", FilterOperator.EQUAL, userDetail.getUserId());
+		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(1));
+		if(preparedQuery.isEmpty()) {
+			String arr[] = userDetail.getEmail().split("@");
+			UserCredential userCredential = new UserCredential();
+			userCredential.setUserId(userDetail.getUserId());
+			userCredential.setUsername(userDetail.getEmail());
+			userCredential.setPassword(arr[0]);
+			DatastoreOperation.ObjectToDatastore(userCredential,"UserCredential");
+		}
 		HttpSession session = request.getSession();
 		DatastoreOperation.ObjectToDatastore(userDetail,"UserDetail");
 		session.setAttribute("userId", userDetail.getUserId());

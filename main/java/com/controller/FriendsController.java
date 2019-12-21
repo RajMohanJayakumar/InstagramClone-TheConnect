@@ -12,12 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.externalOperation.DatastoreOperation;
+import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.QueryResultList;
 import com.model.Feed;
 
 /**
@@ -38,5 +42,19 @@ public class FriendsController extends HttpServlet {
 		response.setContentType("application/json");
 		response.getWriter().print(json);
 	}
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		FetchOptions fetchOptions = FetchOptions.Builder.withLimit(2);
+		String startCursor = request.getParameter("cursor");
+	    if (startCursor != null) {
+	      fetchOptions.cursor(Cursor.fromWebSafeString(startCursor));
+	    }
 
+	    Query q = new Query("SELECT userId FROM Feed");
+	    PreparedQuery pq = datastore.prepare(q);
+
+	    QueryResultList<Entity> results;
+	      results = (QueryResultList<Entity>)pq.asQueryResultList(fetchOptions);
+	      System.out.println(results);
+	      System.out.println(pq);
+	}
 }

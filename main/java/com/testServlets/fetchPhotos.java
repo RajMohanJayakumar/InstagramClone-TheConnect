@@ -15,6 +15,7 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.model.Feed;
 
 @WebServlet("/fetchphotos")
@@ -22,10 +23,13 @@ public class fetchPhotos extends HttpServlet {
 
 	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Query q = new Query("SELECT * FROM Feed");
-		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
-		List<Feed> feeds =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
-		System.out.println(feeds);
+		Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, "1014586");
+		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(1));
+//		List<Feed> feeds =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
+		System.out.println(preparedQuery);
+		if(preparedQuery.isEmpty()) {
+			System.out.println("Perfect Null");
+		}
 	}
 
 

@@ -67,6 +67,7 @@ public class DatastoreOperation {
 		
 		case "UserCredential":{
 			Entity userCredentialEntity = new Entity(entity,((UserCredential) object).getUsername());
+			userCredentialEntity.setProperty("username", ((UserCredential) object).getUsername());
 			userCredentialEntity.setProperty("password", ((UserCredential) object).getPassword());
 			userCredentialEntity.setProperty("userId", ((UserCredential) object).getUserId());
 			datastore.put(userCredentialEntity);

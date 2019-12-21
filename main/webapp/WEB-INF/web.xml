@@ -16,7 +16,10 @@
 	<filter-mapping>
 	<filter-name>SessionFilter</filter-name>
 	<url-pattern>/feed</url-pattern>
-	<url-pattern>/photo</url-pattern>
+	<url-pattern>/friends</url-pattern>
+	<url-pattern>/photos</url-pattern>
+	<url-pattern>/search</url-pattern>
+	<url-pattern>/user</url-pattern>
 	</filter-mapping>
 		
 </web-app>

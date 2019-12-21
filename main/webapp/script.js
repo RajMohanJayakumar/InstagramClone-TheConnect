@@ -1,6 +1,37 @@
-function signOut() {
-  var auth2 = gapi.auth2.getAuthInstance()
-  auth2.signOut().then(function() {});
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  signOut();
+  window.proUserId = profile.userId;
+  payload = [{
+    userId:profile.getId(),
+    name:profile.getName(),
+    proPicUrl:profile.getImageUrl(),
+    email:profile.getEmail()
+  }];
+
+  call('session','post',payload)
+  .then(res => {
+    window.location.reload();
+});
+}
+
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance()
+    auth2.signOut().then(function () {
+    });
+  }
+
+function traditionalSignin(){
+  var username = document.getElementById('username').value;
+  var password = document.getElementById('password').value;
+  payLoad = [{
+    username:username,
+    password:password
+  }];
+  call('traditionalLogin','post',payLoad)
+  .then(res => {
+    window.location.reload();
+});
 }
 
 function logout() {
@@ -22,6 +53,7 @@ call('user?user=currentuser', 'get')
     document.getElementById('email').innerHTML = data.email;
     document.getElementById('proPic').setAttribute('src', data.proPicUrl);
     fetchWallFeeds();
+    saveDataLcl();
   }
   });
 }
@@ -35,7 +67,7 @@ function fetchWallFeeds() {
   hideSections();
   document.getElementById('feedsPortion').style.display = 'block';
   window.location.href = "#top";
-  call('feed?getFeeds=getAll&timeStamp' + new Date().getTime(), 'get')
+  call('feed?getFeeds=getAll', 'get')
     .then(res => {
       feedIterate(res.data, 'feedsPortion');
     })
@@ -311,4 +343,39 @@ document.getElementById('friendsPortion').style.display = 'none';
 document.getElementById('feedsPortion').style.display = 'none';
 document.getElementById('photosPortion').style.display = 'none';
 document.getElementById("addNewPost").style.display = 'none';
+// document.getElementById("search").style.display = 'none';
 }
+
+// function search(){
+//   hideSections();
+//   document.getElementById("search").style.display = 'block';
+  
+//     var input, filter, ul, li, a, i, txtValue;
+
+//     input = document.getElementById("myInput");
+
+//     filter = input.value.toUpperCase();
+
+//     ul = document.getElementById("myUL");
+//     li = ul.getElementsByTagName("li");
+
+//     for (i = 0; i < li.length; i++) {
+//         a = li[i].getElementsByTagName("a")[0];
+//         txtValue = a.textContent || a.innerText;
+//         if (txtValue.toUpperCase().indexOf(filter) > -1) {
+//             li[i].style.display = "";
+//         } else {
+//             li[i].style.display = "none";
+//         }
+//     }
+// }
+
+// function feedCursor() {
+//   hideSections();
+//   document.getElementById('feedsPortion').style.display = 'block';
+//   window.location.href = "#top";
+//   call('friends', 'delete')
+//     .then(res => {
+//       feedIterate(res.data, 'feedsPortion');
+//     })
+// }

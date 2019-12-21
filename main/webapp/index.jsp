@@ -14,7 +14,7 @@
   </div>
   <div class="fl-lf-al-cn" class="form-group mx-sm-3 mb-2">
     <label class="sr-only">Search</label>
-    <input type="text" class="form-control" placeholder="Search">
+    <input type="text" class="form-control" placeholder="Search" id="myInput" onkeyup="search()">
 
   </div>
   <div class="search-btn">
@@ -55,6 +55,9 @@
     <button class="leftPnlBtn" onclick="logout();">
       <h5 class="glyphicon glyphicon-off" style="font-size:14px">&nbsp;Logout</h5>
     </button>
+    <!-- <button class="leftPnlBtn" onclick="feedCursor();">
+      <h5 class="glyphicon glyphicon-off" style="font-size:14px">&nbsp;FeedCursor</h5>
+    </button> -->
   </div>
 
   <div class="middlePanel">
@@ -65,7 +68,7 @@
             placeholder="Write Something..."></textarea>
           <div id="uploadAndPostBtn" class="clearfix">
             <a id="postBtn" class="btn btn-primary mb-2 btn-xs" onclick="postFeed();">Post</a>
-            <button id="addImage" class="btn btn-primary mb-2 btn-xs" onclick="getUploadUrl();">+ Add Image</button>
+            <button id="addImage" class="btn btn-primary mb-2 btn-xs" onclick="getImageUploadUrl();">+ Add Image</button>
             <input class="image-upload" type="file" id="attachFile" style="cursor: pointer;" accept="image/*">
           </div>
         </div>
@@ -79,10 +82,21 @@
     <div id="timelinePortion" class="sections" style="display:none;"></div>
     <div id="photosPortion" class="sections" style="display:none;"></div>
 
-
-    <div id="editPortion" class="editPost">
+    <!-- <div id="search">
+      <ul id="myUL">
+        <li><a href="#">Adele</a></li>
+        <li><a href="#">Agnes</a></li>
       
-    </div>
+        <li><a href="#">Bolly</a></li>
+        <li><a href="#">Bob</a></li>
+        <li><a href="#">Bill</a></li>
+      
+        <li><a href="#">Calvin</a></li>
+        <li><a href="#">Christina</a></li>
+        <li><a href="#">Cindy</a></li>
+      </ul>
+    </div> -->
+    <div id="editPortion" class="editPost"></div>
       <div class="endOfFeeds"></div>
     
   </div>
