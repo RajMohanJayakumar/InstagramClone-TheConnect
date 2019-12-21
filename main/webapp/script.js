@@ -26,7 +26,6 @@
     function signOut() {
       var auth2 = gapi.auth2.getAuthInstance()
       auth2.signOut().then(function () {
-        console.log('User signed out.');
       });
     }
 
@@ -38,7 +37,6 @@
         data = res.data;
         if(data != null){
       window.proUserId = data.userId;
-      console.log(window.proUserId);
       document.getElementById('username').innerHTML = data.name;
       document.getElementById('email').innerHTML = data.email;
       document.getElementById('proPic').setAttribute('src',data.proPicUrl);
@@ -48,8 +46,6 @@
     }
 
     function updateUserDetails(proName,proEmail,proImgUrl){
-      console.log(proName);
-      console.log(proEmail);
       document.getElementById('username').innerHTML = proName;
       document.getElementById('email').innerHTML = proEmail;
     }    
@@ -104,14 +100,7 @@ function addPostBtn(){
   }
 }
 
-function call(url,method,payload){
-  return axios({
-    method: method,
-    url: url,
-    headers: {}, 
-    data: payload
-})
-}
+
 
 function photosCall(){
   call('photos','get')
@@ -125,7 +114,6 @@ function photoIterate(photos){
   document.getElementById('photosPortion').innerHTML = "";
   photos.forEach((e) => {
     if(e.imageUrl != "null"){
-      console.log(e.imageUrl)
     let photoPortion = `<figure class="galleryPic"><img class="img" src="${e.imageUrl}" /></figure>`;
     document.getElementById('photosPortion').innerHTML += photoPortion;
     }
@@ -169,7 +157,6 @@ function postFeed() {
  }
 
  function timelineFeed(){
-   console.log(window.proUserId);
   call('feed?getFeeds=getUserFeeds&fetch='+window.proUserId,'get')
   .then(res => {
      feedIterate(res.data,'timelinePortion');
@@ -184,14 +171,11 @@ function friendTimeline(userId){
 }
 
  function feedIterate(feed,toPost){
-   console.log(feed);
    document.getElementById(toPost).innerHTML = "";
    feed.forEach((e) => {
     if(localStorage.getItem(e.userId) == null){
-      console.log("fri"+e.userId);
       call('user?user='+e.userId,'get')
       .then(res => {
-        console.log(res.data);
            localStorage.setItem(e.userId,JSON.stringify(res.data));
            postFeedFunction(e,toPost);
       })
@@ -204,7 +188,6 @@ function friendTimeline(userId){
 
 function postFeedFunction(e,toPost){
      var userDetail = JSON.parse(localStorage.getItem(e.userId));
-     console.log(userDetail);
    var feedTemplate = `
    <div class="feedsPanel">
             <div id="feedInfo">
@@ -261,7 +244,6 @@ function postFeedFunction(e,toPost){
    friendList.forEach((friendList) => {
      if(window.proUserId != friendList.userId){
     if(localStorage.getItem(friendList.userId) == "null"){
-      console.log("fri"+friendList.userId)
       call('user?user='+friendList.userId,'get')
       .then(res => {
            localStorage.setItem(friendList.userId,JSON.stringify(res.data));
@@ -294,9 +276,7 @@ function friendListFunction(friendList){
 
 
   function editPost(feedId,divProperties){
-    console.log(divProperties);
     var feedText = divProperties.parentElement.parentElement.parentElement.getElementsByClassName("feedText")[0].innerText;
-    console.log(feedText);
     var feedUpdate = `
     <div id="editPost">
         <div class="form-group purple-border">
@@ -331,4 +311,42 @@ function friendListFunction(friendList){
 
 function closeEdit(){
   document.getElementById('editPortion').style.display = 'none';
+}
+
+function getUploadUrl(){
+  headers = {"Authorization" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImQxNzJhY2MxMDJjMGRhYWQzNThiZmM5ZDYwZWEyMWJhOWVjY2I2ZWUifQ.eyJpc3MiOiJodHRwczovL2FueXdoZXJlLnN0YWdpbmcuYW55d2hlcmVhdXRoLmNvbSIsImlhdCI6MTU3Njg1NjgzNiwicHJval9pZCI6ImFueXdoZXJld29ya3MiLCJ0eXBlIjoidXNlciIsInN1YiI6IjdiZTE0MGIzLWNiOTEtNDVmZC1hOWY0LTU5NTVlMWZmOGIxNCIsImV4cCI6MTU3NzQ2MTYzNiwianRpIjoiMGFkMDZlSmJzYmM2T2tCMCJ9.X9nz0eXdrEiv7C5pIl18mWnm1EEujdnsjRf-1EHNq1bW4YZjg77PHubXc34iJkmM3By8Mg-_jeomQff_L-xXp_n3XWGy0mX6PFMwhcY3_ME1qeuW63aybKr_f86AfXSg_fCKkgVY3Ay6MVTnvxMfroc1VCP2J3m6Xv1rNJAjrEIvBGKC_1eGxbo94-iYEKj0iP9UxEPRJYKjwfDC_zd2xJGkZgd65FP1HlsueqOztigL9Ee3yPSLwppQj6IabgzUi7deFpyIMb3UE7N9XskqSKL5l39DcPVeP42x8ZGpTL1kZPgnAS4JzN4ZV3JgsoDZGXJFDVCaaiyoaX7KpMmT3A"}
+  payLoad = {"access_type": "public"};
+  call('https://api-dot-staging-fullspectrum.appspot.com/api/v1/file/upload/url','post',payLoad,headers)
+  .then(res => {
+    console.log(res);
+    imageUpload(res.data.data.uploadUrl);
+  })
+}
+
+function imageUpload(uploadUrl){
+   var image = document.querySelector('#attachFile').files[0];
+
+   headers2 = {
+    "Content-Type": "multipart/form-data",
+    "Access-Control-Allow-Origin": "*"
+   }
+   payLoad = {
+     "data":image
+   }
+    call(uploadUrl,"post",payLoad,headers2)
+      .then(res => {
+        console.log(res.data)
+          var json = res;
+          var url = json.data.data.files.img_serve_url;
+          console.log(url);
+      })
+}
+
+function call(url,method,payload,headers){
+  return axios({
+    method: method,
+    url: url,
+    headers: headers, 
+    data: payload
+})
 }

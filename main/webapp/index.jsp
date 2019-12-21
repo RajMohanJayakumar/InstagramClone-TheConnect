@@ -65,7 +65,9 @@
             placeholder="Write Something..."></textarea>
           <div id="uploadAndPostBtn" class="clearfix">
             <a id="postBtn" class="btn btn-primary mb-2 btn-xs" onclick="postFeed();">Post</a>
-            <a id="addImage" class="btn btn-primary mb-2 btn-xs">+ Add Image</a>
+            <button id="addImage" class="btn btn-primary mb-2 btn-xs">+ Add Image</button>
+            <input type="file" id="input-file">
+            <input class="image-upload" type="file" id="attachFile" multiple="" style="cursor: pointer;" accept="image/*">
           </div>
         </div>
       </div>
