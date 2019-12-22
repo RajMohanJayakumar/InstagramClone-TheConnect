@@ -76,33 +76,17 @@
       <div id="feedsPortion" class="sections"></div>
 
       <div id="friendsPortion" class="sections" style="display:none;">
-        <div class="friendsPortion"><h2 style="margin-left: 65px;">Friends</h2></div>
+        <div class="friendsPortion"><h2 style="margin-left: 35%;">Friends</h2></div>
           <div id="friendsContainer" class="friendsPortion"></div>
       </div>
     <div id="timelinePortion" class="sections" style="display:none;"></div>
     <div id="photosPortion" class="sections" style="display:none;"></div>
 
-    <!-- <div id="search">
-      <ul id="myUL">
-        <li><a href="#">Adele</a></li>
-        <li><a href="#">Agnes</a></li>
-      
-        <li><a href="#">Bolly</a></li>
-        <li><a href="#">Bob</a></li>
-        <li><a href="#">Bill</a></li>
-      
-        <li><a href="#">Calvin</a></li>
-        <li><a href="#">Christina</a></li>
-        <li><a href="#">Cindy</a></li>
-      </ul>
-    </div> -->
     <div id="editPortion" class="editPost"></div>
       <div class="endOfFeeds"></div>
-    
   </div>
 
-  <div class="rightPanel">
-</div>
+  <div class="rightPanel"></div>
 
 <script src="script.js"></script>
   <script>

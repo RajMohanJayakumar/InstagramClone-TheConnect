@@ -48,15 +48,16 @@ call('user?user=currentuser', 'get')
   .then(res => {
   data = res.data;
   if (data != null) {
+    fetchFriends();
     window.proUserId = data.userId;
     document.getElementById('username').innerHTML = data.name;
     document.getElementById('email').innerHTML = data.email;
     document.getElementById('proPic').setAttribute('src', data.proPicUrl);
     fetchWallFeeds();
-    saveDataLcl();
   }
   });
 }
+
 function updateUserDetails(proName, proEmail, proImgUrl) {
 document.getElementById('username').innerHTML = proName;
 document.getElementById('email').innerHTML = proEmail;
@@ -240,7 +241,7 @@ friendList.forEach((friendList) => {
 
 function friendListFunction(friendList) {
   var friend = `
-    <div class="feedPro">
+    <div class="feedPro proDetail">
               <figure style="margin:0 0 14px">
                 <img src="${friendList.proPicUrl}" class="feedProPic" alt="">
                 <figcaption style="display: inline-block;
@@ -346,29 +347,30 @@ document.getElementById("addNewPost").style.display = 'none';
 // document.getElementById("search").style.display = 'none';
 }
 
-// function search(){
-//   hideSections();
-//   document.getElementById("search").style.display = 'block';
+function search(){
+  hideSections();
+    document.getElementById("friendsPortion").style.display = 'block';
   
-//     var input, filter, ul, li, a, i, txtValue;
+    var input, filter, h4, name, a, i, txtValue;
 
-//     input = document.getElementById("myInput");
+    input = document.getElementById("myInput");
 
-//     filter = input.value.toUpperCase();
+    filter = input.value.toUpperCase();
 
-//     ul = document.getElementById("myUL");
-//     li = ul.getElementsByTagName("li");
+    friendList = document.getElementsByClassName("proDetail");
+    
 
-//     for (i = 0; i < li.length; i++) {
-//         a = li[i].getElementsByTagName("a")[0];
-//         txtValue = a.textContent || a.innerText;
-//         if (txtValue.toUpperCase().indexOf(filter) > -1) {
-//             li[i].style.display = "";
-//         } else {
-//             li[i].style.display = "none";
-//         }
-//     }
-// }
+    for (i = 0; i < friendList.length; i++) {
+      h4 = friendList[i].getElementsByTagName("h4");
+        name = h4[0];
+        txtValue = name.textContent || name.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          friendList[i].style.display = "";
+        } else {
+          friendList[i].style.display = "none";
+        }
+    }
+}
 
 // function feedCursor() {
 //   hideSections();
