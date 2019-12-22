@@ -1,7 +1,7 @@
 function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
   signOut();
-  window.proUserId = profile.userId;
+  window.proUserId = profile.getId();
   payload = [{
     userId:profile.getId(),
     name:profile.getName(),
@@ -88,9 +88,9 @@ function fetchFriends() {
 function fetchTimeline(userId) {
   hideSections();
   document.getElementById('timelinePortion').style.display = 'block';
-  console.log("f"+window.proUserId);
+  console.log("friend"+window.proUserId);
   console.log(userId)
-  if((typeof userId) == "undefined"){
+  if(typeof userId == "undefined"){
     console.log(window.proUserId);
     userId = window.proUserId;
   }
