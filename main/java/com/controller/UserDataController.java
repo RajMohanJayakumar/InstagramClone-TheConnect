@@ -33,17 +33,32 @@ public class UserDataController extends HttpServlet {
 		List<UserDetail> userDetails = null;
 		String json = null;
 		
+		System.out.println("session "+session);
+		System.out.println("userDetail "+userDetail);
+		System.out.println("userDetails "+userDetails);
 		String user = request.getParameter("user");
 		if(user.equals("null")) {
+			System.out.println("user is null "+user);
 			response.setStatus(400);
 			return;
 		}
 		
 		switch(user) {
 		case "currentuser" : {
+			System.out.println("currentuser ");
+			System.out.println("session Attribute "+session.getAttribute("userId"));
 			Query q = new Query("UserDetail").addFilter("userId", FilterOperator.EQUAL, session.getAttribute("userId"));
+			System.out.println("Query "+q);
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(4));
+			System.out.println("preparedQuery "+preparedQuery);
+			if(!preparedQuery.isEmpty()) {
 			userDetail = (UserDetail) DatastoreOperation.EntitiesListToObjectList(preparedQuery,"UserDetail","asSingleObject");
+			}
+			else {
+				response.setStatus(202);
+				return;
+			}
+			System.out.println("currentuser "+userDetail.getName());
 		}break;
 		
 		case "getAll":{
@@ -55,17 +70,19 @@ public class UserDataController extends HttpServlet {
 		default : {
 		Query q = new Query("UserDetail").addFilter("userId", FilterOperator.EQUAL, user);
 		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(4));
-		userDetail = (UserDetail) DatastoreOperation.EntitiesListToObjectList(preparedQuery,"UserDetail","asSingleObject");
-		
-		
+		userDetail = (UserDetail) DatastoreOperation.EntitiesListToObjectList(preparedQuery,"UserDetail","asSingleObject");		
 	}
 	}
 		
-		if(userDetail != null)
+		if(userDetail != null) {
+			System.out.println("userDetail not null "+userDetail);
 			json = mapper.writeValueAsString(userDetail);
-		else
+		}
+		else {
 			json = mapper.writeValueAsString(userDetails);
+		}
 		
+		System.out.println("json"+json);
 		response.setContentType("application/json");
 		response.getWriter().print(json);
 }

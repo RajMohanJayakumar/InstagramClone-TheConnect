@@ -41,9 +41,13 @@ public class TraditionalLogin extends HttpServlet {
 		}
 		else {
 			UserCredential storedUserCredential = (UserCredential) DatastoreOperation.EntitiesListToObjectList(preparedQuery,"UserCredential","asSingleObject");
-			if(appliedUserCredential.getUsername().equals(storedUserCredential.getUsername()) && appliedUserCredential.getPassword().equals(storedUserCredential.getPassword())){
+			if(storedUserCredential.getPassword().equals(appliedUserCredential.getPassword())){
 				HttpSession session = request.getSession();
 				session.setAttribute("userId", storedUserCredential.getUserId());
+			}
+			else {
+				response.setStatus(403);
+				return;
 			}
 		}
 	}
