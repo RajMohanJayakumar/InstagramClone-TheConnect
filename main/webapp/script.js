@@ -297,6 +297,7 @@ call('feed', 'put', payLoad)
 
 //To get the image upload URL
 function imageUpload() {
+  loadImage(true);
   window.image = "null";
   var imageFile = document.querySelector('#attachFile').files[0];
   console.log(image);
@@ -314,8 +315,6 @@ call('https://api-dot-staging-fullspectrum.appspot.com/api/v1/file/upload/url', 
   console.log(res);
   window.imageUrl = uploadImageFile(imageFile,res.data.data.uploadUrl);
   })
-
-
 }
 
 //imageUpload function
@@ -333,6 +332,7 @@ data.append('file', imageFile);
 
 call(uploadUrl, "post", data, headers2)
   .then(res => {
+    loadImage(false);
   window.image = res.data.data.files[0].img_serve_url;
   postFeed();
   })
@@ -394,12 +394,12 @@ function search(){
 // }
 
 $( document ).on( "pagecreate", function() {
-      $( ".photopopup" ).on({
-          popupbeforeposition: function() {
-              var maxHeight = $( window ).height() - 60 + "px";
-              $( ".photopopup img" ).css( "max-height", maxHeight );
-          }
-      });
+      $( ".photopopup" ).on({
+          popupbeforeposition: function() {
+              var maxHeight = $( window ).height() - 60 + "px";
+              $( ".photopopup img" ).css( "max-height", maxHeight );
+          }
+      });
   });
 
 
@@ -414,4 +414,13 @@ $( document ).on( "pagecreate", function() {
       postFeed();
     }
       
+  }
+
+  function loadImage(show){
+    if(show){
+    document.getElementById("loadingSymbol").style.display = "block";
+    }
+    else{
+      document.getElementById('loadingSymbol').style.display = "none"
+    }
   }

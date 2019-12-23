@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
   <title>The Connect</title>
-  <meta name="google-signin-client_id" content="682848596913-k654bjpe8d5n9kdl5e9rkeha50hlq2rh.apps.googleusercontent.com">
+  <meta name="google-signin-client_id" content="682848596913-hv4btn93fglrd4enfkkm9p5slfvacktt.apps.googleusercontent.com">
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="style.css">
