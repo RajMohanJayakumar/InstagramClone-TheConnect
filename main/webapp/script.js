@@ -286,20 +286,6 @@ function closeEdit() {
   document.getElementById('editPortion').style.display = 'none';
 }
 
-function updateFeed(feedId) {
-var feedUpdateText = document.getElementById('feedUpdateTextArea').value;
-payLoad = [{
-  feedId: feedId,
-  // imageUrl:  ,
-  feedText: feedUpdateText
-}];
-call('feed', 'put', payLoad)
-  .then(res => {
-  window.location.reload();
-  closeEdit();
-  })
-}
-
 //To get the image upload URL
 function imageUpload(feedId,method) {
   loadImage(true);
@@ -423,9 +409,7 @@ $( document ).on( "pagecreate", function() {
   function updateFeedController(feedId){
     window.feedText = document.getElementById('feedUpdateTextArea').value;
     let feedTextTrim = feedText.trim();
-    if(typeof document.querySelector('#attachupdateFile').files[0] == "undefined" && feedTextTrim == ""){
-      return;
-    }else if(typeof document.querySelector('#attachupdateFile').files[0] != "undefined"){
+    if(typeof document.querySelector('#attachupdateFile').files[0] != "undefined"){
       window.feedImage = document.querySelector('#attachupdateFile').files[0];
       imageUpload(feedId,"put");
     }else{
@@ -439,6 +423,15 @@ $( document ).on( "pagecreate", function() {
     document.getElementById("loadingSymbol").style.display = "block";
     }
     else{
-      document.getElementById('loadingSymbol').style.display = "none"
+      document.getElementById('loadingSymbol').style.display = "none";
     }
+  }
+
+  function feedcursors(){
+    var cursor = document.getElementById("cursor").value;
+    call('feed?getFeeds=getAll1&cursor='+cursor,get)
+    .then(res => {
+      document.getElementById.innerText = res.data.cursor;
+      feedIterate(res.data);
+    })
   }

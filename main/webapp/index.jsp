@@ -69,7 +69,6 @@
             placeholder="Write Something..."></textarea>
           <div id="uploadAndPostBtn" class="clearfix">
             <a id="postBtn" class="btn btn-primary mb-2 btn-xs" onclick="postFeedController();">Post</a>
-            <button id="addImage" class="btn btn-primary mb-2 btn-xs" onclick="imageUpload();">+ Add Image</button>
             <input class="image-upload" type="file" id="attachFile" style="cursor: pointer;" accept="image/*">
           </div>
           <div id="loadingSymbol" style="display: none;">Loading..</div>
@@ -85,6 +84,7 @@
 
     <div id="editPortion" class="editPost"></div>
       <div class="endOfFeeds"></div>
+      <p id="cursor" hidden></p>
   </div>
 
   <div class="rightPanel"></div>
