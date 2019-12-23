@@ -164,6 +164,12 @@ function deleteFeed(feedId, currentDiv) {
 
 function feedIterate(feed, toPost) {
 document.getElementById(toPost).innerHTML = "";
+console.log(feed);
+if(feed.length == 0){
+  var noFeeds = `<center><h4 style="opacity: 0.5; font-weight: 700;">- no feeds to display -</h4></center>`;
+  document.getElementById(toPost).innerHTML = noFeeds;
+  return;
+}
 feed.forEach((e) => {
   if (localStorage.getItem(e.userId) == null) {
   call('user?user=' + e.userId, 'get')
@@ -316,7 +322,7 @@ headers2 = {
   "Access-Control-Allow-Origin": "*"
 }
 payLoad = {
-  "data": image
+  "file": image
 }
 call(uploadUrl, "post", payLoad, headers2)
   .then(res => {
@@ -381,3 +387,12 @@ function search(){
 //       feedIterate(res.data, 'feedsPortion');
 //     })
 // }
+
+$( document ).on( "pagecreate", function() {
+      $( ".photopopup" ).on({
+          popupbeforeposition: function() {
+              var maxHeight = $( window ).height() - 60 + "px";
+              $( ".photopopup img" ).css( "max-height", maxHeight );
+          }
+      });
+  });
