@@ -133,22 +133,27 @@ function photoIterate(photos) {
 }
 
 // Add Post
-function postFeed() {
-  let feedText = document.getElementById('feedTextArea').value;
+function postFeed(feedId,method) {
   payload = [{
-    feedText: feedText,
-    imageUrl: window.image,
+    feedId:feedId,
+    feedText: window.feedText,
+    imageUrl: window.imageUrl,
     timeStamp: new Date().getTime()
   }]
 
-  window.Image = "null";
+  window.image = "null";
+  window.feedText = "null";
+  window.feedImage = "null";
+  window.imageUrl = "null";
 
-  call('feed', 'post', payload)
+  call('feed', method, payload)
   .then(res => {
     document.getElementById('feedTextArea').value = "";
     document.getElementById("addNewPost").style.display = "none";
+    document.getElementById("editPortion").style.display = "none";
     document.getElementById('attachFile').value = "";
     fetchWallFeeds();
+
   })
 }
 
@@ -266,8 +271,8 @@ var feedUpdate = `
       <textarea class="form-control" id="feedUpdateTextArea" rows="3"
         >${feedText}</textarea>
       <div id="uploadAndPostBtn" class="clearfix">
-        <a id="postBtn" class="btn btn-primary mb-2 btn-xs" onclick="updateFeed('${feedId}');">update</a>
-        <a id="updateImage" class="btn btn-primary mb-2 btn-xs">+ update Image</a>
+        <a id="postBtn" class="btn btn-primary mb-2 btn-xs" onclick="updateFeedController('${feedId}');">update</a>
+        <input class="image-upload" type="file" id="attachupdateFile" style="cursor: pointer;" accept="image/*">
         <a id="closeEdit" class="btn btn-primary mb-2 btn-xs" onclick="closeEdit();">Close</a>
       </div>
     </div>
@@ -296,12 +301,9 @@ call('feed', 'put', payLoad)
 }
 
 //To get the image upload URL
-function imageUpload() {
+function imageUpload(feedId,method) {
   loadImage(true);
-  window.image = "null";
-  var imageFile = document.querySelector('#attachFile').files[0];
-  console.log(image);
-  if(typeof imageFile == "undefined"){
+  if(typeof window.feedImage == "undefined"){
     return;
   }
 headers = {
@@ -313,12 +315,13 @@ payLoad = {
 call('https://api-dot-staging-fullspectrum.appspot.com/api/v1/file/upload/url', 'post', payLoad, headers)
   .then(res => {
   console.log(res);
-  window.imageUrl = uploadImageFile(imageFile,res.data.data.uploadUrl);
+  imageUrl =  res.data.data.uploadUrl;
+  uploadImageFile(imageUrl,feedId,method);
   })
 }
 
 //imageUpload function
-function uploadImageFile(imageFile,uploadUrl) {
+function uploadImageFile(uploadUrl,feedId,method) {
 console.log("Upload URL - " + uploadUrl);
 
 headers2 = {
@@ -328,13 +331,13 @@ headers2 = {
 
 let data = new FormData();
 
-data.append('file', imageFile);
+data.append('file', window.feedImage);
 
 call(uploadUrl, "post", data, headers2)
   .then(res => {
     loadImage(false);
-  window.image = res.data.data.files[0].img_serve_url;
-  postFeed();
+  window.imageUrl = res.data.data.files[0].img_serve_url;
+  postFeed(feedId,method);
   })
 }
 
@@ -404,16 +407,31 @@ $( document ).on( "pagecreate", function() {
 
 
   function postFeedController(){
-    let feedText = document.getElementById('feedTextArea').value;
+    window.feedText = document.getElementById('feedTextArea').value;
     let feedTextTrim = feedText.trim();
     if(typeof document.querySelector('#attachFile').files[0] == "undefined" && feedTextTrim == ""){
       return;
     }else if(typeof document.querySelector('#attachFile').files[0] != "undefined"){
-      imageUpload();
+      window.feedImage = document.querySelector('#attachFile').files[0];
+      imageUpload("","post");
     }else{
-      postFeed();
-    }
-      
+      window.feedImage = "null";
+      postFeed("","post");
+    } 
+  }
+
+  function updateFeedController(feedId){
+    window.feedText = document.getElementById('feedUpdateTextArea').value;
+    let feedTextTrim = feedText.trim();
+    if(typeof document.querySelector('#attachupdateFile').files[0] == "undefined" && feedTextTrim == ""){
+      return;
+    }else if(typeof document.querySelector('#attachupdateFile').files[0] != "undefined"){
+      window.feedImage = document.querySelector('#attachupdateFile').files[0];
+      imageUpload(feedId,"put");
+    }else{
+      window.feedImage = "null";
+      postFeed(feedId,"put");
+    } 
   }
 
   function loadImage(show){

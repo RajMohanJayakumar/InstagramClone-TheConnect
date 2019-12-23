@@ -30,7 +30,6 @@ public class PhotosController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(false);
-		
 		Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, session.getAttribute("userId"));
 		q.addSort("timeStamp", Query.SortDirection.DESCENDING);
 		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));

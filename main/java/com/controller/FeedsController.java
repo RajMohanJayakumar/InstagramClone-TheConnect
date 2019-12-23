@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -21,6 +22,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
 import com.externalOperation.*;
+import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -30,6 +32,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.QueryResultList;
 import com.model.Feed;
 import com.model.UserDetail;
 
@@ -46,6 +49,23 @@ public class FeedsController extends HttpServlet {
 		if(getFeeds != null)
 		switch(getFeeds) {
 		case "getAll" : {
+//			Map<String, Object> resultMap = new HashMap<>();
+//			Query q = new Query("Feed")
+//					.addSort("timeStamp", Query.SortDirection.DESCENDING);
+//			FetchOptions fetchOptions = FetchOptions.Builder.withLimit(10);
+//		    // If this servlet is passed a cursor parameter, let's use it.
+//		    String startCursor = request.getParameter("cursor");
+//		    if (startCursor != null) {
+//		      fetchOptions.cursor(Cursor.fromWebSafeString(startCursor));
+//		    }
+//			QueryResultList<Entity> preparedQuery = datastore.prepare(q).asQueryResultList(fetchOptions);
+//			List<Feed> feeds =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
+//			resultMap.put("feeds", feeds);
+//			resultMap.put("cursor",preparedQuery.getCursor().toWebSafeString());
+//			String json = mapper.writeValueAsString(feeds);
+//			response.setContentType("application/json");
+//			response.getWriter().print(json);
+			
 			Query q = new Query("Feed")
 					.addSort("timeStamp", Query.SortDirection.DESCENDING);
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(100));
@@ -73,6 +93,23 @@ public class FeedsController extends HttpServlet {
 		
 		
 		case "getUserFeeds" : {
+//				Map<String, Object> resultMap = new HashMap<>();
+//				Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, fetch);
+//				q.addSort("timeStamp", Query.SortDirection.DESCENDING);
+//				FetchOptions fetchOptions = FetchOptions.Builder.withLimit(10);
+//			    // If this servlet is passed a cursor parameter, let's use it.
+//			    String startCursor = request.getParameter("cursor");
+//			    if (startCursor != null) {
+//			      fetchOptions.cursor(Cursor.fromWebSafeString(startCursor));
+//			    }
+//				QueryResultList<Entity> preparedQuery = datastore.prepare(q).asQueryResultList(fetchOptions);
+//				List<Feed> feeds =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
+//				resultMap.put("feeds", feeds);
+//				resultMap.put("cursor",preparedQuery.getCursor().toWebSafeString());
+//				String json = mapper.writeValueAsString(feeds);
+//				response.setContentType("application/json");
+//				response.getWriter().print(json);
+				
 				Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, fetch);
 				q.addSort("timeStamp", Query.SortDirection.DESCENDING);
 				List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(100));
@@ -120,10 +157,12 @@ public class FeedsController extends HttpServlet {
 		Query q = new Query("Feed").addFilter("feedId", FilterOperator.EQUAL, feed.getFeedId());
 		List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(4));
 		Feed lastFeedUpdate = (Feed) DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed","asSingleObject");		
+		System.out.println(feed.getImageUrl());
 		
 		if(session.getAttribute("userId").equals(lastFeedUpdate.getUserId())) {
 			feed.setEdited("true");
-			feed.setImageUrl(lastFeedUpdate.getImageUrl()); //Have to change once the image api is fixed
+			if(feed.getImageUrl().equals("null"))
+				feed.setImageUrl(lastFeedUpdate.getImageUrl());
 			feed.setFeedId(lastFeedUpdate.getFeedId());
 			feed.setStatus("active");
 			feed.setTimeStamp(lastFeedUpdate.getTimeStamp());
