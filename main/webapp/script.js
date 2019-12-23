@@ -164,7 +164,6 @@ function deleteFeed(feedId, currentDiv) {
 
 function feedIterate(feed, toPost) {
 document.getElementById(toPost).innerHTML = "";
-console.log(feed);
 if(feed.length == 0){
   var noFeeds = `<center><h4 style="opacity: 0.5; font-weight: 700;">- no feeds to display -</h4></center>`;
   document.getElementById(toPost).innerHTML = noFeeds;
@@ -317,18 +316,24 @@ call('https://api-dot-staging-fullspectrum.appspot.com/api/v1/file/upload/url', 
 function imageUpload(uploadUrl) {
 console.log("Upload URL - " + uploadUrl);
 var image = document.querySelector('#attachFile').files[0];
+console.log(image);
+if(typeof userId == "undefined"){
+  return;
+}
 headers2 = {
   "Content-Type": "multipart/form-data",
   "Access-Control-Allow-Origin": "*"
 }
-payLoad = {
-  "file": image
-}
-call(uploadUrl, "post", payLoad, headers2)
+
+let data = new FormData();
+
+data.append('file', image);
+
+call(uploadUrl, "post", data, headers2)
   .then(res => {
   console.log(res.data)
   var json = res;
-  var url = json.data.data.files.img_serve_url;
+  var url = json.data.data.files[0].img_serve_url;
   console.log(url);
   })
 }
