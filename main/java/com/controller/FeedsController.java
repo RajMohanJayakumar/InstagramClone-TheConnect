@@ -51,23 +51,6 @@ public class FeedsController extends HttpServlet {
 		if(getFeeds != null)
 		switch(getFeeds) {
 		case "getAll" : {
-//			Map<String, Object> resultMap = new HashMap<>();
-//			Query q = new Query("Feed")
-//					.addSort("timeStamp", Query.SortDirection.DESCENDING);
-//			FetchOptions fetchOptions = FetchOptions.Builder.withLimit(10);
-//		    // If this servlet is passed a cursor parameter, let's use it.
-//		    String startCursor = request.getParameter("cursor");
-//		    if (startCursor != null) {
-//		      fetchOptions.cursor(Cursor.fromWebSafeString(startCursor));
-//		    }
-//			QueryResultList<Entity> preparedQuery = datastore.prepare(q).asQueryResultList(fetchOptions);
-//			List<Feed> feeds =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
-//			resultMap.put("feeds", feeds);
-//			resultMap.put("cursor",preparedQuery.getCursor().toWebSafeString());
-//			String json = mapper.writeValueAsString(feeds);
-//			response.setContentType("application/json");
-//			response.getWriter().print(json);
-			
 			Query q = new Query("Feed")
 					.addSort("timeStamp", Query.SortDirection.DESCENDING);
 			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
@@ -77,12 +60,11 @@ public class FeedsController extends HttpServlet {
 			response.getWriter().print(json);
 		}
 		break;
-		case "getAll1" : {
+		case "getAllWithCursor" : {
 			Map<String, Object> resultMap = new HashMap<>();
 			Query q = new Query("Feed")
 					.addSort("timeStamp", Query.SortDirection.DESCENDING).addFilter("status", FilterOperator.EQUAL, "active");
 			FetchOptions fetchOptions = FetchOptions.Builder.withLimit(1);
-		    // If this servlet is passed a cursor parameter, let's use it.
 		    String startCursor = request.getParameter("cursor");
 		    if (startCursor != null) {
 		      fetchOptions.cursor(Cursor.fromWebSafeString(startCursor));
@@ -115,24 +97,7 @@ public class FeedsController extends HttpServlet {
 		break;
 		
 		
-		case "getUserFeeds" : {
-//				Map<String, Object> resultMap = new HashMap<>();
-//				Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, fetch);
-//				q.addSort("timeStamp", Query.SortDirection.DESCENDING);
-//				FetchOptions fetchOptions = FetchOptions.Builder.withLimit(10);
-//			    // If this servlet is passed a cursor parameter, let's use it.
-//			    String startCursor = request.getParameter("cursor");
-//			    if (startCursor != null) {
-//			      fetchOptions.cursor(Cursor.fromWebSafeString(startCursor));
-//			    }
-//				QueryResultList<Entity> preparedQuery = datastore.prepare(q).asQueryResultList(fetchOptions);
-//				List<Feed> feeds =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
-//				resultMap.put("feeds", feeds);
-//				resultMap.put("cursor",preparedQuery.getCursor().toWebSafeString());
-//				String json = mapper.writeValueAsString(feeds);
-//				response.setContentType("application/json");
-//				response.getWriter().print(json);
-				
+		case "getUserFeeds" : {				
 				Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, fetch);
 				q.addSort("timeStamp", Query.SortDirection.DESCENDING);
 				List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(300));
@@ -143,12 +108,11 @@ public class FeedsController extends HttpServlet {
 		}
 			break;
 			
-		case "getUserFeeds1" : {
+		case "getUserFeedsWithCursor" : {
 			Map<String, Object> resultMap = new HashMap<>();
 			Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, fetch);
 			q.addSort("timeStamp", Query.SortDirection.DESCENDING);
 			FetchOptions fetchOptions = FetchOptions.Builder.withLimit(2);
-		    // If this servlet is passed a cursor parameter, let's use it.
 		    String startCursor = request.getParameter("cursor");
 		    if (startCursor != null) {
 		      fetchOptions.cursor(Cursor.fromWebSafeString(startCursor));
