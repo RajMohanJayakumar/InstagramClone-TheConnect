@@ -62,6 +62,13 @@
   </div>
 
   <div class="middlePanel">
+    <div id="middlePane2">
+        <div id="friendsPortionSearch" class="sections" style="display:none;">
+            <div class="friendsPortion"><h2 style="margin-left: 35%;">Friends</h2></div>
+              <div id="friendsContainerSearch" class="friendsPortion"></div>
+          </div>
+    </div>
+    <div id="middlePanel1">
       <div id="addNewPost" class="postInput">
         <div class="form-group purple-border">
           <label for="exampleFormControlTextarea4">Add Post</label>
@@ -86,7 +93,7 @@
       <div class="endOfFeeds"></div>
       <p id="cursor" hidden></p>
   </div>
-
+</div>
   <div class="rightPanel"></div>
 
 <script src="script.js"></script>

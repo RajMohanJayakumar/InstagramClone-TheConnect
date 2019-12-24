@@ -232,6 +232,7 @@ document.getElementById(toPost).innerHTML += feedTemplate;
 
 function friendListIterator(friendList) {
 document.getElementById('friendsContainer').innerHTML = "";
+document.getElementById('friendsContainerSearch').innerHTML = "";
 friendList.forEach((friendList) => {
   if (window.proUserId != friendList.userId) {
   if (localStorage.getItem(friendList.userId) == "null") {
@@ -260,6 +261,7 @@ function friendListFunction(friendList) {
                 </figure>
             </div>`;
   document.getElementById('friendsContainer').innerHTML += friend;
+  document.getElementById('friendsContainerSearch').innerHTML += friend;
 }
 
 function editPost(feedId, divProperties) {
@@ -349,7 +351,7 @@ document.getElementById("addNewPost").style.display = 'none';
 
 function search(){
   hideSections();
-    document.getElementById("friendsPortion").style.display = 'block';
+    document.getElementById("friendsPortionSearch").style.display = 'block';
   
     var input, filter, h4, name, a, i, txtValue;
 
@@ -361,6 +363,8 @@ function search(){
     
 
     for (i = 0; i < friendList.length; i++) {
+      if(i==0)
+      document.getElementById("friendsPortionSearch").style.display = 'none';
       h4 = friendList[i].getElementsByTagName("h4");
         name = h4[0];
         txtValue = name.textContent || name.innerText;
@@ -434,4 +438,8 @@ $( document ).on( "pagecreate", function() {
       document.getElementById.innerText = res.data.cursor;
       feedIterate(res.data);
     })
+  }
+
+  function searchClick(){
+    
   }
