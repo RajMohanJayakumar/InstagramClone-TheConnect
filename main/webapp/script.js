@@ -88,10 +88,7 @@ function fetchFriends() {
 function fetchTimeline(userId) {
   hideSections();
   document.getElementById('timelinePortion').style.display = 'block';
-  console.log("friend"+window.proUserId);
-  console.log(userId)
   if(typeof userId == "undefined"){
-    console.log(window.proUserId);
     userId = window.proUserId;
   }
   call('feed?getFeeds=getUserFeeds&fetch=' + userId, 'get')
@@ -305,7 +302,6 @@ payLoad = {
 };
 call('https://api-dot-staging-fullspectrum.appspot.com/api/v1/file/upload/url', 'post', payLoad, headers)
   .then(res => {
-  console.log(res);
   imageUrl =  res.data.data.uploadUrl;
   uploadImageFile(imageUrl,feedId,method);
   })
@@ -313,7 +309,6 @@ call('https://api-dot-staging-fullspectrum.appspot.com/api/v1/file/upload/url', 
 
 //imageUpload function
 function uploadImageFile(uploadUrl,feedId,method) {
-console.log("Upload URL - " + uploadUrl);
 
 headers2 = {
   "Content-Type": "multipart/form-data",

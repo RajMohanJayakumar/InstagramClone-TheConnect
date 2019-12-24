@@ -9,9 +9,6 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-  <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
-  <!-- localhost - 682848596913-k654bjpe8d5n9kdl5e9rkeha50hlq2rh.apps.googleusercontent.com -->
-  <!-- theConnect - 682848596913-hv4btn93fglrd4enfkkm9p5slfvacktt.apps.googleusercontent.com -->
     <style>
       .g-signin2{
         margin-left: 46%;
