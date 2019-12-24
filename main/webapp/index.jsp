@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <head>
   <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
   <title>The Connect</title>
@@ -80,7 +81,7 @@
           </div>
         </div>
         <div id="feedsPortion" class="sections"></div>
-        <div id="friendsPortion" class="sections" style="display:;">
+        <div id="friendsPortion" class="sections" >
           <div class="friendsPortion">
             <h2 style="margin-left: 35%;">Friends</h2>
           </div>
@@ -103,3 +104,4 @@
       };
     </script>
 </body>
+</html>

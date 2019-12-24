@@ -386,6 +386,8 @@ function onSignIn(googleUser) {
  
  function search() {
   document.getElementById("friendsPortionSearch").style.display = 'block';
+  let friends = document.querySelector('#friendsPortionSearch');
+  friends.style.height="100vh";
   reachTop();
   var input, filter, h4, name, a, i, txtValue;
   input = document.getElementById("myInput");
@@ -397,9 +399,11 @@ function onSignIn(googleUser) {
    txtValue = name.textContent || name.innerText;
    if (document.getElementById('myInput').value.length < 1) {
     document.getElementById("friendsPortionSearch").style.display = 'none';
+    friends.style.height="0";
    }
    if (txtValue.toUpperCase().indexOf(filter) > -1) {
     friendList[i].style.display = "block";
+    
    } else {
     friendList[i].style.display = "none";
    }
