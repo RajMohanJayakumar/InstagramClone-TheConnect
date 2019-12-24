@@ -388,7 +388,7 @@ function onSignIn(googleUser) {
   document.getElementById("friendsPortionSearch").style.display = 'block';
   let friends = document.querySelector('#friendsPortionSearch');
   friends.style.height="100vh";
-  reachTop();
+  document.querySelector('body').style.overflow='hidden';
   var input, filter, h4, name, a, i, txtValue;
   input = document.getElementById("myInput");
   filter = input.value.toUpperCase();
@@ -400,6 +400,7 @@ function onSignIn(googleUser) {
    if (document.getElementById('myInput').value.length < 1) {
     document.getElementById("friendsPortionSearch").style.display = 'none';
     friends.style.height="0";
+    document.querySelector('body').style.overflow='auto';
    }
    if (txtValue.toUpperCase().indexOf(filter) > -1) {
     friendList[i].style.display = "block";
@@ -438,6 +439,8 @@ function onSignIn(googleUser) {
  
  function reachTop() {
   document.body.scrollTop = 0;
+  document.getElementById('myInput').value="";
+  document.body.style.overflow='auto';
  }
  
  function loadImage(show) {

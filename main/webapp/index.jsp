@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <head>
   <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
   <title>The Connect</title>
@@ -104,4 +103,3 @@
       };
     </script>
 </body>
-</html>
