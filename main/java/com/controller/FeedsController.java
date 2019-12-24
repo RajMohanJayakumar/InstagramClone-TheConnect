@@ -81,7 +81,7 @@ public class FeedsController extends HttpServlet {
 			Map<String, Object> resultMap = new HashMap<>();
 			Query q = new Query("Feed")
 					.addSort("timeStamp", Query.SortDirection.DESCENDING).addFilter("status", FilterOperator.EQUAL, "active");
-			FetchOptions fetchOptions = FetchOptions.Builder.withLimit(10);
+			FetchOptions fetchOptions = FetchOptions.Builder.withLimit(1);
 		    // If this servlet is passed a cursor parameter, let's use it.
 		    String startCursor = request.getParameter("cursor");
 		    if (startCursor != null) {
@@ -91,6 +91,8 @@ public class FeedsController extends HttpServlet {
 			List<Feed> feeds =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
 			resultMap.put("feeds", feeds);
 			resultMap.put("cursor",preparedQuery.getCursor().toWebSafeString());
+			if(feeds.isEmpty())
+				resultMap.put("cursor","");
 			String json = mapper.writeValueAsString(resultMap);
 			response.setContentType("application/json");
 			response.getWriter().print(json);
@@ -133,7 +135,7 @@ public class FeedsController extends HttpServlet {
 				
 				Query q = new Query("Feed").addFilter("userId", FilterOperator.EQUAL, fetch);
 				q.addSort("timeStamp", Query.SortDirection.DESCENDING);
-				List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(100));
+				List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(300));
 				List<Feed> feeds =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
 				String json = mapper.writeValueAsString(feeds);
 				response.setContentType("application/json");
@@ -155,6 +157,8 @@ public class FeedsController extends HttpServlet {
 			List<Feed> feeds =  DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
 			resultMap.put("feeds", feeds);
 			resultMap.put("cursor",preparedQuery.getCursor().toWebSafeString());
+			if(feeds.isEmpty())
+				resultMap.put("cursor","");
 			String json = mapper.writeValueAsString(feeds);
 			response.setContentType("application/json");
 			response.getWriter().print(json);

@@ -66,7 +66,6 @@
   <div class="middlePanel">
     <div id="middlePane2">
         <div id="friendsPortionSearch" class="sections" style="display:none;">
-            <div class="friendsPortion"><h2 style="margin-left: 35%;">Friends</h2></div>
               <div id="friendsContainerSearch" class="friendsPortion"></div>
           </div>
     </div>
@@ -84,10 +83,13 @@
         </div>
       </div>
       <div id="feedsPortion" class="sections"></div>
-      <div id="friendsPortion" class="sections" style="display:none;">
+      <div id="friendsPortion" class="sections" style="display:;">
         <div class="friendsPortion"><h2 style="margin-left: 35%;">Friends</h2></div>
           <div id="friendsContainer" class="friendsPortion"></div>
       </div>
+      
+      
+      
     <div id="timelinePortion" class="sections" style="display:none;"></div>
     <div id="photosPortion" class="sections" style="display:none;"></div>
 

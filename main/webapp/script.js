@@ -53,7 +53,8 @@ call('user?user=currentuser', 'get')
     document.getElementById('username').innerHTML = data.name;
     document.getElementById('email').innerHTML = data.email;
     document.getElementById('proPic').setAttribute('src', data.proPicUrl);
-    fetchWallFeeds();
+    console.log("1")
+    fetchWallFeeds("");
   }
   });
 }
@@ -62,6 +63,20 @@ function updateUserDetails(proName, proEmail, proImgUrl) {
 document.getElementById('username').innerHTML = proName;
 document.getElementById('email').innerHTML = proEmail;
 }
+
+//Populate the wall with cursor
+// function fetchWallFeeds(cursor) {
+//   hideSections();
+//   document.getElementById('feedsPortion').innerHTML = "";
+//   document.getElementById('feedsPortion').style.display = 'block';
+//   window.location.href = "#top";
+//     call('feed?getFeeds=getAll1&cursor='+cursor, 'get')
+//     .then(res => {
+//       feedIterate(res.data.feeds);
+//       if(res.data.cursor != "")
+//         fetchWallFeeds(res.data.cursor)
+//     });
+// }
 
 //Populate the wall
 function fetchWallFeeds() {
@@ -73,6 +88,7 @@ function fetchWallFeeds() {
       feedIterate(res.data, 'feedsPortion');
     })
 }
+
 //populate the friends list portion
 function fetchFriends() {
   hideSections();
@@ -87,13 +103,14 @@ function fetchFriends() {
 //function to fetch different timelines using parameters
 function fetchTimeline(userId) {
   hideSections();
+  document.getElementById('timelinePortion').innerHTML = "";
   document.getElementById('timelinePortion').style.display = 'block';
   if(typeof userId == "undefined"){
     userId = window.proUserId;
   }
   call('feed?getFeeds=getUserFeeds&fetch=' + userId, 'get')
   .then(res => {
-    feedIterate(res.data, 'timelinePortion');
+    feedIterate(res.data,'timelinePortion');
   })
 }
 
@@ -154,7 +171,7 @@ function postFeed(feedId,method) {
     document.getElementById("addNewPost").style.display = "none";
     document.getElementById("editPortion").style.display = "none";
     document.getElementById('attachFile').value = "";
-    fetchWallFeeds();
+    fetchWallFeeds("");
 
   })
 }
@@ -167,25 +184,45 @@ function deleteFeed(feedId, currentDiv) {
   })
 }
 
+// // Feed Iterate for cursor
+// function feedIterate(feed) {
+// if(feed.length == 0){
+//   var noFeeds = `<center><h4 style="opacity: 0.5; font-weight: 700;">- no feeds to display -</h4></center>`;
+//   document.getElementById('timelinePortion').innerHTML = noFeeds;
+//   return;
+// }
+// feed.forEach((e) => {
+//   if (localStorage.getItem(e.userId) == null) {
+//   call('user?user=' + e.userId, 'get')
+//     .then(res => {
+//     localStorage.setItem(e.userId, JSON.stringify(res.data));
+//     postFeedFunction(e, 'timelinePortion');
+//     })
+//   } else {
+//   postFeedFunction(e, 'timelinePortion');
+//   }
+// })
+// }
+
 function feedIterate(feed, toPost) {
-document.getElementById(toPost).innerHTML = "";
-if(feed.length == 0){
-  var noFeeds = `<center><h4 style="opacity: 0.5; font-weight: 700;">- no feeds to display -</h4></center>`;
-  document.getElementById(toPost).innerHTML = noFeeds;
-  return;
-}
-feed.forEach((e) => {
-  if (localStorage.getItem(e.userId) == null) {
-  call('user?user=' + e.userId, 'get')
-    .then(res => {
-    localStorage.setItem(e.userId, JSON.stringify(res.data));
-    postFeedFunction(e, toPost);
-    })
-  } else {
-  postFeedFunction(e, toPost);
+  document.getElementById(toPost).innerHTML = "";
+  if(feed.length == 0){
+    var noFeeds = `<center><h4 style="opacity: 0.5; font-weight: 700;">- no feeds to display -</h4></center>`;
+    document.getElementById(toPost).innerHTML = noFeeds;
+    return;
   }
-})
-}
+  feed.forEach((e) => {
+    if (localStorage.getItem(e.userId) == null) {
+    call('user?user=' + e.userId, 'get')
+      .then(res => {
+      localStorage.setItem(e.userId, JSON.stringify(res.data));
+      postFeedFunction(e, toPost);
+      })
+    } else {
+    postFeedFunction(e, toPost);
+    }
+  })
+  }
 
 function postFeedFunction(e, toPost) {
 var userDetail = JSON.parse(localStorage.getItem(e.userId));
@@ -234,6 +271,7 @@ document.getElementById(toPost).innerHTML += feedTemplate;
 
 function friendListIterator(friendList) {
 document.getElementById('friendsContainer').innerHTML = "";
+document.getElementById('friendsContainerSearch').innerHTML = "";
 friendList.forEach((friendList) => {
   if (window.proUserId != friendList.userId) {
   if (localStorage.getItem(friendList.userId) == "null") {
@@ -262,6 +300,7 @@ function friendListFunction(friendList) {
                 </figure>
             </div>`;
   document.getElementById('friendsContainer').innerHTML += friend;
+  document.getElementById('friendsContainerSearch').innerHTML += friend;
 }
 
 function editPost(feedId, divProperties) {
@@ -341,6 +380,7 @@ return axios({
 function hideSections() {
 document.getElementById('timelinePortion').style.display = 'none';
 document.getElementById('friendsPortion').style.display = 'none';
+document.getElementById('friendsPortionSearch').style.display = 'none';
 document.getElementById('feedsPortion').style.display = 'none';
 document.getElementById('photosPortion').style.display = 'none';
 document.getElementById("addNewPost").style.display = 'none';
@@ -348,8 +388,8 @@ document.getElementById("addNewPost").style.display = 'none';
 }
 
 function search(){
-  hideSections();
-    document.getElementById("friendsPortion").style.display = 'block';
+  // hideSections();
+    document.getElementById("friendsPortionSearch").style.display = 'block';
   
     var input, filter, h4, name, a, i, txtValue;
 
@@ -364,6 +404,9 @@ function search(){
       h4 = friendList[i].getElementsByTagName("h4");
         name = h4[0];
         txtValue = name.textContent || name.innerText;
+        if(document.getElementById('myInput').value.length < 1){
+          document.getElementById("friendsPortionSearch").style.display = 'none';
+        }
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
           friendList[i].style.display = "block";
         } else {
@@ -371,16 +414,6 @@ function search(){
         }
     }
 }
-
-// function feedCursor() {
-//   hideSections();
-//   document.getElementById('feedsPortion').style.display = 'block';
-//   window.location.href = "#top";
-//   call('friends', 'delete')
-//     .then(res => {
-//       feedIterate(res.data, 'feedsPortion');
-//     })
-// }
 
   function postFeedController(){
     window.feedText = document.getElementById('feedTextArea').value;
