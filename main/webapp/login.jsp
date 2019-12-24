@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <head>
   <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
   <title>The Connect</title>
@@ -9,7 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
   <style>
     .g-signin2 {
       margin-left: 46%;
@@ -50,5 +48,3 @@
   </div>
   <script src="script.js"></script>
 </body>
-
-</html>
