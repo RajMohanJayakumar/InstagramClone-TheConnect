@@ -124,6 +124,11 @@ function addPostBtn() {
 
 function photoIterate(photos) {
   document.getElementById('photosPortion').innerHTML = "";
+  if(photos.length == 0){
+    var noFeeds = `<center><h4 style="opacity: 0.5; font-weight: 700;">- no photos to show -</h4></center>`;
+    document.getElementById('photosPortion').innerHTML = noFeeds;
+    return;
+  }
   photos.forEach((e) => {
     if (e.imageUrl != "null") {
       let photoPortion = `<figure class="galleryPic"><img class="img" src="${e.imageUrl}" /></figure>`;
@@ -232,7 +237,6 @@ document.getElementById(toPost).innerHTML += feedTemplate;
 
 function friendListIterator(friendList) {
 document.getElementById('friendsContainer').innerHTML = "";
-document.getElementById('friendsContainerSearch').innerHTML = "";
 friendList.forEach((friendList) => {
   if (window.proUserId != friendList.userId) {
   if (localStorage.getItem(friendList.userId) == "null") {
@@ -261,7 +265,6 @@ function friendListFunction(friendList) {
                 </figure>
             </div>`;
   document.getElementById('friendsContainer').innerHTML += friend;
-  document.getElementById('friendsContainerSearch').innerHTML += friend;
 }
 
 function editPost(feedId, divProperties) {
@@ -351,7 +354,7 @@ document.getElementById("addNewPost").style.display = 'none';
 
 function search(){
   hideSections();
-    document.getElementById("friendsPortionSearch").style.display = 'block';
+    document.getElementById("friendsPortion").style.display = 'block';
   
     var input, filter, h4, name, a, i, txtValue;
 
@@ -359,17 +362,15 @@ function search(){
 
     filter = input.value.toUpperCase();
 
-    friendList = document.getElementsByClassName("proDetail");
+    friendList = document.querySelectorAll(".proDetail");
     
 
     for (i = 0; i < friendList.length; i++) {
-      if(i==0)
-      document.getElementById("friendsPortionSearch").style.display = 'none';
       h4 = friendList[i].getElementsByTagName("h4");
         name = h4[0];
         txtValue = name.textContent || name.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          friendList[i].style.display = "";
+          friendList[i].style.display = "block";
         } else {
           friendList[i].style.display = "none";
         }
@@ -385,16 +386,6 @@ function search(){
 //       feedIterate(res.data, 'feedsPortion');
 //     })
 // }
-
-$( document ).on( "pagecreate", function() {
-      $( ".photopopup" ).on({
-          popupbeforeposition: function() {
-              var maxHeight = $( window ).height() - 60 + "px";
-              $( ".photopopup img" ).css( "max-height", maxHeight );
-          }
-      });
-  });
-
 
   function postFeedController(){
     window.feedText = document.getElementById('feedTextArea').value;
@@ -438,8 +429,4 @@ $( document ).on( "pagecreate", function() {
       document.getElementById.innerText = res.data.cursor;
       feedIterate(res.data);
     })
-  }
-
-  function searchClick(){
-    
   }
