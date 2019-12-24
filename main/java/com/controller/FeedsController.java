@@ -70,7 +70,7 @@ public class FeedsController extends HttpServlet {
 			
 			Query q = new Query("Feed")
 					.addSort("timeStamp", Query.SortDirection.DESCENDING);
-			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(10));
+			List<Entity> preparedQuery = datastore.prepare(q).asList(FetchOptions.Builder.withLimit(500));
 			List<Feed> feed = DatastoreOperation.EntitiesListToObjectList(preparedQuery,"Feed");
 			String json = mapper.writeValueAsString(feed);
 			response.setContentType("application/json");
