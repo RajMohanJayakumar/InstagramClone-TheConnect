@@ -242,7 +242,7 @@ function onSignIn(googleUser) {
            </h4>
          </div>`;
  
-  var image = `<figure class="feedPic"><img class="img" src="${e.imageUrl}" /></figure>`;
+  var image = `<figure class="feedPic" onclick="showPhoto(this);"><img class="img" src="${e.imageUrl}" /></figure>`;
   var isEdited = `<div class="isEdited></div>`;
   var feedController = `
          <div class="feedBtns">
@@ -265,6 +265,21 @@ function onSignIn(googleUser) {
    feedTemplate += feedController;
   }
   document.getElementById(toPost).innerHTML += feedTemplate;
+ }
+
+ function showPhoto(feed){
+  //  feed = feed.getElementById('feedBtns').remove;
+  feedText = feed.parentElement.getElementsByTagName('h4')[2].innerText;
+  feedHead = feed.parentElement.getElementsByClassName('feedPro')[0].innerHTML;
+  feedImg = feed.getElementsByClassName('img')[0].src;
+  console.log(feedImg);
+  // console.log(feedHead);
+   document.getElementById('gallery').style.display = 'block';
+   document.getElementById('imageToShow').innerHTML = "";
+   document.getElementById('userDetailInImage').innerHTML = feedHead;
+   document.getElementById('feedTextInImage').innerText = feedText;
+   document.getElementById('imageToShow').innerHTML = `<img class="imgPreview" src="${feedImg}" />`
+  //  console.log(feed.getElementById('feedInfo').innerHTML)
  }
  
  function friendListIterator(friendList) {
@@ -319,6 +334,10 @@ function onSignIn(googleUser) {
  `;
   document.getElementById('editPortion').innerHTML = feedUpdate;
   document.getElementById('editPortion').style.display = 'block';
+ }
+
+ function closeImage(){
+  document.getElementById('gallery').style.display = 'none';
  }
  
  function closeEdit() {
@@ -382,6 +401,7 @@ function onSignIn(googleUser) {
   document.getElementById('feedsPortion').style.display = 'none';
   document.getElementById('photosPortion').style.display = 'none';
   document.getElementById("addNewPost").style.display = 'none';
+  document.getElementById('gallery').style.display = 'none';
  }
  
  function search() {

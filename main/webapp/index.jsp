@@ -88,8 +88,14 @@
         </div>
         <div id="timelinePortion" class="sections" style="display:none;"></div>
         <div id="photosPortion" class="sections" style="display:none;"></div>
-
-        <div id="editPortion" class="editPost"></div>
+        <div id="editPortion" class="pageOverlay"></div>
+        <div id="gallery" class="pageOverlayGallery">
+          <div id="userDetailInImage"></div>
+          <div id="feedTextInImage"></div>
+          <div id="imageToShow"></div>
+          <!-- <span style='font-size:100px;' onclick="document.getElementById('gallery').style.display = 'none';">&#10006;</span> -->
+          <a id="closeImage" class="btn btn-primary mb-2 btn-xs" onclick="closeImage();">Close</a>
+        </div>
         <div class="endOfFeeds"></div>
         <p id="cursor" hidden></p>
       </div>
