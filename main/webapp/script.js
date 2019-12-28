@@ -281,6 +281,10 @@ function onSignIn(googleUser) {
    document.getElementById('imageToShow').innerHTML = `<img class="imgPreview" src="${feedImg}" />`
   //  console.log(feed.getElementById('feedInfo').innerHTML)
  }
+
+ function galleryPhotos(){
+   
+ }
  
  function friendListIterator(friendList) {
   document.getElementById('friendsContainer').innerHTML = "";
